@@ -1,0 +1,62 @@
+Groceries Please
+------------------------
+
+Cashier have to find bar code on product to scan them in super short time
+		damage bar code that you have to type by hand
+		karen comes bother you
+		enter discount
+		fake barcode on product that doesn't work
+		Sale send a rush of product to you
+		Converyor belt give x package to scan every 10 second
+		Document with code when there is no bar code
+		Scanner malfunction -> shake mouse or super click quick time event
+	
+		
+Input 
+	arrow key flip product
+	mouse to scan the code bar: click move around barcode to scan - open infra red scan
+	
+	
+Are you guys going to record stuff like "Can we get Karen to cashier four please?"
+GYOUNG would like to record voice over
+
+Score = total price of scanned item
+
+
+
+Products:
+
+	Food: 
+		Waffle cereal
+		waffle-os (Beanz Lord Beanz brand)
+		Gwockomollleee
+		HelloFresch 
+		Alpha Greek Yougurt
+		
+	Toys: 
+		Train 
+		boats 
+		plane toys 
+		(Captain Chris's Toys)
+		
+	Electronics: 
+		phone
+		mouse
+		heaset
+		microphone
+		
+	Hygiene produts: 
+		soap
+		toilet paper (Sir Poop-A-Lot / Delta's Disaster)
+		detergent
+		
+	Kitty food: 
+		Jip's Choice
+	Deco: 
+		Bu Cult Candles
+		
+	Bluesatyrs's Aqua Special
+	
+Leaderboard?
+Try not to be fired for a week? without getting fired
+Try to pass 100 boxes?

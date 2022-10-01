@@ -1,0 +1,103 @@
+Theme: Every 10 seconds
+
+bad 0 >-----------------------> 100 good
+
+80		Rushed task todo
+80		Twist every 10 seconds
+75		Rushed Strategy Game
+75		Rushed enemy wave games
+
+65		The map change every 10 seconds
+60		Time bonus on kill/pickup
+50		Rythmic game
+50		Clicker Game
+50		Transportation / Directing Games
+29.992	Memory Game
+29.991	Time dilation
+
+---------------------
+
+
+Rythmic game
+
+Clicker Game
+	Clicker game, cookie clicker, saving the universe, automate things, base/builder with numbers
+
+Rushed Strategy Game:
+	card game where you have to rush to finish your turn in 10 seconds
+	Reings game style game
+	a chess/checkers styled game where both players only have 10 seconds to make as many legal moves as possible. afterwards the pieces will automatically play out. points are awarded for taking pieces. and obv if you get their King you win
+	
+Rushed enemy wave games: ++
+	Wave game with wave every 10 seconds: 
+		boat defence
+		so.....its history time its the battle of britain every 10 seconds a german bomber wave appears you are a British anti aircraft crew on a boat???!?! the boat is the target of the bombers, defend your boat. each wave there are different types of bombers in the beginning, there are only fighters and only have bullets that do small ammount of damage, later the dive bombers, easier to hit, and do medium damage. and a lot later levels big bombers that do heavy damage and drop multiple bombs even la
+		after you shootdown enough aircraft, you get special buffs, for example, once you shoot down 10 aircraft, faster shooting (cause you know, anti aircraft gun shoot slow) after 20, you get a single spitfire (plane) to help with shooting down bombers, after 30 you get a squadron of (4 to 5) to help with shooting down aircraft
+		Tog: could work as a clicker game too
+	you have waves of enemies every 10 seconds, increasing in intensity and you need to build the best possible defense in 10 seconds
+	boat & air defence
+	swap betwwen tower defence and action game every 10 second?
+
+The map change every 10 seconds:
+	overcooked desk switching / puzzel game where things change every 10 seconds
+	a platformer with physics. where every 10 seconds the level rotates 90 degrees clockwise, objects fall etc. and you still have to make it to the exit
+	A platformer/maze where every 10 seconds the map changes to the next in a loop of say 10 maps
+	gravity change / cube maze
+	a 2d platforming in a 3d world but the camera angle decides the platform part. Camera change every 10 seconds
+	Planet that orbits every 10 seconds
+
+Transportation / Directing Games:	
+	Mini Metro style / rail route
+	send people home every 10 seconds from work or whatever
+	Package sorting where package arrive every 10 seconds
+
+Rushed task todo:
+	Everythings breaks every 10 seconds and you try to fix it
+	Every ten seconds you get a new waffle and you have to eat as much waffles as possible before the waffle tower reaches the top of the screen.
+	Waffle cooker where you have to flip the waffle every 10 second or it burns
+	Every 10 seconds make a different small task
+	multitasking game... like a mother that works from home, has pets, kids, job, plants, and every 10 seconds she has a new request
+		them u can ad another chats, like dad, kids, pets... and more players more tasks are added every 10 seconds
+	Keep the developer awake
+	Monday Stream: Streamer that try to accomplish a task but chat send them stuff todo constantly (optional twitch integration)
+	among us task style
+	Cashier have to find bar code on product to scan them in super short time
+		damage bar code that you have to type by hand
+		karen comes bother you
+		enter discount
+		fake barcode on product that doesn't work
+		Sale send a rush of product to you
+		Converyor belt give x package to scan every 10 second
+		Document with code when there is no bar code
+	
+Time bonus on kill/pickup:
+	Add time from enemies: So, what if you have 10 seconds and all enemies have 10 seconds. And you have to kill them asap to steal their time and keep living.
+	a platformer with a hard time limit of 10 seconds but every collectible you pick up gives you an extension of two seconds
+	a platformer.. where you only live 10 seconds. but during that time you can hit buttons around the level to unlock doors for your next life etc. multiple lives to get through a single level
+	
+	top down shooter (like hotline Miami) where all you have to do is reach the end. 
+		but bullet's don't kill enemies. it sends them back/forward in time 10 seconds.
+		so you have to choose between shooting enemies and avoiding them
+		shooting them = harder later
+		avoiding them = harder at the time but easier later
+	
+Time dilation:
+	Every 10 seconds, but each second lasts a hour in an alternate universe
+		10 seconds in slomo as an alternative to that
+	Superhot? Inception?
+
+Twist every 10 seconds:
+	and if you create a kind of coop game, that every 10 seconds it changes who is playing 
+		and the person needs to continue the game?
+	For any gametype, every 10 seconds the controls randomly change
+	Every 10 seconds you get a different weapon/power
+	A game that switches between a plat-former, shooter , puzzle every 10 seconds
+	among us task style
+
+Memory Game
+	Or like a memory game? Where you have ten seconds to memorize something? Can be whatever.
+
+
+
+
+
