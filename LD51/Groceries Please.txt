@@ -2,19 +2,19 @@ Groceries Please
 ------------------------
 
 Cashier have to find bar code on product to scan them in super short time
-		damage bar code that you have to type by hand
-		karen comes bother you
-		enter discount
-		fake barcode on product that doesn't work
-		Sale send a rush of product to you
-		Converyor belt give x package to scan every 10 second
-		Document with code when there is no bar code
-		Scanner malfunction -> shake mouse or super click quick time event
+ok				damage bar code that you have to type by hand
+?				fake barcode on product that doesn't work
+ok				karen comes bother you
+?				enter discount
+ok				Sale send a rush of product to you
+ok				Converyor belt give x package to scan every 10 second
+out of scope	Document with code when there is no bar code
+ok				Scanner malfunction -> shake mouse or super click quick time event
 	
 		
 Input 
-	arrow key flip product
-	mouse to scan the code bar: click move around barcode to scan - open infra red scan
+ok		arrow key flip product
+todo	mouse to scan the code bar: click move around barcode to scan - open infra red scan
 	
 	
 Are you guys going to record stuff like "Can we get Karen to cashier four please?"

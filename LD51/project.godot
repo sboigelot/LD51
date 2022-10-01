@@ -9,30 +9,51 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody",
+"class": "Package",
+"language": "GDScript",
+"path": "res://Package.gd"
+}, {
 "base": "Reference",
 "class": "ResourceAsyncLoader",
 "language": "GDScript",
 "path": "res://Utilities/ResourceAsyncLoader.gd"
+}, {
+"base": "Spatial",
+"class": "Supermarket3d",
+"language": "GDScript",
+"path": "res://Scenes/Supermarket3d.gd"
 } ]
 _global_script_class_icons={
-"ResourceAsyncLoader": ""
+"Package": "",
+"ResourceAsyncLoader": "",
+"Supermarket3d": ""
 }
 
 [application]
 
 config/name="LD51"
-run/main_scene="res://UI/MainMenu.tscn"
+run/main_scene="res://Scenes/Supermarket.tscn"
 config/icon="res://icon.png"
 
 [audio]
 
-default_bus_layout="res://Sound/MasterBusLayout.tres"
+default_bus_layout="res://Sounds/MasterBusLayout.tres"
 
 [autoload]
 
 Game="*res://Game.tscn"
-SfxManager="*res://Sound/SfxManager.tscn"
+SfxManager="*res://Sounds/SfxManager.tscn"
 Photograph="*res://Utilities/Photograph.gd"
+
+[display]
+
+window/size/width=1920
+window/size/height=1080
+window/size/test_width=1280
+window/size/test_height=720
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
 
 [input]
 

@@ -1,0 +1,69 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Package.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Supermarket3d.gd" type="Script" id=2]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 0.1, 1, 3 )
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 0.2, 2, 6 )
+
+[node name="Supermarket3d" type="Spatial"]
+script = ExtResource( 2 )
+scan_package_np = NodePath("ScanPackageLocation/Package")
+
+[node name="ScanPackageLocation" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2, 0 )
+
+[node name="Package" parent="ScanPackageLocation" instance=ExtResource( 1 )]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0 )
+projection = 1
+size = 10.0
+
+[node name="PackageSpawnLocations" type="Spatial" parent="."]
+
+[node name="Location1" type="Spatial" parent="PackageSpawnLocations"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0 )
+
+[node name="Location2" type="Spatial" parent="PackageSpawnLocations"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 1 )
+
+[node name="Location3" type="Spatial" parent="PackageSpawnLocations"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 2 )
+
+[node name="Location4" type="Spatial" parent="PackageSpawnLocations"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -1 )
+
+[node name="ConveyorBelt" type="Spatial" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[node name="Spatial" type="Spatial" parent="."]
+
+[node name="HWallStaticBody" type="StaticBody" parent="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial/HWallStaticBody"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial/HWallStaticBody"]
+visible = false
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="VWallStaticBody" type="StaticBody" parent="Spatial"]
+
+[node name="CollisionShape" type="CollisionShape" parent="Spatial/VWallStaticBody"]
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Spatial/VWallStaticBody"]
+visible = false
+mesh = SubResource( 2 )
+material/0 = null
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

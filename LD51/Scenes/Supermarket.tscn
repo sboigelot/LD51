@@ -1,0 +1,111 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scenes/Supermarket.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/LD51-noarm.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/Supermarket3d.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Fonts/VTCSuperMarketSaleDisplay.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://Sprites/LD51-arm.png" type="Texture" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 4 )
+
+[node name="Supermarket" type="Node2D"]
+script = ExtResource( 1 )
+supermarket3d_np = NodePath("ColorRect/ViewportContainer/Viewport/Supermarket3d")
+debug_rtl_np = NodePath("PanelContainer/MarginContainer/VBoxContainer/RichTextLabel")
+
+[node name="BackgroundTextureRect" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 1920, 1080 )
+texture = ExtResource( 2 )
+expand = true
+
+[node name="ColorRect" type="Control" parent="."]
+
+[node name="ViewportContainer" type="ViewportContainer" parent="ColorRect"]
+margin_right = 1920.0
+margin_bottom = 1080.0
+
+[node name="Viewport" type="Viewport" parent="ColorRect/ViewportContainer"]
+size = Vector2( 1920, 1080 )
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="Supermarket3d" parent="ColorRect/ViewportContainer/Viewport" instance=ExtResource( 3 )]
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+visible = false
+margin_right = 14.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 400, 400 )
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 393.0
+margin_bottom = 393.0
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 376.0
+margin_bottom = 376.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer"]
+margin_right = 366.0
+margin_bottom = 294.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/normal_font = SubResource( 1 )
+text = "this is a test"
+
+[node name="DownButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 298.0
+margin_right = 366.0
+margin_bottom = 318.0
+text = "Down"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 322.0
+margin_right = 366.0
+margin_bottom = 342.0
+
+[node name="LeftButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_right = 181.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Left"
+
+[node name="RightButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 185.0
+margin_right = 366.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+text = "Right"
+
+[node name="UpButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 346.0
+margin_right = 366.0
+margin_bottom = 366.0
+text = "Up"
+
+[node name="ForgroundTextureRext" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+rect_min_size = Vector2( 1920, 1080 )
+texture = ExtResource( 5 )
+expand = true
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/DownButton" to="." method="_on_DownButton_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/LeftButton" to="." method="_on_LeftButton_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/RightButton" to="." method="_on_RightButton_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/UpButton" to="." method="_on_UpButton_pressed"]
