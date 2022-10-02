@@ -26,7 +26,7 @@ func _ready():
 	
 func _on_NewGameButton_pressed():
 #	SfxManager.play("ui-button-click")
-	Game.new_game(true)
+	Game.new_game()
 
 func update_sound_sliders():
 	var master_volume:float = AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Master"))
@@ -60,3 +60,6 @@ func _on_SoundFxHSlider_value_changed(value):
 func _on_WebGLButton_pressed():
 	OS.set_window_fullscreen(true)
 	webgl_button.queue_free()
+
+func _on_StartButton_pressed():
+	Game.new_game()

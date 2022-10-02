@@ -42,10 +42,25 @@ func _ready():
 #	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	set_scanner_hands(false)
 #	set_viewport_texture()
+	set_editor_azerty()
 
 	if scan_package_holder.get_child_count() >= 1:
-		scan_package = scan_package_holder.get_child(0)
+#		scan_package = scan_package_holder.get_child(0)
+		scan_package_holder.get_child(0).queue_free()
 	spawn_package()
+	
+func set_editor_azerty():
+	if not OS.is_debug_build():
+		return
+		
+	change_keybind("ui_up", KEY_Z)
+	change_keybind("ui_left", KEY_Q)
+	
+func change_keybind(action_name, scan_code):
+	var actions = InputMap.get_action_list(action_name)
+	var last_action = actions[actions.size() - 1] as InputEventKey
+	last_action.scancode = scan_code
+		
 
 func set_viewport_texture(viewport:Viewport):
 	var path = viewport.get_path()
@@ -164,16 +179,19 @@ func move_scan_camera():
 	var screen_extend = Vector2(8.65,4.75)
 	var cam_translation_range = screen_extend * 2
 
+	var fullscreen_pixel_size = OS.window_size
+	fullscreen_pixel_size = Vector2(1920,1080)
+
 	var mouse_postion = get_viewport().get_mouse_position() as Vector2
 	var mouse_screen_percentage = Vector2(
-		mouse_postion.x / OS.window_size.x,
-		mouse_postion.y / OS.window_size.y
+		mouse_postion.x / fullscreen_pixel_size.x,
+		mouse_postion.y / fullscreen_pixel_size.y
 	)
 	
 	var scanner_position = scanner_screen_center.global_position
 	var scanner_position_screen_percentage = Vector2(
-		scanner_position.x / OS.window_size.x,
-		scanner_position.y / OS.window_size.y
+		scanner_position.x / fullscreen_pixel_size.x,
+		scanner_position.y / fullscreen_pixel_size.y
 	)
 
 	scan_camera.translation.x = (scanner_position_screen_percentage.x * cam_translation_range.x) - screen_extend.x

@@ -30,7 +30,9 @@ shape = SubResource( 4 )
 
 [node name="dvdbox" parent="RotationRoot/PackageVisualPlaceholder" instance=ExtResource( 1 )]
 
-[node name="MeshInstance" type="MeshInstance" parent="RotationRoot/PackageVisualPlaceholder"]
+[node name="BarcodesPlaceholder" type="Spatial" parent="RotationRoot"]
+
+[node name="BarcodeMeshInstance" type="MeshInstance" parent="RotationRoot/BarcodesPlaceholder"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.435596, 0.100382, -0.0481462 )
 mesh = SubResource( 2 )
 skeleton = NodePath("../../..")
