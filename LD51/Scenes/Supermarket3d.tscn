@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Scenes/Package.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Supermarket3d.gd" type="Script" id=2]
@@ -7,6 +7,9 @@
 [ext_resource path="res://Sprites/register.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/LD51-hand.png" type="Texture" id=6]
 [ext_resource path="res://Fonts/VTCSuperMarketSaleDisplay.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Sprites/error_screen.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/keyboard.png" type="Texture" id=9]
+[ext_resource path="res://Fonts/airstrip-four/airstrip_48.tres" type="DynamicFont" id=10]
 
 [sub_resource type="PlaneMesh" id=12]
 size = Vector2( 17.8, 10 )
@@ -75,10 +78,13 @@ hand_node_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode")
 scanner_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext")
 scanner_screen_texturerect_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/ScannerCameraScreen")
 scanner_screen_center_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/ScannerCameraScreen/CenterPosition2D")
+scanner_error_screen_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/ErrorScreen")
 scanner_laser_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/LaserLine2D")
 scanner_anim_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/ScannerAnimationPlayer")
 scanner_on_charger_np = NodePath("CanvasLayer/Supermarket/ScannerCharger/ScannerTextureRext")
 debug_label_np = NodePath("CanvasLayer/Supermarket/ButtonPanelContainer/DebugLabel")
+keyboard_line_edit_np = NodePath("CanvasLayer/Supermarket/Keyboard/KeyboardLineEdit")
+keyboard_error_label_np = NodePath("CanvasLayer/Supermarket/Keyboard/KeyboardErrorLabel")
 hand_min_y = 385.0
 
 [node name="BackgroundImage" type="MeshInstance" parent="."]
@@ -176,7 +182,7 @@ render_target_v_flip = true
 [node name="ScanCamera" type="Camera" parent="ScanViewport"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0 )
 projection = 1
-size = 0.5
+size = 0.3
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -237,6 +243,52 @@ size_flags_vertical = 0
 custom_fonts/font = SubResource( 9 )
 text = "test label"
 
+[node name="Keyboard" type="Node2D" parent="CanvasLayer/Supermarket"]
+position = Vector2( -266, -125 )
+
+[node name="KeyboardTextureRext" type="Sprite" parent="CanvasLayer/Supermarket/Keyboard"]
+position = Vector2( 1601.65, 1113.26 )
+texture = ExtResource( 9 )
+offset = Vector2( -116.215, -177.787 )
+
+[node name="KeyboardErrorLabel" type="Label" parent="CanvasLayer/Supermarket/Keyboard"]
+visible = false
+margin_left = 1336.0
+margin_top = 882.0
+margin_right = 1636.0
+margin_bottom = 982.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_fonts/font = ExtResource( 10 )
+text = "UNKNOWN!"
+align = 1
+valign = 1
+
+[node name="KeyboardLineEdit" type="LineEdit" parent="CanvasLayer/Supermarket/Keyboard"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1340.0
+margin_top = 884.0
+margin_right = 1398.0
+margin_bottom = 908.0
+rect_scale = Vector2( 4.9614, 4.01029 )
+align = 1
+caret_blink = true
+caret_blink_speed = 0.35
+
+[node name="KeyboardButton" type="Button" parent="CanvasLayer/Supermarket/Keyboard"]
+margin_left = 1290.0
+margin_top = 840.0
+margin_right = 1302.0
+margin_bottom = 860.0
+rect_scale = Vector2( 32.6383, 9.43961 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 6 )
+flat = true
+
 [node name="ScannerCharger" type="Node2D" parent="CanvasLayer/Supermarket"]
 
 [node name="ScannerTextureRext" type="Sprite" parent="CanvasLayer/Supermarket/ScannerCharger"]
@@ -276,16 +328,15 @@ position = Vector2( 166, 341 )
 texture = ExtResource( 6 )
 
 [node name="ScannerTextureRext" type="Sprite" parent="CanvasLayer/Supermarket/Cashier/HandNode"]
-visible = false
 position = Vector2( 17, -37 )
 texture = ExtResource( 4 )
 
 [node name="BlackScreen" type="TextureRect" parent="CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext"]
 modulate = Color( 0, 0, 0, 1 )
 margin_left = -56.0
-margin_top = -83.5
-margin_right = 54.0
-margin_bottom = -3.5
+margin_top = -84.0
+margin_right = 56.0
+margin_bottom = -3.0
 mouse_filter = 2
 texture = ExtResource( 3 )
 expand = true
@@ -312,6 +363,16 @@ joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
 
+[node name="ErrorScreen" type="TextureRect" parent="CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext"]
+margin_left = -56.0
+margin_top = -84.0
+margin_right = 57.0
+margin_bottom = -3.0
+mouse_filter = 2
+texture = ExtResource( 8 )
+expand = true
+stretch_mode = 1
+
 [node name="ScannerAnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext"]
 anims/Scan = SubResource( 8 )
 
@@ -320,4 +381,6 @@ anims/Scan = SubResource( 8 )
 [connection signal="pressed" from="CanvasLayer/Supermarket/ButtonPanelContainer/RightButton" to="." method="_on_RightButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Supermarket/ButtonPanelContainer/DownButton" to="." method="_on_DownButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Supermarket/ButtonPanelContainer/UpButton" to="." method="_on_UpButton_pressed"]
+[connection signal="text_entered" from="CanvasLayer/Supermarket/Keyboard/KeyboardLineEdit" to="." method="_on_KeyboardLineEdit_text_entered"]
+[connection signal="pressed" from="CanvasLayer/Supermarket/Keyboard/KeyboardButton" to="." method="_on_KeyboardButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Supermarket/ScannerCharger/ScannerChargerButton" to="." method="_on_ScannerChargerButton_pressed"]

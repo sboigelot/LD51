@@ -3,6 +3,8 @@ extends KinematicBody
 class_name Package
 
 signal clicked(package)
+signal barcode_scanned(package, barcode)
+signal scan_error(package, barcode)
 
 export(NodePath) var rotation_root_np
 onready var rotation_root = get_node(rotation_root_np) as Spatial
@@ -17,6 +19,11 @@ var target_basis: Basis
 var rotation_speed: float = 200
 
 var tween_basis: Basis setget set_tween_basis
+
+var barcode: Barcode
+
+func _ready():
+	barcode = $RotationRoot/BarcodesPlaceholder/Barcode
 
 func set_tween_basis(value:Basis):
 	rotation_root.transform.basis = value
@@ -45,8 +52,16 @@ func start_rotate_tween():
 	tween.start()
 
 func _on_Package_input_event(camera, event, position, normal, shape_idx):
-	pass # Replace with function body.
 	if (event is InputEventMouseButton and
 		event.pressed and
 		event.button_index == BUTTON_LEFT):
 			emit_signal("clicked", self)
+
+func _on_Barcode_clicked(barcode):
+	emit_signal("clicked", self)
+
+func _on_Barcode_scanned(barcode):
+	emit_signal("barcode_scanned", self, barcode)
+
+func _on_Barcode_scan_error(barcode):
+	emit_signal("scan_error", self, barcode)

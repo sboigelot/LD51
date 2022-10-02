@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Area",
+"class": "Barcode",
+"language": "GDScript",
+"path": "res://Scenes/Barcode.gd"
+}, {
 "base": "KinematicBody",
 "class": "Package",
 "language": "GDScript",
@@ -25,6 +30,7 @@ _global_script_classes=[ {
 "path": "res://Scenes/Supermarket3d.gd"
 } ]
 _global_script_class_icons={
+"Barcode": "",
 "Package": "",
 "ResourceAsyncLoader": "",
 "Supermarket3d": ""

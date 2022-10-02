@@ -10,10 +10,13 @@ export(NodePath) var hand_node_np
 export(NodePath) var scanner_np
 export(NodePath) var scanner_screen_texturerect_np
 export(NodePath) var scanner_screen_center_np
+export(NodePath) var scanner_error_screen_np
 export(NodePath) var scanner_laser_np
 export(NodePath) var scanner_anim_np
 export(NodePath) var scanner_on_charger_np
 export(NodePath) var debug_label_np
+export(NodePath) var keyboard_line_edit_np
+export(NodePath) var keyboard_error_label_np
 
 onready var camera = get_node(camera_np) as Camera
 onready var scan_camera = get_node(scan_camera_np) as Camera
@@ -22,10 +25,13 @@ onready var hand_node = get_node(hand_node_np) as Node2D
 onready var scanner = get_node(scanner_np) as Sprite
 onready var scanner_screen_texturerect = get_node(scanner_screen_texturerect_np) as TextureRect
 onready var scanner_screen_center = get_node(scanner_screen_center_np) as Position2D
+onready var scanner_error_screen = get_node(scanner_error_screen_np) as TextureRect
 onready var scanner_laser = get_node(scanner_laser_np) as Line2D
 onready var scanner_anim = get_node(scanner_anim_np) as AnimationPlayer
 onready var scanner_on_charger = get_node(scanner_on_charger_np) as Sprite
 onready var debug_label = get_node(debug_label_np) as Label
+onready var keyboard_line_edit = get_node(keyboard_line_edit_np) as LineEdit
+onready var keyboard_error_label = get_node(keyboard_error_label_np) as Label
 
 var hand_node_offset: Vector2
 
@@ -55,6 +61,10 @@ func _ready():
 		scan_package_holder.get_child(0).queue_free()
 	spawn_package()
 	
+	scanner_error_screen.visible = false
+	keyboard_line_edit.visible = false
+	keyboard_error_label.visible = false
+	
 func set_editor_azerty():
 	if not OS.is_debug_build():
 		return
@@ -67,7 +77,6 @@ func change_keybind(action_name, scan_code):
 	var last_action = actions[actions.size() - 1] as InputEventKey
 	last_action.scancode = scan_code
 		
-
 func set_viewport_texture(viewport:Viewport):
 	var path = viewport.get_path()
 	var texture = ViewportTexture.new()
@@ -77,7 +86,7 @@ func set_viewport_texture(viewport:Viewport):
 func _process(delta):
 	process_keyboard_rotate()
 	move_hand_to_cursor()
-	toggle_scan_anim()
+	toggle_scan_anim(delta)
 	move_scan_camera()
 
 func process_keyboard_rotate():
@@ -100,7 +109,7 @@ func move_hand_to_cursor():
 		hand_node.position.y = hand_min_y
 #		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
-func toggle_scan_anim():
+func toggle_scan_anim(delta):
 	if Input.is_mouse_button_pressed(BUTTON_LEFT):
 		if get_scanner_hands():
 			if not scanner_anim.is_playing():
@@ -168,10 +177,19 @@ func on_conveyor_belt_package_clicked(package: Package):
 		package.get_parent().remove_child(package)
 		scan_package_holder.add_child(package)
 		package.disconnect("clicked", self, "on_conveyor_belt_package_clicked")
-#		temp
-		package.connect("clicked", self, "move_package_to_exit_belt")
+		package.connect("barcode_scanned", self, "_on_Package_barcode_scanned")
+		package.connect("scan_error", self, "_on_Package_scan_error")
 		package.transform = Transform()
 		scan_package = package
+
+func _on_Package_barcode_scanned(package, barcode):
+	if get_scanner_hands():
+			move_package_to_exit_belt(package)
+
+func _on_Package_scan_error(package, barcode):
+	scanner_error_screen.visible = true
+	yield(get_tree().create_timer(0.5), "timeout")
+	scanner_error_screen.visible = false
 
 func move_package_to_exit_belt(package: Package):
 	if scan_package_holder.get_child_count() == 0:
@@ -240,3 +258,32 @@ func move_scan_camera():
 		scan_camera.translation.x,
 		scan_camera.translation.z
 	])
+
+func _on_KeyboardButton_pressed():
+	keyboard_line_edit.text = ""
+	keyboard_line_edit.visible = true
+	keyboard_line_edit.grab_focus()
+	set_scanner_hands(false)
+
+func _on_KeyboardLineEdit_text_entered(new_text):
+	keyboard_line_edit.visible = false
+	var numbers = []
+	for character in new_text:
+		numbers.append(int(character))
+	
+	if scan_package != null:
+		var solution = scan_package.barcode.numbers
+		if solution.size() != numbers.size():
+			blink_keyboard_label()
+			return
+		for i in solution.size():
+			if solution[i] != numbers[i]:
+				blink_keyboard_label()
+				return
+		move_package_to_exit_belt(scan_package)
+		
+func blink_keyboard_label():
+	keyboard_error_label.visible = true
+	yield(get_tree().create_timer(0.4), "timeout")
+	keyboard_error_label.visible = false
+	

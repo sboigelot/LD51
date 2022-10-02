@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scenes/Barcode.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/BarcodeImageGenerator.tscn" type="PackedScene" id=3]
+
+[sub_resource type="PlaneMesh" id=2]
+size = Vector2( 0.5, 0.3 )
+
+[sub_resource type="ViewportTexture" id=6]
+viewport_path = NodePath("Viewport")
+
+[sub_resource type="SpatialMaterial" id=3]
+resource_local_to_scene = true
+albedo_texture = SubResource( 6 )
+
+[sub_resource type="BoxShape" id=5]
+
+[node name="Barcode" type="Area"]
+script = ExtResource( 2 )
+barcode_image_genetaor_np = NodePath("Viewport/CanvasLayer/BarcodeImageGenerator")
+
+[node name="BarcodeMeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 2 )
+skeleton = NodePath("../../../..")
+material/0 = SubResource( 3 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 0.25, 0, 0, 0, 0.1, 0, 0, 0, 0.15, 0, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 160, 90 )
+render_target_v_flip = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Viewport"]
+
+[node name="BarcodeImageGenerator" parent="Viewport/CanvasLayer" instance=ExtResource( 3 )]
+
+[connection signal="input_event" from="." to="." method="_on_Barcode_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_Barcode_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_Barcode_mouse_exited"]

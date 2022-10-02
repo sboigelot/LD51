@@ -1,0 +1,88 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scenes/BarcodeImageGenerator.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/barcode_background_good.png" type="Texture" id=2]
+[ext_resource path="res://Scenes/NumerAndLine.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Sprites/barcode_foreground_bad.png" type="Texture" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[node name="BarcodeImageGenerator" type="Control"]
+margin_right = 160.0
+margin_bottom = 90.0
+script = ExtResource( 1 )
+np_number_placeholder = NodePath("PanelContainer/MarginContainer/NumbePlaceholder")
+code = PoolIntArray( 2, 4, 6, 0 )
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 160, 90 )
+custom_styles/panel = SubResource( 1 )
+
+[node name="BackgroudTextureRect" type="TextureRect" parent="PanelContainer"]
+margin_right = 160.0
+margin_bottom = 90.0
+texture = ExtResource( 2 )
+expand = true
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+margin_right = 160.0
+margin_bottom = 90.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 15
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 10
+
+[node name="NumbePlaceholder" type="HBoxContainer" parent="PanelContainer/MarginContainer"]
+margin_left = 32.0
+margin_top = 15.0
+margin_right = 128.0
+margin_bottom = 80.0
+size_flags_horizontal = 4
+
+[node name="NumerAndLine" parent="PanelContainer/MarginContainer/NumbePlaceholder" instance=ExtResource( 3 )]
+margin_bottom = 65.0
+size_flags_horizontal = 0
+number = -1
+
+[node name="NumerAndLine2" parent="PanelContainer/MarginContainer/NumbePlaceholder" instance=ExtResource( 3 )]
+margin_left = 16.0
+margin_right = 29.0
+margin_bottom = 65.0
+size_flags_horizontal = 0
+number = 1
+
+[node name="NumerAndLine6" parent="PanelContainer/MarginContainer/NumbePlaceholder" instance=ExtResource( 3 )]
+margin_left = 33.0
+margin_right = 46.0
+margin_bottom = 65.0
+size_flags_horizontal = 0
+number = 8
+
+[node name="NumerAndLine3" parent="PanelContainer/MarginContainer/NumbePlaceholder" instance=ExtResource( 3 )]
+margin_left = 50.0
+margin_right = 63.0
+margin_bottom = 65.0
+size_flags_horizontal = 0
+number = 9
+
+[node name="NumerAndLine4" parent="PanelContainer/MarginContainer/NumbePlaceholder" instance=ExtResource( 3 )]
+margin_left = 67.0
+margin_right = 80.0
+margin_bottom = 65.0
+size_flags_horizontal = 0
+number = 2
+
+[node name="NumerAndLine5" parent="PanelContainer/MarginContainer/NumbePlaceholder" instance=ExtResource( 3 )]
+margin_left = 84.0
+margin_right = 96.0
+margin_bottom = 65.0
+size_flags_horizontal = 0
+number = -1
+
+[node name="ForegroundTextureRect" type="TextureRect" parent="PanelContainer"]
+margin_right = 160.0
+margin_bottom = 90.0
+texture = ExtResource( 4 )
+expand = true
