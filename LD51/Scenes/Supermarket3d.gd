@@ -29,7 +29,7 @@ onready var debug_label = get_node(debug_label_np) as Label
 
 var hand_node_offset: Vector2
 
-export(float) var hand_min_y = 350
+export(float) var hand_min_y = 550
 
 export(bool) var scanner_in_hands setget set_scanner_hands, get_scanner_hands
 func set_scanner_hands(value:bool):
@@ -45,7 +45,7 @@ func get_scanner_hands():
 var scan_package: Package
 
 func _ready():
-#	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	set_scanner_hands(false)
 #	set_viewport_texture()
 	set_editor_azerty()

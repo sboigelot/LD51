@@ -4,7 +4,7 @@
 [ext_resource path="res://Scenes/Supermarket3d.gd" type="Script" id=2]
 [ext_resource path="res://Sprites/square.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/LD51-scanner.png" type="Texture" id=4]
-[ext_resource path="res://Sprites/LD51-noarm.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/register.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/LD51-hand.png" type="Texture" id=6]
 [ext_resource path="res://Fonts/VTCSuperMarketSaleDisplay.ttf" type="DynamicFontData" id=7]
 
@@ -79,6 +79,7 @@ scanner_laser_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTex
 scanner_anim_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/ScannerAnimationPlayer")
 scanner_on_charger_np = NodePath("CanvasLayer/Supermarket/ScannerCharger/ScannerTextureRext")
 debug_label_np = NodePath("CanvasLayer/Supermarket/ButtonPanelContainer/DebugLabel")
+hand_min_y = 385.0
 
 [node name="BackgroundImage" type="MeshInstance" parent="."]
 mesh = SubResource( 12 )
@@ -271,10 +272,11 @@ flat = true
 [node name="HandNode" type="Node2D" parent="CanvasLayer/Supermarket/Cashier"]
 
 [node name="ArmTextureRext" type="Sprite" parent="CanvasLayer/Supermarket/Cashier/HandNode"]
-position = Vector2( 146, 280 )
+position = Vector2( 166, 341 )
 texture = ExtResource( 6 )
 
 [node name="ScannerTextureRext" type="Sprite" parent="CanvasLayer/Supermarket/Cashier/HandNode"]
+visible = false
 position = Vector2( 17, -37 )
 texture = ExtResource( 4 )
 
