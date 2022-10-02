@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/LD51-arm.png-f13b9267fb93fd855cf8789b052cb075.stex"
+path="res://.import/LD51-scanner.png-7fdd316fd2dfd41be01cf7000cbe5d0f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/LD51-arm.png"
-dest_files=[ "res://.import/LD51-arm.png-f13b9267fb93fd855cf8789b052cb075.stex" ]
+source_file="res://Sprites/LD51-scanner.png"
+dest_files=[ "res://.import/LD51-scanner.png-7fdd316fd2dfd41be01cf7000cbe5d0f.stex" ]
 
 [params]
 
