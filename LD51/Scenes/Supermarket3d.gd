@@ -2,8 +2,6 @@ extends Spatial
 
 class_name Supermarket3d
 
-var scan_package: Package
-
 export(NodePath) var camera_np
 export(NodePath) var scan_camera_np
 export(NodePath) var scan_package_holder_np
@@ -29,14 +27,22 @@ onready var scanner_anim = get_node(scanner_anim_np) as AnimationPlayer
 onready var scanner_on_charger = get_node(scanner_on_charger_np) as Sprite
 onready var debug_label = get_node(debug_label_np) as Label
 
-export(float) var hand_min_y
+var hand_node_offset: Vector2
+
+export(float) var hand_min_y = 350
 
 export(bool) var scanner_in_hands setget set_scanner_hands, get_scanner_hands
 func set_scanner_hands(value:bool):
 	scanner.visible = value
 	scanner_on_charger.visible = not value
+	if value:
+		hand_node_offset = Vector2(-15,80)
+	else: 
+		hand_node_offset = Vector2()
 func get_scanner_hands():
 	return scanner.visible
+
+var scan_package: Package
 
 func _ready():
 #	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
@@ -87,7 +93,7 @@ func process_keyboard_rotate():
 func move_hand_to_cursor():
 #	hand_node.position = get_global_mouse_position()
 	var mouse_postion = get_viewport().get_mouse_position() as Vector2
-	hand_node.position = mouse_postion
+	hand_node.position = mouse_postion + hand_node_offset
 	
 #	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	if hand_node.position.y < hand_min_y:
@@ -162,18 +168,43 @@ func on_conveyor_belt_package_clicked(package: Package):
 		package.get_parent().remove_child(package)
 		scan_package_holder.add_child(package)
 		package.disconnect("clicked", self, "on_conveyor_belt_package_clicked")
+#		temp
+		package.connect("clicked", self, "move_package_to_exit_belt")
 		package.transform = Transform()
 		scan_package = package
 
-func _physics_process(delta):
+func move_package_to_exit_belt(package: Package):
+	if scan_package_holder.get_child_count() == 0:
+		return
+	package.get_parent().remove_child(package)
+	$ConveyorBelt2.add_child(package)
+	var spawn_positions = [
+		$ConveyorBelt2/PackageSpawnLocations/Location1.transform,
+		$ConveyorBelt2/PackageSpawnLocations/Location2.transform,
+		$ConveyorBelt2/PackageSpawnLocations/Location3.transform,
+		$ConveyorBelt2/PackageSpawnLocations/Location4.transform,
+	]
+	package.transform = spawn_positions[randi() % spawn_positions.size()]
 
+func _physics_process(delta):
+	move_package_in_coveryor_belt(delta, $ConveyorBelt)
+	move_package_in_coveryor_belt(delta, $ConveyorBelt2)
+	free_exited_packages($ConveyorBelt2)
+	
+func move_package_in_coveryor_belt(delta, belt):
 	var direction = Vector3.RIGHT
 	var velocity = direction * conveyor_speed
 
-	for child in $ConveyorBelt.get_children():
+	for child in belt.get_children():
 		if child is Package:
 			var package = child as Package
 			package.move_and_slide(velocity * delta)
+
+func free_exited_packages(belt):
+	for child in belt.get_children():
+		if child is Package and child.translation.x > 10:
+			var package = child as Package
+			package.queue_free()
 
 func move_scan_camera():
 	var screen_extend = Vector2(8.65,4.75)

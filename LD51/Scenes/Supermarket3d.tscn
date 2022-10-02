@@ -71,15 +71,14 @@ camera_np = NodePath("Camera")
 scan_camera_np = NodePath("ScanViewport/ScanCamera")
 scan_package_holder_np = NodePath("ScanPackageLocation")
 supermarket2d_np = NodePath("CanvasLayer/Supermarket")
-hand_node_np = NodePath("CanvasLayer/Supermarket/HandNode")
-scanner_np = NodePath("CanvasLayer/Supermarket/HandNode/ScannerTextureRext")
-scanner_screen_texturerect_np = NodePath("CanvasLayer/Supermarket/HandNode/ScannerTextureRext/ScannerCameraScreen")
-scanner_screen_center_np = NodePath("CanvasLayer/Supermarket/HandNode/ScannerTextureRext/ScannerCameraScreen/CenterPosition2D")
-scanner_laser_np = NodePath("CanvasLayer/Supermarket/HandNode/ScannerTextureRext/LaserLine2D")
-scanner_anim_np = NodePath("CanvasLayer/Supermarket/HandNode/ScannerTextureRext/ScannerAnimationPlayer")
+hand_node_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode")
+scanner_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext")
+scanner_screen_texturerect_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/ScannerCameraScreen")
+scanner_screen_center_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/ScannerCameraScreen/CenterPosition2D")
+scanner_laser_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/LaserLine2D")
+scanner_anim_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/ScannerAnimationPlayer")
 scanner_on_charger_np = NodePath("CanvasLayer/Supermarket/ScannerCharger/ScannerTextureRext")
 debug_label_np = NodePath("CanvasLayer/Supermarket/ButtonPanelContainer/DebugLabel")
-hand_min_y = 350.0
 
 [node name="BackgroundImage" type="MeshInstance" parent="."]
 mesh = SubResource( 12 )
@@ -142,6 +141,22 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 2 )
 
 [node name="Location4" type="Spatial" parent="ConveyorBelt/PackageSpawnLocations"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, -1 )
+
+[node name="ConveyorBelt2" type="Spatial" parent="."]
+
+[node name="PackageSpawnLocations" type="Spatial" parent="ConveyorBelt2"]
+
+[node name="Location1" type="Spatial" parent="ConveyorBelt2/PackageSpawnLocations"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.44567, 2.76566e-05, -0.641549 )
+
+[node name="Location2" type="Spatial" parent="ConveyorBelt2/PackageSpawnLocations"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.51551, -9.53674e-07, 0.390394 )
+
+[node name="Location3" type="Spatial" parent="ConveyorBelt2/PackageSpawnLocations"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.17654, 0, -0.30039 )
+
+[node name="Location4" type="Spatial" parent="ConveyorBelt2/PackageSpawnLocations"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.50091, 9.53674e-07, 0.50222 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 10.0
@@ -251,37 +266,41 @@ custom_styles/disabled = SubResource( 5 )
 custom_styles/normal = SubResource( 6 )
 flat = true
 
-[node name="HandNode" type="Node2D" parent="CanvasLayer/Supermarket"]
+[node name="Cashier" type="Node2D" parent="CanvasLayer/Supermarket"]
 
-[node name="ArmTextureRext" type="Sprite" parent="CanvasLayer/Supermarket/HandNode"]
+[node name="HandNode" type="Node2D" parent="CanvasLayer/Supermarket/Cashier"]
+
+[node name="ArmTextureRext" type="Sprite" parent="CanvasLayer/Supermarket/Cashier/HandNode"]
 position = Vector2( 146, 280 )
 texture = ExtResource( 6 )
 
-[node name="ScannerTextureRext" type="Sprite" parent="CanvasLayer/Supermarket/HandNode"]
+[node name="ScannerTextureRext" type="Sprite" parent="CanvasLayer/Supermarket/Cashier/HandNode"]
 position = Vector2( 17, -37 )
 texture = ExtResource( 4 )
 
-[node name="BlackScreen" type="TextureRect" parent="CanvasLayer/Supermarket/HandNode/ScannerTextureRext"]
+[node name="BlackScreen" type="TextureRect" parent="CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext"]
 modulate = Color( 0, 0, 0, 1 )
 margin_left = -56.0
 margin_top = -83.5
 margin_right = 54.0
 margin_bottom = -3.5
+mouse_filter = 2
 texture = ExtResource( 3 )
 expand = true
 
-[node name="ScannerCameraScreen" type="TextureRect" parent="CanvasLayer/Supermarket/HandNode/ScannerTextureRext"]
+[node name="ScannerCameraScreen" type="TextureRect" parent="CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext"]
 margin_left = -56.0
 margin_top = -83.5
 margin_right = 54.0
 margin_bottom = -3.5
+mouse_filter = 2
 texture = SubResource( 10 )
 expand = true
 
-[node name="CenterPosition2D" type="Position2D" parent="CanvasLayer/Supermarket/HandNode/ScannerTextureRext/ScannerCameraScreen"]
+[node name="CenterPosition2D" type="Position2D" parent="CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/ScannerCameraScreen"]
 position = Vector2( 55, 40 )
 
-[node name="LaserLine2D" type="Line2D" parent="CanvasLayer/Supermarket/HandNode/ScannerTextureRext"]
+[node name="LaserLine2D" type="Line2D" parent="CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext"]
 position = Vector2( -40, -40 )
 scale = Vector2( 1.07063, 1.07063 )
 points = PoolVector2Array( 0, 0, 75, 0 )
@@ -291,7 +310,7 @@ joint_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
 
-[node name="ScannerAnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Supermarket/HandNode/ScannerTextureRext"]
+[node name="ScannerAnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext"]
 anims/Scan = SubResource( 8 )
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
