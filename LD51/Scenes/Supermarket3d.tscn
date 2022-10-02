@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Products/y30z130/Poopalot/Package.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Supermarket3d.gd" type="Script" id=2]
@@ -70,6 +70,14 @@ tracks/0/keys = {
 "values": [ Vector2( -40, -40 ), Vector2( -40, -30 ), Vector2( -40, -40 ), Vector2( -40, -50 ), Vector2( -40, -40 ), Vector2( -40, -30 ), Vector2( -40, -40 ) ]
 }
 
+[sub_resource type="BoxShape" id=18]
+
+[sub_resource type="CubeMesh" id=19]
+
+[sub_resource type="SpatialMaterial" id=20]
+flags_transparent = true
+albedo_color = Color( 1, 0, 0, 0.439216 )
+
 [node name="Supermarket3d" type="Spatial"]
 script = ExtResource( 2 )
 camera_np = NodePath("Camera")
@@ -90,6 +98,9 @@ keyboard_line_edit_np = NodePath("CanvasLayer/Supermarket/Keyboard/KeyboardLineE
 keyboard_error_label_np = NodePath("CanvasLayer/Supermarket/Keyboard/KeyboardErrorLabel")
 score_label_np = NodePath("CanvasLayer/Supermarket/ScoreHUD/MarginContainer/ScoreContainer/ScoreLabel")
 time_label_np = NodePath("CanvasLayer/Supermarket/ScoreHUD/MarginContainer/TimeContainer/TimeLabel")
+danger_zone_mesh_np = NodePath("DangerZone/DangerZoneMesh")
+danger_zone_hud_np = NodePath("CanvasLayer/Supermarket/DangerZoneHUD")
+danger_zone_label_np = NodePath("CanvasLayer/Supermarket/DangerZoneHUD/MarginContainer/HBoxContainer/DangerZoneLabel")
 hand_min_y = 385.0
 
 [node name="BackgroundImage" type="MeshInstance" parent="."]
@@ -451,6 +462,51 @@ margin_right = 280.0
 margin_bottom = 114.0
 texture = ExtResource( 12 )
 
+[node name="DangerZoneHUD" type="Control" parent="CanvasLayer/Supermarket"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Supermarket/DangerZoneHUD"]
+margin_top = 930.0
+margin_right = 501.0
+margin_bottom = 995.0
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Supermarket/DangerZoneHUD/MarginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 515.0
+margin_bottom = 60.0
+
+[node name="DangerZoneLabel" type="Label" parent="CanvasLayer/Supermarket/DangerZoneHUD/MarginContainer/HBoxContainer"]
+margin_right = 30.0
+margin_bottom = 55.0
+custom_colors/font_color = Color( 1, 0.552941, 0.552941, 1 )
+custom_fonts/font = ExtResource( 10 )
+text = "0"
+
+[node name="Label3" type="Label" parent="CanvasLayer/Supermarket/DangerZoneHUD/MarginContainer/HBoxContainer"]
+margin_left = 34.0
+margin_right = 510.0
+margin_bottom = 55.0
+custom_colors/font_color = Color( 1, 0.552941, 0.552941, 1 )
+custom_fonts/font = ExtResource( 10 )
+text = " / 6 in danger zone!"
+
+[node name="DangerZone" type="Area" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="DangerZone"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 3, -8, 0, 0.8 )
+shape = SubResource( 18 )
+
+[node name="DangerZoneMesh" type="MeshInstance" parent="DangerZone"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 3, -8, -0.3, 0.877936 )
+mesh = SubResource( 19 )
+material/0 = SubResource( 20 )
+
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/Supermarket/ButtonPanelContainer/LeftButton" to="." method="_on_LeftButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Supermarket/ButtonPanelContainer/RightButton" to="." method="_on_RightButton_pressed"]
@@ -460,3 +516,5 @@ texture = ExtResource( 12 )
 [connection signal="text_entered" from="CanvasLayer/Supermarket/Keyboard/KeyboardLineEdit" to="." method="_on_KeyboardLineEdit_text_entered"]
 [connection signal="pressed" from="CanvasLayer/Supermarket/Keyboard/KeyboardButton" to="." method="_on_KeyboardButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Supermarket/ScannerCharger/ScannerChargerButton" to="." method="_on_ScannerChargerButton_pressed"]
+[connection signal="body_entered" from="DangerZone" to="." method="_on_LooseArea_body_entered"]
+[connection signal="body_exited" from="DangerZone" to="." method="_on_LooseArea_body_exited"]

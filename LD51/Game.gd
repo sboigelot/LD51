@@ -55,7 +55,6 @@ func randomize_barcode_locations():
 	
 func defeat():
 	win = false
-#	current_player_datas.clear()
 	get_tree().change_scene("res://Scenes/VictoryScreen.tscn")
 
 func victory():

@@ -20,6 +20,9 @@ export(NodePath) var keyboard_line_edit_np
 export(NodePath) var keyboard_error_label_np
 export(NodePath) var score_label_np
 export(NodePath) var time_label_np
+export(NodePath) var danger_zone_mesh_np
+export(NodePath) var danger_zone_hud_np
+export(NodePath) var danger_zone_label_np
 
 onready var camera = get_node(camera_np) as Camera
 onready var scan_camera = get_node(scan_camera_np) as Camera
@@ -38,6 +41,9 @@ onready var keyboard_line_edit = get_node(keyboard_line_edit_np) as LineEdit
 onready var keyboard_error_label = get_node(keyboard_error_label_np) as Label
 onready var score_label = get_node(score_label_np) as Label
 onready var time_label = get_node(time_label_np) as Label
+onready var danger_zone_mesh = get_node(danger_zone_mesh_np) as MeshInstance
+onready var danger_zone_hud = get_node(danger_zone_hud_np) as Control
+onready var danger_zone_label = get_node(danger_zone_label_np) as Label
 
 var hand_node_offset: Vector2
 
@@ -55,6 +61,7 @@ func get_scanner_hands():
 	return scanner.visible
 
 var scan_package: Package
+var danger_zone_package = []
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
@@ -72,6 +79,7 @@ func _ready():
 	keyboard_error_label.visible = false
 	score_label.text = str(Game.score)
 	time_label.text = Game.get_time_str()
+	update_danger_zone_visuals()
 	
 func set_editor_azerty():
 	if not OS.is_debug_build():
@@ -167,15 +175,15 @@ func rotate_package(add_rotation: Vector2):
 
 func _on_Timer_timeout():
 	spawn_package()
-	yield(get_tree().create_timer(0.3),"timeout")
+	yield(get_tree().create_timer(1),"timeout")
 	spawn_package()
-	yield(get_tree().create_timer(0.3),"timeout")
+	yield(get_tree().create_timer(1),"timeout")
 	spawn_package()
 
 func spawn_package():
 	var product_id = randi() % package_scenes.size()
 	var scene = package_scenes[product_id]
-	print("spawn: "+ str(product_id))
+#	print("spawn: "+ str(product_id))
 	var instance = scene.instance()
 	var spawn_positions = [
 		$ConveyorBelt/PackageSpawnLocations/Location1.transform,
@@ -346,3 +354,27 @@ func _on_KeyboardLineEdit_text_changed(new_text:String):
 #		return		
 #	var last = new_text[new_text.length() - 1]
 #	SfxManager.play("key"+last)
+
+
+func _on_LooseArea_body_entered(body):
+	if not body is Package:
+		return
+	danger_zone_package.append(body)
+	
+	if danger_zone_package.size() >= 6:
+		Game.defeat()
+		return
+		
+	update_danger_zone_visuals()
+
+func update_danger_zone_visuals():
+	danger_zone_mesh.visible = danger_zone_package.size() >= 3
+	danger_zone_hud.visible = danger_zone_package.size() >= 3
+	danger_zone_label.text = str(danger_zone_package.size())
+
+func _on_LooseArea_body_exited(body):
+	if not body is Package:
+		return
+	if danger_zone_package.has(body):
+		danger_zone_package.erase(body)
+	update_danger_zone_visuals()
