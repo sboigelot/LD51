@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/key0.wav-d6024d1f468a670eb8a753344868e6ef.sample"
+
+[deps]
+
+source_file="res://Sounds/SoundFx/key0.wav"
+dest_files=[ "res://.import/key0.wav-d6024d1f468a670eb8a753344868e6ef.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

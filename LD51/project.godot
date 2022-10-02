@@ -17,7 +17,7 @@ _global_script_classes=[ {
 "base": "KinematicBody",
 "class": "Package",
 "language": "GDScript",
-"path": "res://Scenes/Package.gd"
+"path": "res://Products/Package.gd"
 }, {
 "base": "Reference",
 "class": "ResourceAsyncLoader",

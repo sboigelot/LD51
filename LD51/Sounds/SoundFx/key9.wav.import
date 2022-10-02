@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/key9.wav-6735fafabfeb519b8c37e352e21e616f.sample"
+
+[deps]
+
+source_file="res://Sounds/SoundFx/key9.wav"
+dest_files=[ "res://.import/key9.wav-6735fafabfeb519b8c37e352e21e616f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

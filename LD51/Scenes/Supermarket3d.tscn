@@ -1,6 +1,6 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=29 format=2]
 
-[ext_resource path="res://Scenes/Package.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Products/y30z130/Poopalot/Package.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Supermarket3d.gd" type="Script" id=2]
 [ext_resource path="res://Sprites/square.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/LD51-scanner.png" type="Texture" id=4]
@@ -10,6 +10,8 @@
 [ext_resource path="res://Sprites/error_screen.png" type="Texture" id=8]
 [ext_resource path="res://Sprites/keyboard.png" type="Texture" id=9]
 [ext_resource path="res://Fonts/airstrip-four/airstrip_48.tres" type="DynamicFont" id=10]
+[ext_resource path="res://Sprites/coin.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/clock.png" type="Texture" id=12]
 
 [sub_resource type="PlaneMesh" id=12]
 size = Vector2( 17.8, 10 )
@@ -83,8 +85,11 @@ scanner_laser_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTex
 scanner_anim_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/ScannerAnimationPlayer")
 scanner_on_charger_np = NodePath("CanvasLayer/Supermarket/ScannerCharger/ScannerTextureRext")
 debug_label_np = NodePath("CanvasLayer/Supermarket/ButtonPanelContainer/DebugLabel")
+keyboard_texturerect_np = NodePath("CanvasLayer/Supermarket/Keyboard/KeyboardTextureRext")
 keyboard_line_edit_np = NodePath("CanvasLayer/Supermarket/Keyboard/KeyboardLineEdit")
 keyboard_error_label_np = NodePath("CanvasLayer/Supermarket/Keyboard/KeyboardErrorLabel")
+score_label_np = NodePath("CanvasLayer/Supermarket/ScoreHUD/MarginContainer/ScoreContainer/ScoreLabel")
+time_label_np = NodePath("CanvasLayer/Supermarket/ScoreHUD/MarginContainer/TimeContainer/TimeLabel")
 hand_min_y = 385.0
 
 [node name="BackgroundImage" type="MeshInstance" parent="."]
@@ -376,11 +381,82 @@ stretch_mode = 1
 [node name="ScannerAnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext"]
 anims/Scan = SubResource( 8 )
 
+[node name="ScoreHUD" type="Control" parent="CanvasLayer/Supermarket"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Supermarket/ScoreHUD"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 1920, 0 )
+size_flags_horizontal = 3
+custom_constants/margin_right = 5
+custom_constants/margin_top = 5
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 5
+
+[node name="ScoreContainer" type="HBoxContainer" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 318.0
+margin_bottom = 119.0
+size_flags_horizontal = 0
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/ScoreContainer"]
+margin_right = 112.0
+margin_bottom = 114.0
+texture = ExtResource( 11 )
+
+[node name="Label" type="Label" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/ScoreContainer"]
+margin_left = 116.0
+margin_top = 29.0
+margin_right = 279.0
+margin_bottom = 84.0
+custom_fonts/font = ExtResource( 10 )
+text = "SCORE:"
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/ScoreContainer"]
+margin_left = 283.0
+margin_top = 29.0
+margin_right = 313.0
+margin_bottom = 84.0
+custom_fonts/font = ExtResource( 10 )
+text = "0"
+
+[node name="TimeContainer" type="HBoxContainer" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer"]
+margin_left = 1635.0
+margin_top = 5.0
+margin_right = 1915.0
+margin_bottom = 119.0
+size_flags_horizontal = 8
+
+[node name="Label" type="Label" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/TimeContainer"]
+margin_top = 29.0
+margin_right = 128.0
+margin_bottom = 84.0
+custom_fonts/font = ExtResource( 10 )
+text = "TIME:"
+
+[node name="TimeLabel" type="Label" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/TimeContainer"]
+margin_left = 132.0
+margin_top = 29.0
+margin_right = 162.0
+margin_bottom = 84.0
+custom_fonts/font = ExtResource( 10 )
+text = "0"
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/TimeContainer"]
+margin_left = 166.0
+margin_right = 280.0
+margin_bottom = 114.0
+texture = ExtResource( 12 )
+
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/Supermarket/ButtonPanelContainer/LeftButton" to="." method="_on_LeftButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Supermarket/ButtonPanelContainer/RightButton" to="." method="_on_RightButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Supermarket/ButtonPanelContainer/DownButton" to="." method="_on_DownButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Supermarket/ButtonPanelContainer/UpButton" to="." method="_on_UpButton_pressed"]
+[connection signal="text_changed" from="CanvasLayer/Supermarket/Keyboard/KeyboardLineEdit" to="." method="_on_KeyboardLineEdit_text_changed"]
 [connection signal="text_entered" from="CanvasLayer/Supermarket/Keyboard/KeyboardLineEdit" to="." method="_on_KeyboardLineEdit_text_entered"]
 [connection signal="pressed" from="CanvasLayer/Supermarket/Keyboard/KeyboardButton" to="." method="_on_KeyboardButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Supermarket/ScannerCharger/ScannerChargerButton" to="." method="_on_ScannerChargerButton_pressed"]

@@ -1,6 +1,19 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Sounds/SfxManager.gd" type="Script" id=1]
+[ext_resource path="res://Sounds/SoundFx/Scan.wav" type="AudioStream" id=2]
+[ext_resource path="res://Sounds/SoundFx/buttonpress.wav" type="AudioStream" id=3]
+[ext_resource path="res://Sounds/SoundFx/key6.wav" type="AudioStream" id=4]
+[ext_resource path="res://Sounds/SoundFx/key7.wav" type="AudioStream" id=5]
+[ext_resource path="res://Sounds/SoundFx/key8.wav" type="AudioStream" id=6]
+[ext_resource path="res://Sounds/SoundFx/key9.wav" type="AudioStream" id=7]
+[ext_resource path="res://Sounds/SoundFx/key0.wav" type="AudioStream" id=8]
+[ext_resource path="res://Sounds/SoundFx/key3.wav" type="AudioStream" id=9]
+[ext_resource path="res://Sounds/SoundFx/key4.wav" type="AudioStream" id=10]
+[ext_resource path="res://Sounds/SoundFx/key1.wav" type="AudioStream" id=11]
+[ext_resource path="res://Sounds/SoundFx/key2.wav" type="AudioStream" id=12]
+[ext_resource path="res://Sounds/SoundFx/key5.wav" type="AudioStream" id=13]
 
 [node name="SfxManager" type="Node"]
 script = ExtResource( 1 )
+sample_collection = [ ExtResource( 3 ), ExtResource( 2 ), ExtResource( 8 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 13 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ) ]

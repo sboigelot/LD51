@@ -1,0 +1,66 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Products/Cylender/Beans/beans.glb" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Barcode.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Products/Package.gd" type="Script" id=4]
+
+[sub_resource type="CylinderShape" id=1]
+height = 1.0
+
+[node name="Package" type="KinematicBody"]
+script = ExtResource( 4 )
+tween_np = NodePath("Tween")
+barcode_placeholder_np = NodePath("RotationRoot/BarcodesPlaceholder")
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 0.45, 0, 0, 0, 1, 0, 0, 0, 0.45, 0, 0.102292, 0 )
+shape = SubResource( 1 )
+
+[node name="RotationRoot" type="Spatial" parent="."]
+
+[node name="PackageVisualPlaceholder" type="Spatial" parent="RotationRoot"]
+
+[node name="beans" parent="RotationRoot/PackageVisualPlaceholder" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.397708, 0 )
+
+[node name="BarcodesPlaceholder" type="Spatial" parent="RotationRoot"]
+
+[node name="FrontBarcode" parent="RotationRoot/BarcodesPlaceholder" instance=ExtResource( 3 )]
+transform = Transform( 0.844449, 0, 0.535635, 0, 1, 0, -0.535635, 0, 0.844449, 0.0092873, 0.596055, -0.0407426 )
+
+[node name="BackBarcode" parent="RotationRoot/BarcodesPlaceholder" instance=ExtResource( 3 )]
+transform = Transform( -0.999922, -1.09246e-09, -0.0124963, 0, -1, 8.74228e-08, -0.0124963, 8.7416e-08, 0.999922, -0.0048705, -0.396394, -0.0280171 )
+
+[node name="LeftBarcode" parent="RotationRoot/BarcodesPlaceholder" instance=ExtResource( 3 )]
+transform = Transform( -0.5113, -0.0177478, -0.859219, 0.858702, 0.0298065, -0.511608, 0.0346902, -0.999398, 4.36851e-08, 0, 0.26231, -0.429597 )
+
+[node name="RightBarcode" parent="RotationRoot/BarcodesPlaceholder" instance=ExtResource( 3 )]
+transform = Transform( -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.406278, -0.033214, -0.00526351 )
+
+[node name="TopBarcode" parent="RotationRoot/BarcodesPlaceholder" instance=ExtResource( 3 )]
+transform = Transform( 0.0235248, 4.36993e-08, 0.999723, 0.999723, -1.0283e-09, -0.0235248, 0, 1, -4.37114e-08, -0.00702667, 0.144702, 0.417643 )
+
+[node name="BottomBarcode" parent="RotationRoot/BarcodesPlaceholder" instance=ExtResource( 3 )]
+transform = Transform( 0.243801, 4.23924e-08, -0.969825, 0.969825, -1.06569e-08, 0.243801, 0, -1, -4.37114e-08, -0.0552088, -0.0982556, -0.404258 )
+
+[connection signal="input_event" from="." to="." method="_on_Package_input_event"]
+[connection signal="clicked" from="RotationRoot/BarcodesPlaceholder/FrontBarcode" to="." method="_on_Barcode_clicked"]
+[connection signal="scan_error" from="RotationRoot/BarcodesPlaceholder/FrontBarcode" to="." method="_on_Barcode_scan_error"]
+[connection signal="scanned" from="RotationRoot/BarcodesPlaceholder/FrontBarcode" to="." method="_on_Barcode_scanned"]
+[connection signal="clicked" from="RotationRoot/BarcodesPlaceholder/BackBarcode" to="." method="_on_Barcode_clicked"]
+[connection signal="scan_error" from="RotationRoot/BarcodesPlaceholder/BackBarcode" to="." method="_on_Barcode_scan_error"]
+[connection signal="scanned" from="RotationRoot/BarcodesPlaceholder/BackBarcode" to="." method="_on_Barcode_scanned"]
+[connection signal="clicked" from="RotationRoot/BarcodesPlaceholder/LeftBarcode" to="." method="_on_Barcode_clicked"]
+[connection signal="scan_error" from="RotationRoot/BarcodesPlaceholder/LeftBarcode" to="." method="_on_Barcode_scan_error"]
+[connection signal="scanned" from="RotationRoot/BarcodesPlaceholder/LeftBarcode" to="." method="_on_Barcode_scanned"]
+[connection signal="clicked" from="RotationRoot/BarcodesPlaceholder/RightBarcode" to="." method="_on_Barcode_clicked"]
+[connection signal="scan_error" from="RotationRoot/BarcodesPlaceholder/RightBarcode" to="." method="_on_Barcode_scan_error"]
+[connection signal="scanned" from="RotationRoot/BarcodesPlaceholder/RightBarcode" to="." method="_on_Barcode_scanned"]
+[connection signal="clicked" from="RotationRoot/BarcodesPlaceholder/TopBarcode" to="." method="_on_Barcode_clicked"]
+[connection signal="scan_error" from="RotationRoot/BarcodesPlaceholder/TopBarcode" to="." method="_on_Barcode_scan_error"]
+[connection signal="scanned" from="RotationRoot/BarcodesPlaceholder/TopBarcode" to="." method="_on_Barcode_scanned"]
+[connection signal="clicked" from="RotationRoot/BarcodesPlaceholder/BottomBarcode" to="." method="_on_Barcode_clicked"]
+[connection signal="scan_error" from="RotationRoot/BarcodesPlaceholder/BottomBarcode" to="." method="_on_Barcode_scan_error"]
+[connection signal="scanned" from="RotationRoot/BarcodesPlaceholder/BottomBarcode" to="." method="_on_Barcode_scanned"]

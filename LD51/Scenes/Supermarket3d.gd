@@ -15,8 +15,11 @@ export(NodePath) var scanner_laser_np
 export(NodePath) var scanner_anim_np
 export(NodePath) var scanner_on_charger_np
 export(NodePath) var debug_label_np
+export(NodePath) var keyboard_texturerect_np
 export(NodePath) var keyboard_line_edit_np
 export(NodePath) var keyboard_error_label_np
+export(NodePath) var score_label_np
+export(NodePath) var time_label_np
 
 onready var camera = get_node(camera_np) as Camera
 onready var scan_camera = get_node(scan_camera_np) as Camera
@@ -30,8 +33,11 @@ onready var scanner_laser = get_node(scanner_laser_np) as Line2D
 onready var scanner_anim = get_node(scanner_anim_np) as AnimationPlayer
 onready var scanner_on_charger = get_node(scanner_on_charger_np) as Sprite
 onready var debug_label = get_node(debug_label_np) as Label
+onready var keyboard_texturerect = get_node(keyboard_texturerect_np) as Sprite
 onready var keyboard_line_edit = get_node(keyboard_line_edit_np) as LineEdit
 onready var keyboard_error_label = get_node(keyboard_error_label_np) as Label
+onready var score_label = get_node(score_label_np) as Label
+onready var time_label = get_node(time_label_np) as Label
 
 var hand_node_offset: Vector2
 
@@ -64,6 +70,8 @@ func _ready():
 	scanner_error_screen.visible = false
 	keyboard_line_edit.visible = false
 	keyboard_error_label.visible = false
+	score_label.text = str(Game.score)
+	time_label.text = Game.get_time_str()
 	
 func set_editor_azerty():
 	if not OS.is_debug_build():
@@ -88,6 +96,9 @@ func _process(delta):
 	move_hand_to_cursor()
 	toggle_scan_anim(delta)
 	move_scan_camera()
+	
+	Game.time += delta
+	time_label.text = Game.get_time_str()
 
 func process_keyboard_rotate():
 	if Input.is_action_just_pressed("ui_down"):
@@ -139,7 +150,12 @@ export(Vector3) var package_scale_on_belt = Vector3(0.75,0.75,0.75)
 
 export(float) var conveyor_speed = 60.0
 
-const package_scene = preload("res://Scenes/Package.tscn")
+var package_scenes = [
+	load("res://Products/y30z130/Poopalot/Package.tscn"),
+	load("res://Products/DvdBox/GateBuilder/Package.tscn"),
+	load("res://Products/DvdBox/Kawai/Package.tscn"),
+	load("res://Products/Cylender/Beans/Package.tscn"),
+]
 
 func _on_Supermarket_rotate_package(add_rotation):
 	rotate_package(add_rotation)
@@ -151,9 +167,16 @@ func rotate_package(add_rotation: Vector2):
 
 func _on_Timer_timeout():
 	spawn_package()
+	yield(get_tree().create_timer(0.3),"timeout")
+	spawn_package()
+	yield(get_tree().create_timer(0.3),"timeout")
+	spawn_package()
 
 func spawn_package():
-	var instance = package_scene.instance()
+	var product_id = randi() % package_scenes.size()
+	var scene = package_scenes[product_id]
+	print("spawn: "+ str(product_id))
+	var instance = scene.instance()
 	var spawn_positions = [
 		$ConveyorBelt/PackageSpawnLocations/Location1.transform,
 		$ConveyorBelt/PackageSpawnLocations/Location2.transform,
@@ -165,13 +188,13 @@ func spawn_package():
 	instance.connect("clicked", self, "on_conveyor_belt_package_clicked")
 
 #	Rotate randomly UP
-#	var axis = Vector3.UP
-#	var rotation_radiant = deg2rad(randi() % 360)
-#	instance.transform.basis = instance.transform.basis.rotated(axis, rotation_radiant)
+	var axis = Vector3.UP
+	var rotation_radiant = deg2rad(randi() % 360)
+	instance.transform.basis = instance.transform.basis.rotated(axis, rotation_radiant)
 
 #	Rotate randomly LEFT
-	var rotation_count = Vector2(randi() % 4, randi() % 4)
-	instance.add_to_target_rotation(rotation_count * 90)
+#	var rotation_count = Vector2(randi() % 4, randi() % 4)
+#	instance.add_to_target_rotation(rotation_count * 90)
 
 #	scale
 	instance.scale = package_scale_on_belt
@@ -189,14 +212,27 @@ func on_conveyor_belt_package_clicked(package: Package):
 
 func _on_Package_barcode_scanned(package, barcode):
 	if get_scanner_hands():
-			move_package_to_exit_belt(package)
+		SfxManager.play("Scan")
+		move_package_to_exit_belt(package)
 
 func _on_Package_scan_error(package, barcode):
+	blink_keyboard_modulate()
+	blink_scanner_error()
+
+func blink_scanner_error():
 	scanner_error_screen.visible = true
 	yield(get_tree().create_timer(0.5), "timeout")
 	scanner_error_screen.visible = false
 
+func add_score(score):
+	Game.score += score
+	score_label.text = str(Game.score)
+
 func move_package_to_exit_belt(package: Package):
+	
+	add_score(scan_package.price)
+	
+	scan_package = null
 	if scan_package_holder.get_child_count() == 0:
 		return
 	package.get_parent().remove_child(package)
@@ -285,10 +321,28 @@ func _on_KeyboardLineEdit_text_entered(new_text):
 			if solution[i] != numbers[i]:
 				blink_keyboard_label()
 				return
+				
+		SfxManager.play("Scan")
 		move_package_to_exit_belt(scan_package)
-		
+
+func blink_keyboard_modulate():
+	for i in 2:
+		keyboard_texturerect.modulate = Color.red
+		yield(get_tree().create_timer(0.2), "timeout")
+		keyboard_texturerect.modulate = Color.white
+		yield(get_tree().create_timer(0.2), "timeout")
+	
+
 func blink_keyboard_label():
+	if keyboard_error_label.visible:
+		return		
 	keyboard_error_label.visible = true
 	yield(get_tree().create_timer(0.4), "timeout")
 	keyboard_error_label.visible = false
-	
+
+func _on_KeyboardLineEdit_text_changed(new_text:String):
+	SfxManager.play("buttonpress")
+#	if new_text == "":
+#		return		
+#	var last = new_text[new_text.length() - 1]
+#	SfxManager.play("key"+last)

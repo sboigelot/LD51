@@ -4,9 +4,9 @@ func get_base_uri():
 	return "https://ldtobugisapiapi.azure-api.net/"
 
 func _ready():
-	return
-	post_entry("togis",100,30)
+#	post_entry("togis",100,30)
 	get_top_time()
+	get_top_score()
 		
 func get_top_score():
 	$GetTopScoreHTTPRequest.request(get_base_uri() + "GetTimeBoard")

@@ -14,23 +14,44 @@ enum BARCODE_LOCATION {
 	BACK
 }
 
-var barcode_location_per_product = {
-	"res://Scenes/Package.tscn" : BARCODE_LOCATION.LEFT
+var valid_locations_per_product = {
+	"res://Products/y30z130/Poopalot/Package.tscn" : 	[BARCODE_LOCATION.FRONT,BARCODE_LOCATION.LEFT,BARCODE_LOCATION.BOTTOM,BARCODE_LOCATION.RIGHT,BARCODE_LOCATION.TOP,BARCODE_LOCATION.BACK],
+	"res://Products/Cylender/Beans/Package.tscn" : 		[BARCODE_LOCATION.FRONT,BARCODE_LOCATION.LEFT,BARCODE_LOCATION.BOTTOM,BARCODE_LOCATION.RIGHT,BARCODE_LOCATION.TOP,BARCODE_LOCATION.BACK],
+	"res://Products/DvdBox/GateBuilder/Package.tscn" : 	[BARCODE_LOCATION.FRONT,BARCODE_LOCATION.BACK],
+	"res://Products/DvdBox/Kawai/Package.tscn" : 		[BARCODE_LOCATION.FRONT,BARCODE_LOCATION.BACK],
 }
+var barcode_location_per_product = {}
 
-func new_game():
+func clear_data():
 	randomize()	
 	randomize_barcode_locations()
-	
 	win = false
 	score = 0
 	time = 0
 	
+func _ready():
+	 clear_data()
+	
+func get_time_str():
+	var minutes = round(time / 60)
+	var seconds = round(fmod(time,60))
+	var txt = "%s:%s" % [
+		("0%d" % minutes) if minutes < 10 else ("%d" % minutes),
+		("0%d" % seconds) if seconds < 10 else ("%d" % seconds)
+	]
+	return txt
+
+func new_game():
+	clear_data()
 	get_tree().change_scene("res://Scenes/Supermarket3d.tscn")
 
 func randomize_barcode_locations():
-	for product in barcode_location_per_product.keys():
-		barcode_location_per_product[product] = randi() % BARCODE_LOCATION.size()
+	barcode_location_per_product.clear()
+	for product in valid_locations_per_product.keys():
+		var valid_locations = valid_locations_per_product[product]
+		barcode_location_per_product[product] = valid_locations[
+			randi() % valid_locations.size()
+		]
 	
 func defeat():
 	win = false
