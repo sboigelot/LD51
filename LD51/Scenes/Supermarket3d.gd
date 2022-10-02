@@ -184,6 +184,7 @@ func on_conveyor_belt_package_clicked(package: Package):
 		package.connect("barcode_scanned", self, "_on_Package_barcode_scanned")
 		package.connect("scan_error", self, "_on_Package_scan_error")
 		package.transform = Transform()
+		
 		scan_package = package
 
 func _on_Package_barcode_scanned(package, barcode):

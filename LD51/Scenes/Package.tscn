@@ -9,7 +9,6 @@
 
 [node name="Package" type="KinematicBody"]
 script = ExtResource( 2 )
-rotation_root_np = NodePath("RotationRoot")
 package_model_np = NodePath("RotationRoot/PackageVisualPlaceholder")
 tween_np = NodePath("Tween")
 barcode_placeholder_np = NodePath("RotationRoot/BarcodesPlaceholder")

@@ -6,12 +6,10 @@ signal clicked(package)
 signal barcode_scanned(package, barcode)
 signal scan_error(package, barcode)
 
-export(NodePath) var rotation_root_np
 export(NodePath) var package_model_np
 export(NodePath) var tween_np
 export(NodePath) var barcode_placeholder_np
 
-onready var rotation_root = get_node(rotation_root_np) as Spatial
 onready var package_model = get_node(package_model_np) as Spatial
 onready var tween = get_node(tween_np) as Tween
 onready var barcode_placeholder = get_node(barcode_placeholder_np) as Spatial
@@ -50,24 +48,22 @@ func apply_barcode_location():
 		if other_barcode == barcode:
 			continue
 			
-#		other_barcode.visible = false
 		other_barcode.queue_free()
 	
 
 func set_tween_basis(value:Basis):
-	rotation_root.transform.basis = value
+	transform.basis = value
 
 func rotate_cube(direction:Vector2):
-	rotation_root.rotate_x(direction.x)
-	rotation_root.rotate_z(direction.y)
+	rotate_x(direction.x)
+	rotate_z(direction.y)
 
 func add_to_target_rotation(add_rotation: Vector2):
 
 	var axis = Vector3(add_rotation.x/90, 0, add_rotation.y/90) # Or Vector3.RIGHT
 	var rotation_radiant = deg2rad(90)
 	
-	target_basis = rotation_root.transform.basis.rotated(
-		axis, rotation_radiant) #.orthonormalized()
+	target_basis = transform.basis.rotated(axis, rotation_radiant) #.orthonormalized()
 
 	start_rotate_tween()
 
@@ -76,10 +72,7 @@ func start_rotate_tween():
 		tween.stop_all()
 		
 	tween.interpolate_property(self, "tween_basis",
-		rotation_root.transform.basis, target_basis, 0.2,
-		Tween.TRANS_CUBIC, Tween.EASE_OUT)
-	tween.interpolate_property(self, "tween_basis",
-		$CollisionShape.transform.basis, target_basis, 0.2,
+		transform.basis, target_basis, 0.2,
 		Tween.TRANS_CUBIC, Tween.EASE_OUT)
 	tween.start()
 
