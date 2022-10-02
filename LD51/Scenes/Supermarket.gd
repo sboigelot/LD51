@@ -1,10 +1,6 @@
 extends Node2D
 
-export(NodePath) var supermarket3d_np
-onready var supermarket3d = get_node(supermarket3d_np) as Supermarket3d
-
-export(NodePath) var debug_rtl_np
-onready var debug_rtl = get_node(debug_rtl_np) as RichTextLabel
+signal rotate_package(add_rotation)
 
 export(NodePath) var hand_node_np
 onready var hand_node = get_node(hand_node_np) as Node2D
@@ -12,6 +8,8 @@ export(float) var hand_min_y
 
 export(NodePath) var scanner_np
 onready var scanner = get_node(scanner_np) as Sprite
+export(NodePath) var scanner_texturerect_np
+onready var scanner_texturerect = get_node(scanner_texturerect_np) as TextureRect
 export(NodePath) var scanner_laser_np
 onready var scanner_laser = get_node(scanner_laser_np) as Line2D
 export(NodePath) var scanner_anim_np
@@ -26,16 +24,16 @@ func set_scanner_hands(value:bool):
 func get_scanner_hands():
 	return scanner.visible
 
+func set_viewport_texture(viewport:Viewport):
+	var path = viewport.get_path()
+	var texture = ViewportTexture.new()
+	texture.viewport_path = path
+	scanner_texturerect.texture = texture
+
 func _ready():
 	set_scanner_hands(false)
 
 func _process(delta):
-#	debug_rtl.text = "x: %d\ny: %d\nz: %d" % [
-#		supermarket3d.scan_package.package_model.rotation_degrees.x,
-#		supermarket3d.scan_package.package_model.rotation_degrees.y,
-#		supermarket3d.scan_package.package_model.rotation_degrees.z
-#	]
-#
 	if Input.is_action_just_pressed("ui_down"):
 		_on_DownButton_pressed()
 	if Input.is_action_just_pressed("ui_up"):
@@ -60,16 +58,16 @@ func _process(delta):
 			scanner_anim.stop()
 
 func _on_DownButton_pressed():
-	supermarket3d.rotate_package(Vector2(90,0))
+	emit_signal("rotate_package", Vector2(90,0))
 
 func _on_UpButton_pressed():
-	supermarket3d.rotate_package(Vector2(-90,0))
+	emit_signal("rotate_package", Vector2(-90,0))
 
 func _on_LeftButton_pressed():
-	supermarket3d.rotate_package(Vector2(0,90))
+	emit_signal("rotate_package", Vector2(0,90))
 
 func _on_RightButton_pressed():
-	supermarket3d.rotate_package(Vector2(0,-90))
+	emit_signal("rotate_package", Vector2(0,-90))
 
 func _on_ScannerChargerButton_pressed():
 	set_scanner_hands(not get_scanner_hands())

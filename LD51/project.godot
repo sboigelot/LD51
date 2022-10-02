@@ -33,7 +33,7 @@ _global_script_class_icons={
 [application]
 
 config/name="LD51"
-run/main_scene="res://Scenes/Supermarket.tscn"
+run/main_scene="res://Scenes/Supermarket3d.tscn"
 config/icon="res://icon.png"
 
 [audio]

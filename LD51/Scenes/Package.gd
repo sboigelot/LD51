@@ -44,16 +44,9 @@ func start_rotate_tween():
 		Tween.TRANS_CUBIC, Tween.EASE_OUT)
 	tween.start()
 
-#func _process(delta):
-#	if Input.is_mouse_button_pressed(BUTTON_LEFT):
-#		var mouse_postion = get_viewport().get_mouse_position() as Vector2
-#
-#		var camera = get_parent().get_parent().get_camera()
-#		var from = camera.project_ray_origin(mouse_postion)
-#		var to = from + camera.project_ray_normal(mouse_postion) * 100
-##		var cursorPos = Plane(Vector3.UP, transform.origin.y).intersects_ray(from, to)
-#		RayCast.new()
-#		print(cursorPos)
-#
 func _on_Package_input_event(camera, event, position, normal, shape_idx):
 	pass # Replace with function body.
+	if (event is InputEventMouseButton and
+		event.pressed and
+		event.button_index == BUTTON_LEFT):
+			emit_signal("clicked", self)

@@ -4,7 +4,7 @@
 [ext_resource path="res://Scenes/Package.gd" type="Script" id=2]
 [ext_resource path="res://Sprites/barcode.png" type="Texture" id=3]
 
-[sub_resource type="BoxShape" id=1]
+[sub_resource type="BoxShape" id=4]
 
 [sub_resource type="PlaneMesh" id=2]
 size = Vector2( 0.48, 0.27 )
@@ -22,7 +22,7 @@ tween_np = NodePath("Tween")
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 0.8, 0, 0, 0, 0.1, 0, 0, 0, 1, 0, 0, 0 )
-shape = SubResource( 1 )
+shape = SubResource( 4 )
 
 [node name="RotationRoot" type="Spatial" parent="."]
 
@@ -30,10 +30,10 @@ shape = SubResource( 1 )
 
 [node name="dvdbox" parent="RotationRoot/PackageVisualPlaceholder" instance=ExtResource( 1 )]
 
-[node name="MeshInstance" type="MeshInstance" parent="RotationRoot"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.480776, 0.101185, 0.40387 )
+[node name="MeshInstance" type="MeshInstance" parent="RotationRoot/PackageVisualPlaceholder"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.435596, 0.100382, -0.0481462 )
 mesh = SubResource( 2 )
-skeleton = NodePath("../..")
+skeleton = NodePath("../../..")
 material/0 = SubResource( 3 )
 
 [connection signal="input_event" from="." to="." method="_on_Package_input_event"]
