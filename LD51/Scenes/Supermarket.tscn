@@ -1,10 +1,16 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenes/Supermarket.gd" type="Script" id=1]
+[ext_resource path="res://Fonts/VTCSuperMarketSaleDisplay.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Sprites/square.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/LD51-scanner.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/LD51-hand.png" type="Texture" id=6]
 
 [sub_resource type="StyleBoxEmpty" id=7]
+
+[sub_resource type="DynamicFont" id=9]
+size = 24
+font_data = ExtResource( 2 )
 
 [sub_resource type="StyleBoxEmpty" id=2]
 
@@ -36,12 +42,14 @@ tracks/0/keys = {
 [node name="Supermarket" type="Node2D"]
 script = ExtResource( 1 )
 hand_node_np = NodePath("ScannerCharger/HandNode")
-hand_min_y = 550.0
 scanner_np = NodePath("ScannerCharger/HandNode/ScannerTextureRext")
-scanner_texturerect_np = NodePath("ScannerCharger/HandNode/ScannerTextureRext/TextureRect")
+scanner_texturerect_np = NodePath("ScannerCharger/HandNode/ScannerTextureRext/ScannerCameraScreen")
+scanner_screen_center_np = NodePath("ScannerCharger/HandNode/ScannerTextureRext/ScannerCameraScreen/CenterPosition2D")
 scanner_laser_np = NodePath("ScannerCharger/HandNode/ScannerTextureRext/LaserLine2D")
 scanner_anim_np = NodePath("ScannerCharger/HandNode/ScannerTextureRext/ScannerAnimationPlayer")
 scanner_on_charger_np = NodePath("ScannerCharger/ScannerTextureRext")
+scanner_test_label_np = NodePath("ButtonPanelContainer/ScanTestLabel")
+hand_min_y = 550.0
 
 [node name="ButtonPanelContainer" type="PanelContainer" parent="."]
 margin_left = 1050.0
@@ -89,12 +97,31 @@ size_flags_horizontal = 4
 size_flags_vertical = 0
 text = "Up"
 
+[node name="ScanTestLabel" type="Label" parent="ButtonPanelContainer"]
+visible = false
+margin_right = 208.0
+margin_bottom = 20.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 9 )
+text = "test label"
+
 [node name="ScannerCharger" type="Node2D" parent="."]
 
 [node name="ScannerTextureRext" type="Sprite" parent="ScannerCharger"]
-position = Vector2( 1540, 910 )
+position = Vector2( 1601.65, 1113.26 )
 rotation = 0.284487
 texture = ExtResource( 5 )
+offset = Vector2( -116.215, -177.787 )
+
+[node name="BlackScreen" type="TextureRect" parent="ScannerCharger/ScannerTextureRext"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = -173.474
+margin_top = -263.148
+margin_right = -61.4744
+margin_bottom = -181.148
+texture = ExtResource( 3 )
+expand = true
 
 [node name="ScannerChargerButton" type="Button" parent="ScannerCharger"]
 margin_left = 1444.0
@@ -120,13 +147,24 @@ texture = ExtResource( 6 )
 position = Vector2( 6, -69.5 )
 texture = ExtResource( 5 )
 
-[node name="TextureRect" type="TextureRect" parent="ScannerCharger/HandNode/ScannerTextureRext"]
-visible = false
+[node name="BlackScreen" type="TextureRect" parent="ScannerCharger/HandNode/ScannerTextureRext"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = -56.0
+margin_top = -83.5
+margin_right = 54.0
+margin_bottom = -3.5
+texture = ExtResource( 3 )
+expand = true
+
+[node name="ScannerCameraScreen" type="TextureRect" parent="ScannerCharger/HandNode/ScannerTextureRext"]
 margin_left = -56.0
 margin_top = -83.5
 margin_right = 54.0
 margin_bottom = -3.5
 expand = true
+
+[node name="CenterPosition2D" type="Position2D" parent="ScannerCharger/HandNode/ScannerTextureRext/ScannerCameraScreen"]
+position = Vector2( 55, 40 )
 
 [node name="LaserLine2D" type="Line2D" parent="ScannerCharger/HandNode/ScannerTextureRext"]
 position = Vector2( -40, -40 )

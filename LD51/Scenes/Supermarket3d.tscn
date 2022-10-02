@@ -32,12 +32,13 @@ extents = Vector3( 6, 1, 0.1 )
 [node name="Supermarket3d" type="Spatial"]
 script = ExtResource( 2 )
 scan_package_holder_np = NodePath("ScanPackageLocation")
+supermarket2d_np = NodePath("CanvasLayer/Supermarket")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Supermarket" parent="CanvasLayer" instance=ExtResource( 4 )]
 
-[node name="TextureRect" parent="CanvasLayer/Supermarket/ScannerCharger/HandNode/ScannerTextureRext" index="0"]
+[node name="ScannerCameraScreen" parent="CanvasLayer/Supermarket/ScannerCharger/HandNode/ScannerTextureRext" index="0"]
 texture = SubResource( 10 )
 
 [node name="BackgroundImage" type="MeshInstance" parent="."]
@@ -117,7 +118,7 @@ size = Vector2( 110, 80 )
 render_target_v_flip = true
 
 [node name="ScanCamera" type="Camera" parent="ScanViewport"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 2.3111, 10, 0.268178 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0 )
 projection = 1
 size = 0.5
 
