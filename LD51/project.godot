@@ -19,11 +19,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Utilities/ResourceAsyncLoader.gd"
 }, {
-"base": "Node2D",
-"class": "Supermarket2d",
-"language": "GDScript",
-"path": "res://Scenes/Supermarket.gd"
-}, {
 "base": "Spatial",
 "class": "Supermarket3d",
 "language": "GDScript",
@@ -32,7 +27,6 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Package": "",
 "ResourceAsyncLoader": "",
-"Supermarket2d": "",
 "Supermarket3d": ""
 }
 
