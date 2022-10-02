@@ -7,23 +7,52 @@ signal barcode_scanned(package, barcode)
 signal scan_error(package, barcode)
 
 export(NodePath) var rotation_root_np
-onready var rotation_root = get_node(rotation_root_np) as Spatial
-
 export(NodePath) var package_model_np
-onready var package_model = get_node(package_model_np) as Spatial
-
 export(NodePath) var tween_np
+export(NodePath) var barcode_placeholder_np
+
+onready var rotation_root = get_node(rotation_root_np) as Spatial
+onready var package_model = get_node(package_model_np) as Spatial
 onready var tween = get_node(tween_np) as Tween
+onready var barcode_placeholder = get_node(barcode_placeholder_np) as Spatial
 
 var target_basis: Basis
 var rotation_speed: float = 200
 
 var tween_basis: Basis setget set_tween_basis
 
+onready var barcodes_per_location = {
+	Game.BARCODE_LOCATION.FRONT: 	$RotationRoot/BarcodesPlaceholder/FrontBarcode,
+	Game.BARCODE_LOCATION.BACK: 	$RotationRoot/BarcodesPlaceholder/BottomBack,
+	Game.BARCODE_LOCATION.LEFT: 	$RotationRoot/BarcodesPlaceholder/LeftBarcode,
+	Game.BARCODE_LOCATION.RIGHT: 	$RotationRoot/BarcodesPlaceholder/RightBarcode,
+	Game.BARCODE_LOCATION.TOP: 		$RotationRoot/BarcodesPlaceholder/TopBarcode,
+	Game.BARCODE_LOCATION.BOTTOM: 	$RotationRoot/BarcodesPlaceholder/BottomBarcode,
+}
+
 var barcode: Barcode
 
 func _ready():
-	barcode = $RotationRoot/BarcodesPlaceholder/Barcode
+	apply_barcode_location()
+	
+func apply_barcode_location():
+	
+	var random_location = Game.BARCODE_LOCATION.TOP
+	if Game.barcode_location_per_product.has(filename):
+		random_location = Game.barcode_location_per_product[filename]
+	
+	if barcodes_per_location.has(random_location):
+		barcode = barcodes_per_location[random_location]
+	else:
+		barcode = barcodes_per_location[barcodes_per_location.keys()[0]]
+	
+	for other_barcode in barcodes_per_location.values():
+		if other_barcode == barcode:
+			continue
+			
+#		other_barcode.visible = false
+		other_barcode.queue_free()
+	
 
 func set_tween_basis(value:Basis):
 	rotation_root.transform.basis = value
@@ -48,6 +77,9 @@ func start_rotate_tween():
 		
 	tween.interpolate_property(self, "tween_basis",
 		rotation_root.transform.basis, target_basis, 0.2,
+		Tween.TRANS_CUBIC, Tween.EASE_OUT)
+	tween.interpolate_property(self, "tween_basis",
+		$CollisionShape.transform.basis, target_basis, 0.2,
 		Tween.TRANS_CUBIC, Tween.EASE_OUT)
 	tween.start()
 

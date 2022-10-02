@@ -51,6 +51,7 @@ default_bus_layout="res://Sounds/MasterBusLayout.tres"
 Game="*res://Game.tscn"
 SfxManager="*res://Sounds/SfxManager.tscn"
 Photograph="*res://Utilities/Photograph.gd"
+Leaderboard="*res://Utilities/Leaderboard.tscn"
 
 [display]
 

@@ -160,17 +160,21 @@ func spawn_package():
 		$ConveyorBelt/PackageSpawnLocations/Location3.transform,
 		$ConveyorBelt/PackageSpawnLocations/Location4.transform,
 	]
+	$ConveyorBelt.add_child(instance)
 	instance.transform = spawn_positions[randi() % spawn_positions.size()]
 	instance.connect("clicked", self, "on_conveyor_belt_package_clicked")
 
-#	Rotate randomly
-	var axis = Vector3.UP
-	var rotation_radiant = deg2rad(randi() % 360)
-	instance.transform.basis = instance.transform.basis.rotated(axis, rotation_radiant)
+#	Rotate randomly UP
+#	var axis = Vector3.UP
+#	var rotation_radiant = deg2rad(randi() % 360)
+#	instance.transform.basis = instance.transform.basis.rotated(axis, rotation_radiant)
+
+#	Rotate randomly LEFT
+	var rotation_count = Vector2(randi() % 4, randi() % 4)
+	instance.add_to_target_rotation(rotation_count * 90)
 
 #	scale
 	instance.scale = package_scale_on_belt
-	$ConveyorBelt.add_child(instance)
 
 func on_conveyor_belt_package_clicked(package: Package):
 	if scan_package_holder.get_child_count() == 0:

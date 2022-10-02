@@ -18,6 +18,7 @@ export(NodePath) var np_webgl_button
 onready var webgl_button = get_node(np_webgl_button) as Button
 
 func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	if OS.get_name() != "HTML5":
 		webgl_button.queue_free()
 	else:
