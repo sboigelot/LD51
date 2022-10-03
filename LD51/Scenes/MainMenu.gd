@@ -46,17 +46,17 @@ func update_sound_sliders():
 	ui_audio_soundfx.max_value = volume_max
 	ui_audio_soundfx.value = sfx_volume
 
-func _on_MasterHSlider_value_changed(value):
+func _on_MasterVolumeSlider_value_changed(value):
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), value)
-	SfxManager.play("ui-button-click")
+	SfxManager.play("confirm")
 
-func _on_MusicHSlider_value_changed(value):
+func _on_MusicVolumeSlider_value_changed(value):
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), value)
-	SfxManager.play("ui-button-click")
+	SfxManager.play("confirm")
 
-func _on_SoundFxHSlider_value_changed(value):
+func _on_SoundFxVolumeSlider_value_changed(value):
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), value)
-	SfxManager.play("ui-button-click")
+	SfxManager.play("confirm")
 
 func _on_WebGLButton_pressed():
 	OS.set_window_fullscreen(true)
@@ -64,3 +64,4 @@ func _on_WebGLButton_pressed():
 
 func _on_StartButton_pressed():
 	Game.new_game()
+	SfxManager.play("confirm")

@@ -320,6 +320,9 @@ func on_conveyor_belt_package_clicked(package: Package):
 		scan_package = package
 		button_panel.visible = true
 		button_mesh.visible = true
+		
+		var grab_id = (1+(randi()%8)-1)
+		SfxManager.play("grab%d" % grab_id)
 
 func _on_Package_barcode_scanned(package, barcode):
 	if get_scanner_hands() and is_scanner_worling():
@@ -470,11 +473,11 @@ func blink_scanner_price(price:int):
 	keyboard_price_screen.visible = false
 
 func _on_KeyboardLineEdit_text_changed(new_text:String):
-	SfxManager.play("buttonpress")
-#	if new_text == "":
-#		return		
-#	var last = new_text[new_text.length() - 1]
-#	SfxManager.play("key"+last)
+#	SfxManager.play("buttonpress")
+	if new_text == "":
+		return		
+	var last = new_text[new_text.length() - 1]
+	SfxManager.play("key"+last)
 
 
 func _on_LooseArea_body_entered(body):
@@ -506,6 +509,7 @@ func _on_LooseArea_body_exited(body):
 func _on_RedButton_pressed():
 	if red_button_pressed_texturerect.visible:
 		return
+	SfxManager.play("back")
 	set_scanner_hands(false)
 	red_button_texturerect.visible = false
 	red_button_pressed_texturerect.visible = true
@@ -536,8 +540,8 @@ const speech_bubble_scene = preload("res://Scenes/SpeechBubble.tscn")
 export(float) var karen_chance_percent_per_timer = 15
 var karen_accumulated_chance: float = 0
 var karen_last_bubble_spawn_time:float = 0
-export var karen_bubble_spawn_delay:float = 2
-export var karen_min_spawn_time: float = 30.0
+export var karen_bubble_spawn_delay:float = 3
+export var karen_min_spawn_time: float = 20.0
 
 func k_ready():
 	karen.visible = false
@@ -586,6 +590,8 @@ func k_spawn_bubble():
 	instance.transform = spawn_location.transform
 	instance.translate(Vector3(0, 0.1*speech_bubble_plaholder.get_child_count(), 0))
 	speech_bubble_plaholder.add_child(instance)
+	
+	SfxManager.play("karen%d" % (randi() % 4))
 
 func k_push_away():
 	if not karen.visible:

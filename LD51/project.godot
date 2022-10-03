@@ -39,7 +39,7 @@ _global_script_class_icons={
 [application]
 
 config/name="LD51"
-run/main_scene="res://Scenes/Supermarket3d.tscn"
+run/main_scene="res://Scenes/MainMenu.tscn"
 config/icon="res://icon.png"
 
 [audio]
@@ -52,6 +52,7 @@ Game="*res://Game.tscn"
 SfxManager="*res://Sounds/SfxManager.tscn"
 Photograph="*res://Utilities/Photograph.gd"
 Leaderboard="*res://Utilities/Leaderboard.tscn"
+Music="*res://Sounds/Music.tscn"
 
 [display]
 

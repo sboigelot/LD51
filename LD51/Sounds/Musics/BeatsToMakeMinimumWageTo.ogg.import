@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/BeatsToMakeMinimumWageTo.ogg-dba74dcf254e3845c48da92ce5b5fbb9.oggstr"
+
+[deps]
+
+source_file="res://Sounds/Musics/BeatsToMakeMinimumWageTo.ogg"
+dest_files=[ "res://.import/BeatsToMakeMinimumWageTo.ogg-dba74dcf254e3845c48da92ce5b5fbb9.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -6,7 +6,6 @@
 [ext_resource path="res://Sprites/LD51-scanner.png" type="Texture" id=4]
 [ext_resource path="res://Sprites/register.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/LD51-hand.png" type="Texture" id=6]
-[ext_resource path="res://Fonts/VTCSuperMarketSaleDisplay.ttf" type="DynamicFontData" id=7]
 [ext_resource path="res://Sprites/error_screen.png" type="Texture" id=8]
 [ext_resource path="res://Sprites/keyboard.png" type="Texture" id=9]
 [ext_resource path="res://Fonts/airstrip-four/airstrip_48.tres" type="DynamicFont" id=10]
@@ -50,9 +49,12 @@ extents = Vector3( 6, 1, 0.1 )
 
 [sub_resource type="StyleBoxEmpty" id=7]
 
+[sub_resource type="DynamicFontData" id=32]
+font_path = "res://Fonts/VTCSuperMarketSaleDisplay.ttf"
+
 [sub_resource type="DynamicFont" id=9]
 size = 24
-font_data = ExtResource( 7 )
+font_data = SubResource( 32 )
 
 [sub_resource type="StyleBoxEmpty" id=2]
 

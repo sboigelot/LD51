@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/ExtendedSteady_BeatsToMakeMinimumWageTo.ogg-191a006fc0f6672af0f987c75c690093.oggstr"
+
+[deps]
+
+source_file="res://Sounds/Musics/ExtendedSteady_BeatsToMakeMinimumWageTo.ogg"
+dest_files=[ "res://.import/ExtendedSteady_BeatsToMakeMinimumWageTo.ogg-191a006fc0f6672af0f987c75c690093.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

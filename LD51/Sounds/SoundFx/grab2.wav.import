@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/grab2.wav-a4d38e1cf66c183d687be9317d55d466.sample"
+
+[deps]
+
+source_file="res://Sounds/SoundFx/grab2.wav"
+dest_files=[ "res://.import/grab2.wav-a4d38e1cf66c183d687be9317d55d466.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
