@@ -1,14 +1,14 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scenes/MainMenu.gd" type="Script" id=1]
-[ext_resource path="res://Fonts/airstrip-four/airstrip_20.tres" type="DynamicFont" id=2]
-[ext_resource path="res://Fonts/airstrip-four/airstrip_28.tres" type="DynamicFont" id=3]
-[ext_resource path="res://Fonts/airstrip-four/airstrip_92.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Fonts/Bebas_20.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Fonts/Bebas_28.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Fonts/Bebas_92.tres" type="DynamicFont" id=4]
 [ext_resource path="res://Sprites/LD51-hand.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/mainbackground.png" type="Texture" id=6]
-[ext_resource path="res://Fonts/airstrip-four/airstrip_16.tres" type="DynamicFont" id=7]
+[ext_resource path="res://Fonts/Bebas_16.tres" type="DynamicFont" id=7]
 [ext_resource path="res://Sprites/quit.png" type="Texture" id=8]
-[ext_resource path="res://Fonts/airstrip-four/airstrip_48.tres" type="DynamicFont" id=9]
+[ext_resource path="res://Fonts/Bebas_48.tres" type="DynamicFont" id=9]
 [ext_resource path="res://Sprites/LOGO .png" type="Texture" id=10]
 [ext_resource path="res://Sprites/LOGO-CART.png" type="Texture" id=11]
 
@@ -36,14 +36,12 @@ margin_bottom = 1080.0
 texture = ExtResource( 6 )
 
 [node name="TitleLabel2" type="Label" parent="PanelContainer"]
-margin_top = 939.0
+margin_top = 927.0
 margin_right = 1920.0
 margin_bottom = 1080.0
 size_flags_vertical = 8
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_shadow = Color( 0.380392, 0.380392, 0.380392, 1 )
-custom_constants/shadow_offset_x = 3
-custom_constants/shadow_offset_y = 2
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = 0
 custom_fonts/font = ExtResource( 7 )
 text = "A game made for LD51 by:
 Graphics: Bu
@@ -77,8 +75,8 @@ margin_bottom = 467.0
 
 [node name="TitleLabel" type="Label" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/TitleContainer"]
 visible = false
-margin_right = 861.0
-margin_bottom = 104.0
+margin_right = 808.0
+margin_bottom = 111.0
 size_flags_vertical = 0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0.380392, 0.380392, 0.380392, 1 )
@@ -102,50 +100,53 @@ margin_bottom = 511.0
 texture = ExtResource( 11 )
 
 [node name="MusicConrol" type="GridContainer" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer"]
-margin_left = 210.0
+margin_left = 245.0
 margin_top = 517.0
-margin_right = 598.0
+margin_right = 563.0
 margin_bottom = 597.0
 size_flags_horizontal = 4
 columns = 2
 
 [node name="Label" type="Label" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol"]
-margin_right = 184.0
+margin_right = 114.0
 margin_bottom = 24.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 2 )
 text = "master volume:"
 
 [node name="MasterVolumeSlider" type="HSlider" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol"]
-margin_left = 188.0
-margin_right = 388.0
+margin_left = 118.0
+margin_right = 318.0
 margin_bottom = 16.0
 rect_min_size = Vector2( 200, 0 )
 
 [node name="Label2" type="Label" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol"]
 margin_top = 28.0
-margin_right = 184.0
+margin_right = 114.0
 margin_bottom = 52.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 2 )
 text = "music volume:"
 
 [node name="MusicVolumeSlider" type="HSlider" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol"]
-margin_left = 188.0
+margin_left = 118.0
 margin_top = 28.0
-margin_right = 388.0
+margin_right = 318.0
 margin_bottom = 44.0
 rect_min_size = Vector2( 200, 0 )
 
 [node name="Label3" type="Label" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol"]
 margin_top = 56.0
-margin_right = 184.0
+margin_right = 114.0
 margin_bottom = 80.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_fonts/font = ExtResource( 2 )
 text = "sound fx volume:"
 
 [node name="SoundFxVolumeSlider" type="HSlider" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol"]
-margin_left = 188.0
+margin_left = 118.0
 margin_top = 56.0
-margin_right = 388.0
+margin_right = 318.0
 margin_bottom = 72.0
 rect_min_size = Vector2( 200, 0 )
 
@@ -172,9 +173,9 @@ anchor_bottom = 1.0
 mouse_filter = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer/StartButton/MarginContainer"]
-margin_top = 15.0
+margin_top = 12.0
 margin_right = 128.0
-margin_bottom = 81.0
+margin_bottom = 84.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -239,9 +240,9 @@ anchor_bottom = 1.0
 mouse_filter = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/WebGLButton/CenterContainer"]
-margin_top = 372.0
+margin_top = 360.0
 margin_right = 1920.0
-margin_bottom = 708.0
+margin_bottom = 720.0
 rect_min_size = Vector2( 1920, 0 )
 mouse_filter = 2
 custom_fonts/normal_font = ExtResource( 9 )

@@ -35,9 +35,9 @@ custom_constants/margin_left = 20
 custom_constants/margin_bottom = 10
 
 [node name="NumbePlaceholder" type="HBoxContainer" parent="PanelContainer/MarginContainer"]
-margin_left = 32.0
+margin_left = 34.0
 margin_top = 15.0
-margin_right = 128.0
+margin_right = 126.0
 margin_bottom = 80.0
 size_flags_horizontal = 4
 
@@ -48,34 +48,34 @@ number = -1
 
 [node name="NumerAndLine2" parent="PanelContainer/MarginContainer/NumbePlaceholder" instance=ExtResource( 3 )]
 margin_left = 16.0
-margin_right = 29.0
+margin_right = 28.0
 margin_bottom = 65.0
 size_flags_horizontal = 0
 number = 1
 
 [node name="NumerAndLine6" parent="PanelContainer/MarginContainer/NumbePlaceholder" instance=ExtResource( 3 )]
-margin_left = 33.0
-margin_right = 46.0
+margin_left = 32.0
+margin_right = 44.0
 margin_bottom = 65.0
 size_flags_horizontal = 0
 
 [node name="NumerAndLine3" parent="PanelContainer/MarginContainer/NumbePlaceholder" instance=ExtResource( 3 )]
-margin_left = 50.0
-margin_right = 63.0
+margin_left = 48.0
+margin_right = 60.0
 margin_bottom = 65.0
 size_flags_horizontal = 0
 number = 9
 
 [node name="NumerAndLine4" parent="PanelContainer/MarginContainer/NumbePlaceholder" instance=ExtResource( 3 )]
-margin_left = 67.0
-margin_right = 80.0
+margin_left = 64.0
+margin_right = 76.0
 margin_bottom = 65.0
 size_flags_horizontal = 0
 number = 2
 
 [node name="NumerAndLine5" parent="PanelContainer/MarginContainer/NumbePlaceholder" instance=ExtResource( 3 )]
-margin_left = 84.0
-margin_right = 96.0
+margin_left = 80.0
+margin_right = 92.0
 margin_bottom = 65.0
 size_flags_horizontal = 0
 number = -1

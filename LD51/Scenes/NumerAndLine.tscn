@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scenes/NumerAndLine.gd" type="Script" id=1]
-[ext_resource path="res://Fonts/airstrip-four/airstrip_20.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Fonts/Bebas_28.tres" type="DynamicFont" id=2]
 
 [node name="NumerAndLine" type="VBoxContainer"]
 margin_right = 12.0
@@ -10,28 +10,28 @@ custom_constants/separation = 0
 script = ExtResource( 1 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-margin_right = 13.0
-margin_bottom = 46.0
+margin_right = 12.0
+margin_bottom = 35.0
 rect_min_size = Vector2( 12, 0 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_bottom = 3
 
 [node name="PanelContainer" type="ColorRect" parent="MarginContainer"]
-margin_left = 5.0
-margin_right = 8.0
-margin_bottom = 43.0
+margin_left = 4.0
+margin_right = 7.0
+margin_bottom = 32.0
 rect_min_size = Vector2( 3, 0 )
 size_flags_horizontal = 4
 size_flags_vertical = 3
 color = Color( 0, 0, 0, 1 )
 
 [node name="Label" type="Label" parent="."]
-margin_top = 46.0
-margin_right = 13.0
+margin_top = 35.0
+margin_right = 12.0
 margin_bottom = 70.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.231373 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 0 )
 custom_fonts/font = ExtResource( 2 )
 text = "0"
 align = 1
