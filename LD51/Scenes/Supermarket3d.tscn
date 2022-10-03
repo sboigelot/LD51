@@ -702,7 +702,7 @@ margin_bottom = 85.0
 custom_colors/font_color = Color( 0.352941, 0.815686, 0.196078, 1 )
 custom_colors/font_color_shadow = Color( 0.137255, 0.529412, 0.0823529, 1 )
 custom_fonts/font = ExtResource( 10 )
-text = "  new pacakges!"
+text = "  new packages!"
 
 [node name="ScoreContainer" type="HBoxContainer" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/VBoxContainer"]
 margin_top = 116.0

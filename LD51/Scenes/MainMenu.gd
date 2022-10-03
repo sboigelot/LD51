@@ -24,6 +24,7 @@ func _ready():
 	else:
 		webgl_button.visible = true
 	update_sound_sliders()
+	Music.play(load("res://Sounds/Musics/onboarging.ogg"))
 	
 func _on_NewGameButton_pressed():
 #	SfxManager.play("ui-button-click")

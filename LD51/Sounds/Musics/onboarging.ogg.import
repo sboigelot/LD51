@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/onboarging.ogg-88bd69e513d560381884c83ce9c1a29e.oggstr"
+
+[deps]
+
+source_file="res://Sounds/Musics/onboarging.ogg"
+dest_files=[ "res://.import/onboarging.ogg-88bd69e513d560381884c83ce9c1a29e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -38,6 +38,8 @@ func _ready():
 	update_top_time_ui()
 	reload_leaderboard()
 	
+	Music.play(load("res://Sounds/Musics/onboarging.ogg"))
+	
 func update_top_score_ui():
 	top_score_rtb.bbcode_text = "[center][b]TOP 10 SCORES[/b]\n"
 	

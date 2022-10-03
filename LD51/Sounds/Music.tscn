@@ -18,6 +18,7 @@ var rng = RandomNumberGenerator.new()
 
 export var playlist:Array = [
 	\"res://Sounds/Musics/ExtendedSteady_BeatsToMakeMinimumWageTo.ogg\",
+	\"res://Sounds/Musics/onboarging.ogg\",
 ]
 
 export var previous_random_picks = []
@@ -73,7 +74,7 @@ func play_next_music():
 
 [node name="Music" type="Node"]
 script = SubResource( 1 )
-play_on_start = true
+playlist = [ "res://Sounds/Musics/ExtendedSteady_BeatsToMakeMinimumWageTo.ogg", null ]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 autoplay = true

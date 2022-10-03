@@ -107,6 +107,9 @@ func load_products():
 		package_scenes.append(load(product_scene))
 
 func _ready():
+	
+	Music.play(load("res://Sounds/Musics/ExtendedSteady_BeatsToMakeMinimumWageTo.ogg"))
+	
 	load_products()
 	
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
@@ -560,7 +563,7 @@ const speech_bubble_scene = preload("res://Scenes/SpeechBubble.tscn")
 const speech_bubble_scene1 = preload("res://Scenes/SpeechBubble2.tscn")
 const speech_bubble_scene2 = preload("res://Scenes/SpeechBubble3.tscn")
 
-export(float) var karen_chance_percent_per_timer = 15
+export(float) var karen_chance_percent_per_timer = 10
 var karen_accumulated_chance: float = 0
 var karen_last_bubble_spawn_time:float = 0
 export var karen_bubble_spawn_delay:float = 3

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scenes/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/Bebas_20.tres" type="DynamicFont" id=2]
@@ -7,10 +7,12 @@
 [ext_resource path="res://Sprites/LD51-hand.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/mainbackground.png" type="Texture" id=6]
 [ext_resource path="res://Fonts/Bebas_16.tres" type="DynamicFont" id=7]
-[ext_resource path="res://Sprites/quit.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/QUIT-BUTTON.png" type="Texture" id=8]
 [ext_resource path="res://Fonts/Bebas_48.tres" type="DynamicFont" id=9]
 [ext_resource path="res://Sprites/LOGO .png" type="Texture" id=10]
 [ext_resource path="res://Sprites/LOGO-CART.png" type="Texture" id=11]
+[ext_resource path="res://Sprites/PLAY-BUTTON.png" type="Texture" id=12]
+[ext_resource path="res://Sprites/FULLSCREEN.png" type="Texture" id=13]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.360784, 0.529412, 0.396078, 1 )
@@ -35,22 +37,6 @@ margin_right = 1920.0
 margin_bottom = 1080.0
 texture = ExtResource( 6 )
 
-[node name="TitleLabel2" type="Label" parent="PanelContainer"]
-margin_top = 927.0
-margin_right = 1920.0
-margin_bottom = 1080.0
-size_flags_vertical = 8
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-custom_constants/shadow_offset_x = 0
-custom_fonts/font = ExtResource( 7 )
-text = "A game made for LD51 by:
-Graphics: Bu
-Music: Anchorlight
-Voice-over: Master of illusion
-Backend API: djoramm
-Game code: Togis"
-valign = 1
-
 [node name="CenterContainer" type="MarginContainer" parent="PanelContainer"]
 margin_right = 1920.0
 margin_bottom = 1080.0
@@ -61,21 +47,21 @@ margin_bottom = 1080.0
 custom_constants/margin_bottom = 100
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/CenterContainer/MarginContainer"]
-margin_left = 556.0
-margin_top = 118.0
+margin_left = 555.0
+margin_top = 104.0
 margin_right = 1364.0
-margin_bottom = 861.0
+margin_bottom = 875.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 custom_constants/separation = 50
 
 [node name="TitleContainer" type="MarginContainer" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer"]
-margin_right = 808.0
-margin_bottom = 467.0
+margin_right = 809.0
+margin_bottom = 464.0
 
 [node name="TitleLabel" type="Label" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/TitleContainer"]
 visible = false
-margin_right = 808.0
+margin_right = 809.0
 margin_bottom = 111.0
 size_flags_vertical = 0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
@@ -88,8 +74,8 @@ align = 1
 valign = 1
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/TitleContainer"]
-margin_right = 808.0
-margin_bottom = 467.0
+margin_right = 809.0
+margin_bottom = 464.0
 texture = ExtResource( 10 )
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/TitleContainer/TextureRect"]
@@ -101,9 +87,9 @@ texture = ExtResource( 11 )
 
 [node name="MusicConrol" type="GridContainer" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer"]
 margin_left = 245.0
-margin_top = 517.0
+margin_top = 514.0
 margin_right = 563.0
-margin_bottom = 597.0
+margin_bottom = 594.0
 size_flags_horizontal = 4
 columns = 2
 
@@ -151,80 +137,48 @@ margin_bottom = 72.0
 rect_min_size = Vector2( 200, 0 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer"]
-margin_left = 273.0
-margin_top = 647.0
-margin_right = 534.0
-margin_bottom = 743.0
-size_flags_horizontal = 4
+margin_left = 124.0
+margin_top = 644.0
+margin_right = 684.0
+margin_bottom = 771.0
+size_flags_horizontal = 6
 size_flags_vertical = 6
-custom_constants/separation = 5
 
-[node name="StartButton" type="Button" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_right = 128.0
-margin_bottom = 96.0
-rect_min_size = Vector2( 128, 96 )
-size_flags_horizontal = 0
-size_flags_vertical = 0
-custom_fonts/font = ExtResource( 3 )
-
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer/StartButton"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer/StartButton/MarginContainer"]
-margin_top = 12.0
-margin_right = 128.0
-margin_bottom = 84.0
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-custom_fonts/normal_font = ExtResource( 3 )
-bbcode_enabled = true
-bbcode_text = "[center]Start
-Work[/center]"
-text = "Start
-Work"
-fit_content_height = true
-
-[node name="FullscreenButton" type="Button" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 133.0
-margin_right = 261.0
-margin_bottom = 96.0
-rect_min_size = Vector2( 128, 96 )
-size_flags_horizontal = 0
-size_flags_vertical = 0
-custom_fonts/font = ExtResource( 3 )
-
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer/FullscreenButton"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer/FullscreenButton/MarginContainer"]
-margin_top = 23.0
-margin_right = 128.0
-margin_bottom = 73.0
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 4
-custom_fonts/normal_font = ExtResource( 2 )
-bbcode_enabled = true
-bbcode_text = "[center]Toggle
-Fullscreen[/center]"
-text = "Toggle
-Fullscreen"
-fit_content_height = true
-
-[node name="QuitButton" type="Button" parent="PanelContainer"]
-margin_left = 912.0
-margin_top = 1000.0
-margin_right = 1008.0
-margin_bottom = 1080.0
-rect_min_size = Vector2( 96, 80 )
+[node name="QuitButton" type="Button" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_right = 184.0
+margin_bottom = 127.0
+rect_min_size = Vector2( 184, 127 )
 size_flags_horizontal = 4
 size_flags_vertical = 8
 icon = ExtResource( 8 )
+flat = true
+expand_icon = true
+
+[node name="FullscreenButton" type="Button" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 188.0
+margin_right = 372.0
+margin_bottom = 127.0
+rect_min_size = Vector2( 184, 127 )
+focus_mode = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+enabled_focus_mode = 0
+icon = ExtResource( 13 )
+flat = true
+expand_icon = true
+
+[node name="StartButton" type="Button" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 376.0
+margin_right = 560.0
+margin_bottom = 127.0
+rect_min_size = Vector2( 184, 127 )
+focus_mode = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+enabled_focus_mode = 0
+icon = ExtResource( 12 )
 flat = true
 expand_icon = true
 
@@ -261,6 +215,22 @@ To play competitively, download the game
 click here to switch to fullscreen"
 fit_content_height = true
 
+[node name="TitleLabel2" type="Label" parent="."]
+margin_left = 20.0
+margin_top = 919.0
+margin_right = 1900.0
+margin_bottom = 1072.0
+size_flags_vertical = 8
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 7 )
+text = "A game made for LD51 by:
+Graphics: Bu
+Music: Anchorlight
+Voice-over: Master of illusion
+Backend API: djoramm
+Game code: Togis"
+valign = 1
+
 [node name="Cashier" type="Node2D" parent="."]
 
 [node name="HandNode" type="Node2D" parent="Cashier"]
@@ -272,7 +242,7 @@ texture = ExtResource( 5 )
 [connection signal="value_changed" from="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol/MasterVolumeSlider" to="." method="_on_MasterVolumeSlider_value_changed"]
 [connection signal="value_changed" from="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol/MusicVolumeSlider" to="." method="_on_MusicVolumeSlider_value_changed"]
 [connection signal="value_changed" from="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol/SoundFxVolumeSlider" to="." method="_on_SoundFxVolumeSlider_value_changed"]
-[connection signal="pressed" from="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer/QuitButton" to="." method="_on_QuitButton_pressed"]
 [connection signal="pressed" from="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer/FullscreenButton" to="." method="_on_FullscreenButton_pressed"]
-[connection signal="pressed" from="PanelContainer/QuitButton" to="." method="_on_QuitButton_pressed"]
+[connection signal="pressed" from="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="PanelContainer/WebGLButton" to="." method="_on_WebGLButton_pressed"]
