@@ -18,10 +18,10 @@ func _ready():
 	pass
 		
 func get_top_score():
-	$GetTopScoreHTTPRequest.request(get_base_uri() + "GetTimeBoard")
+	$GetTopScoreHTTPRequest.request(get_base_uri() + "GetScoreBoard")
 
 func get_top_time():
-	$GetTopTimeHTTPRequest.request(get_base_uri() + "GetScoreBoard")
+	$GetTopTimeHTTPRequest.request(get_base_uri() + "GetTimeBoard")
 
 func post_entry(name:String, score:float, time:float):
 	# Convert data to json string:
@@ -44,7 +44,7 @@ func _on_GetTopScoreHTTPRequest_request_completed(result, response_code, headers
 		return
 		
 	top_score = JSON.parse(body.get_string_from_utf8()).result
-#	print(top_score)
+	print(top_score)
 	emit_signal("top_score_updated")
 
 func _on_GetTopTimeHTTPRequest_request_completed(result, response_code, headers, body):
@@ -53,7 +53,7 @@ func _on_GetTopTimeHTTPRequest_request_completed(result, response_code, headers,
 		return
 		
 	top_time = JSON.parse(body.get_string_from_utf8()).result
-#	print(top_score)
+	print(top_score)
 	emit_signal("top_time_updated")
 
 func _on_PostEntryHTTPRequest_request_completed(result, response_code, headers, body):

@@ -24,7 +24,7 @@ var reloading_leaderboard: bool = false
 var score_submitted = false
 
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	update_ui(Game.win, Game.score, Game.time)
 	
 	Leaderboard.connect("entry_added", self, "on_score_added")
@@ -42,7 +42,7 @@ func update_top_score_ui():
 	top_score_rtb.bbcode_text = "[center][b]TOP 10 SCORES[/b]\n"
 	
 	for entry in Leaderboard.top_score:
-		top_score_rtb.bbcode_text += "\n%s\t%s[img=32]res://Sprites/coin.png[/img]" % [
+		top_score_rtb.bbcode_text += "\n%s\t%s [img=32]res://Sprites/coin.png[/img]" % [
 			entry.name,
 			entry.score
 		]
@@ -109,6 +109,7 @@ func on_leaderboard_loaded():
 
 
 func _on_PostScoretDialog_confirmed():
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	if post_score_name_lineedit.text == "":
 		return
 		
@@ -121,4 +122,15 @@ func _on_PostScoretDialog_confirmed():
 	)
 
 func _on_PostScoreButton_pressed():
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	post_score_dialog.popup_centered()
+
+func _process(delta):
+	move_hand_to_cursor()
+
+func move_hand_to_cursor():
+	var mouse_postion = get_viewport().get_mouse_position() as Vector2
+	$Cashier/HandNode.position = mouse_postion
+	
+	if $Cashier/HandNode.position.y < 450:
+		$Cashier/HandNode.position.y = 450

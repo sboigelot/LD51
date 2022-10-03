@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Scenes/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/airstrip-four/airstrip_20.tres" type="DynamicFont" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://Sprites/mainbackground.png" type="Texture" id=6]
 [ext_resource path="res://Fonts/airstrip-four/airstrip_16.tres" type="DynamicFont" id=7]
 [ext_resource path="res://Sprites/quit.png" type="Texture" id=8]
+[ext_resource path="res://Fonts/airstrip-four/airstrip_48.tres" type="DynamicFont" id=9]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.360784, 0.529412, 0.396078, 1 )
@@ -16,7 +17,7 @@ bg_color = Color( 0.360784, 0.529412, 0.396078, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
-np_start_game_button = NodePath("PanelContainer/MarginContainer2/StartButton")
+np_start_game_button = NodePath("PanelContainer/MarginContainer2/HBoxContainer/StartButton")
 np_ui_audio_master = NodePath("PanelContainer/CenterContainer/VBoxContainer/MusicConrol/MasterVolumeSlider")
 np_ui_audio_music = NodePath("PanelContainer/CenterContainer/VBoxContainer/MusicConrol/MusicVolumeSlider")
 np_ui_audio_soundfx = NodePath("PanelContainer/CenterContainer/VBoxContainer/MusicConrol/SoundFxVolumeSlider")
@@ -74,36 +75,33 @@ Backend API: djoramm
 Game code: Togis"
 valign = 1
 
-[node name="WebGLButton" type="Button" parent="PanelContainer"]
-visible = false
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1017.0
-margin_bottom = 593.0
-text = "click here to switch to fullscreen"
-
 [node name="MarginContainer2" type="MarginContainer" parent="PanelContainer"]
 margin_right = 1920.0
 margin_bottom = 1080.0
 custom_constants/margin_top = 600
 custom_constants/margin_left = 1200
 
-[node name="StartButton" type="Button" parent="PanelContainer/MarginContainer2"]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer2"]
 margin_left = 1200.0
 margin_top = 600.0
-margin_right = 1328.0
-margin_bottom = 696.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+custom_constants/separation = 5
+
+[node name="StartButton" type="Button" parent="PanelContainer/MarginContainer2/HBoxContainer"]
+margin_right = 128.0
+margin_bottom = 96.0
 rect_min_size = Vector2( 128, 96 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_fonts/font = ExtResource( 3 )
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer2/StartButton"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer2/HBoxContainer/StartButton"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer2/StartButton/MarginContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer2/HBoxContainer/StartButton/MarginContainer"]
 margin_top = 15.0
 margin_right = 128.0
 margin_bottom = 81.0
@@ -116,6 +114,35 @@ bbcode_text = "[center]Start
 Work[/center]"
 text = "Start
 Work"
+fit_content_height = true
+
+[node name="FullscreenButton" type="Button" parent="PanelContainer/MarginContainer2/HBoxContainer"]
+margin_left = 133.0
+margin_right = 261.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 128, 96 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 3 )
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer2/HBoxContainer/FullscreenButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer2/HBoxContainer/FullscreenButton/MarginContainer"]
+margin_top = 23.0
+margin_right = 128.0
+margin_bottom = 73.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+custom_fonts/normal_font = ExtResource( 2 )
+bbcode_enabled = true
+bbcode_text = "[center]Toggle
+Fullscreen[/center]"
+text = "Toggle
+Fullscreen"
 fit_content_height = true
 
 [node name="QuitButton" type="Button" parent="PanelContainer"]
@@ -186,6 +213,39 @@ margin_right = 388.0
 margin_bottom = 72.0
 rect_min_size = Vector2( 200, 0 )
 
+[node name="WebGLButton" type="Button" parent="PanelContainer"]
+visible = false
+margin_right = 1920.0
+margin_bottom = 1080.0
+custom_fonts/font = ExtResource( 9 )
+
+[node name="CenterContainer" type="CenterContainer" parent="PanelContainer/WebGLButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/WebGLButton/CenterContainer"]
+margin_top = 372.0
+margin_right = 1920.0
+margin_bottom = 708.0
+rect_min_size = Vector2( 1920, 0 )
+mouse_filter = 2
+custom_fonts/normal_font = ExtResource( 9 )
+bbcode_enabled = true
+bbcode_text = "[center]
+The [color=lime]HTML5 version[/color] [color=red]doesn't have a leaderboard ![/color]
+
+To play competitively,[color=aqua] download the game[/color]
+
+click here to switch to fullscreen[/center]"
+text = "
+The HTML5 version doesn't have a leaderboard !
+
+To play competitively, download the game
+
+click here to switch to fullscreen"
+fit_content_height = true
+
 [node name="Cashier" type="Node2D" parent="."]
 
 [node name="HandNode" type="Node2D" parent="Cashier"]
@@ -194,9 +254,10 @@ rect_min_size = Vector2( 200, 0 )
 position = Vector2( 166, 341 )
 texture = ExtResource( 5 )
 
-[connection signal="pressed" from="PanelContainer/WebGLButton" to="." method="_on_WebGLButton_pressed"]
-[connection signal="pressed" from="PanelContainer/MarginContainer2/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer2/HBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="PanelContainer/MarginContainer2/HBoxContainer/FullscreenButton" to="." method="_on_FullscreenButton_pressed"]
 [connection signal="pressed" from="PanelContainer/QuitButton" to="." method="_on_QuitButton_pressed"]
 [connection signal="value_changed" from="PanelContainer/CenterContainer/VBoxContainer/MusicConrol/MasterVolumeSlider" to="." method="_on_MasterVolumeSlider_value_changed"]
 [connection signal="value_changed" from="PanelContainer/CenterContainer/VBoxContainer/MusicConrol/MusicVolumeSlider" to="." method="_on_MusicVolumeSlider_value_changed"]
 [connection signal="value_changed" from="PanelContainer/CenterContainer/VBoxContainer/MusicConrol/SoundFxVolumeSlider" to="." method="_on_SoundFxVolumeSlider_value_changed"]
+[connection signal="pressed" from="PanelContainer/WebGLButton" to="." method="_on_WebGLButton_pressed"]

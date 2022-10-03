@@ -83,6 +83,8 @@ var shake_sum:float = 0.0
 var shake_target:float = 5000.0
 var shake_previous_mouse_pos: Vector2
 
+export var conveyor_visual_speed:float = 0.10
+
 func set_scanner_hands(value:bool):
 	scanner.visible = value
 	scanner_on_charger.visible = not value
@@ -158,6 +160,11 @@ func _process(delta):
 	check_shake()	
 	update_clock(delta)
 	k_on_process()
+	
+	move_belt_visual(delta)
+	
+func move_belt_visual(delta):
+	$BeltVisual.get_active_material(0).uv1_offset.x -= delta * conveyor_visual_speed
 	
 func update_clock(delta):
 	Game.time += delta

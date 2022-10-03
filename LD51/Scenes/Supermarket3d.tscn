@@ -1,6 +1,6 @@
-[gd_scene load_steps=52 format=2]
+[gd_scene load_steps=55 format=2]
 
-[ext_resource path="res://Products/y30z130/Poopalot/Package.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Products/z50/Poopalot/Package.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Supermarket3d.gd" type="Script" id=2]
 [ext_resource path="res://Sprites/square.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/LD51-scanner.png" type="Texture" id=4]
@@ -17,6 +17,7 @@
 [ext_resource path="res://Sprites/karen/karen.png" type="Texture" id=15]
 [ext_resource path="res://Scenes/SpeechBubble.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Sprites/trashbin.png" type="Texture" id=17]
+[ext_resource path="res://Sprites/converyor.png" type="Texture" id=18]
 [ext_resource path="res://Sprites/circle_outline_170_in_200.png" type="Texture" id=19]
 [ext_resource path="res://Sprites/broken_scanner.png" type="Texture" id=20]
 [ext_resource path="res://Sprites/arrrows.png" type="Texture" id=21]
@@ -26,6 +27,13 @@ size = Vector2( 17.8, 10 )
 
 [sub_resource type="SpatialMaterial" id=13]
 albedo_texture = ExtResource( 5 )
+
+[sub_resource type="PlaneMesh" id=33]
+size = Vector2( 9.5, 4.65 )
+
+[sub_resource type="SpatialMaterial" id=34]
+albedo_texture = ExtResource( 18 )
+uv1_offset = Vector3( -0.9, 0, 0 )
 
 [sub_resource type="PlaneMesh" id=26]
 size = Vector2( 3, 3 )
@@ -190,6 +198,11 @@ karen_button_help_animation_np = NodePath("CanvasLayer/Supermarket/ManagerButton
 [node name="BackgroundImage" type="MeshInstance" parent="."]
 mesh = SubResource( 12 )
 material/0 = SubResource( 13 )
+
+[node name="BeltVisual" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.52037, 0.00670505, 0.832237 )
+mesh = SubResource( 33 )
+material/0 = SubResource( 34 )
 
 [node name="Arrows" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.43684, 0.0120896, 0 )

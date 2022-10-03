@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Fonts/airstrip-four/airstrip_48.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Scenes/VictoryScreen.gd" type="Script" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://Sprites/mainbackground.png" type="Texture" id=4]
 [ext_resource path="res://Fonts/airstrip-four/airstrip_92.tres" type="DynamicFont" id=5]
 [ext_resource path="res://Fonts/airstrip-four/airstrip_16.tres" type="DynamicFont" id=6]
+[ext_resource path="res://Sprites/quit.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/LD51-hand.png" type="Texture" id=8]
 
 [node name="VictoryScreen" type="Control"]
 anchor_right = 1.0
@@ -103,9 +105,9 @@ margin_bottom = 1030.0
 
 [node name="HBoxContainer" type="GridContainer" parent="MarginContainer/CenterContainer"]
 margin_left = 458.0
-margin_top = 251.0
+margin_top = 240.0
 margin_right = 1362.0
-margin_bottom = 779.0
+margin_bottom = 790.0
 columns = 2
 
 [node name="TopScoreRichTextLabel" type="RichTextLabel" parent="MarginContainer/CenterContainer/HBoxContainer"]
@@ -234,45 +236,51 @@ text = "00:00"
 align = 2
 
 [node name="RetryButton" type="Button" parent="MarginContainer/CenterContainer/HBoxContainer"]
+margin_left = 173.0
 margin_top = 490.0
-margin_right = 450.0
-margin_bottom = 528.0
-size_flags_horizontal = 3
+margin_right = 277.0
+margin_bottom = 550.0
+rect_min_size = Vector2( 96, 60 )
+size_flags_horizontal = 4
 custom_fonts/font = ExtResource( 3 )
 text = "Replay"
 
 [node name="PostScoreButton" type="Button" parent="MarginContainer/CenterContainer/HBoxContainer"]
-margin_left = 454.0
+margin_left = 596.0
 margin_top = 490.0
-margin_right = 904.0
-margin_bottom = 528.0
-size_flags_horizontal = 3
+margin_right = 761.0
+margin_bottom = 550.0
+rect_min_size = Vector2( 96, 60 )
+size_flags_horizontal = 4
 custom_fonts/font = ExtResource( 3 )
 text = "Post Score"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-margin_left = 820.0
-margin_top = 992.0
-margin_right = 1099.0
+margin_left = 912.0
+margin_top = 950.0
+margin_right = 1008.0
 margin_bottom = 1030.0
 size_flags_horizontal = 4
 size_flags_vertical = 8
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_right = 279.0
-margin_bottom = 38.0
+margin_right = 96.0
+margin_bottom = 80.0
 size_flags_horizontal = 0
 
 [node name="Controls" type="VBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
-margin_right = 279.0
-margin_bottom = 38.0
+margin_right = 96.0
+margin_bottom = 80.0
 
 [node name="BackToMenuButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/Controls"]
-margin_right = 279.0
-margin_bottom = 38.0
+margin_right = 96.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 96, 80 )
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
-text = "Back to main menu"
+icon = ExtResource( 7 )
+flat = true
+expand_icon = true
 
 [node name="PostScoretDialog" type="AcceptDialog" parent="."]
 margin_right = 83.0
@@ -295,6 +303,14 @@ text = "Enter your name:"
 margin_top = 18.0
 margin_right = 284.0
 margin_bottom = 42.0
+
+[node name="Cashier" type="Node2D" parent="."]
+
+[node name="HandNode" type="Node2D" parent="Cashier"]
+
+[node name="ArmTextureRext" type="Sprite" parent="Cashier/HandNode"]
+position = Vector2( 166, 341 )
+texture = ExtResource( 8 )
 
 [connection signal="pressed" from="MarginContainer/CenterContainer/HBoxContainer/RetryButton" to="." method="_on_RetryButton_pressed"]
 [connection signal="pressed" from="MarginContainer/CenterContainer/HBoxContainer/PostScoreButton" to="." method="_on_PostScoreButton_pressed"]

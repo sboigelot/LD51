@@ -76,6 +76,8 @@ func move_hand_to_cursor():
 	if $Cashier/HandNode.position.y < 450:
 		$Cashier/HandNode.position.y = 450
 
-
 func _on_QuitButton_pressed():
 	get_tree().quit()
+
+func _on_FullscreenButton_pressed():
+	OS.window_fullscreen = !OS.window_fullscreen
