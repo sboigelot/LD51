@@ -8,69 +8,103 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 2 )
-np_victory_label = NodePath("CenterContainer/VBoxContainer/VictoryLabel")
-np_retry_button = NodePath("CenterContainer/VBoxContainer/RetryButton")
-np_score_label = NodePath("CenterContainer/VBoxContainer/HBoxContainer/ScoreLabel")
-np_time_label = NodePath("CenterContainer/VBoxContainer/HBoxContainer/TimeLabel")
+np_victory_label = NodePath("MarginContainer/VBoxContainer/VBoxContainer/VictoryLabel")
+np_retry_button = NodePath("MarginContainer/VBoxContainer/VBoxContainer/Controls/RetryButton")
+np_score_label = NodePath("MarginContainer/VBoxContainer/VBoxContainer/GridContainer/ScoreLabel")
+np_time_label = NodePath("MarginContainer/VBoxContainer/VBoxContainer/GridContainer/TimeLabel")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 60.0
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/margin_right = 50
+custom_constants/margin_top = 50
+custom_constants/margin_left = 50
+custom_constants/margin_bottom = 50
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
-margin_left = 792.0
-margin_top = 452.0
-margin_right = 1127.0
-margin_bottom = 627.0
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 50.0
+margin_top = 50.0
+margin_right = 1870.0
+margin_bottom = 1030.0
 
-[node name="VictoryLabel" type="Label" parent="CenterContainer/VBoxContainer"]
-margin_right = 335.0
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_right = 387.0
+margin_bottom = 169.0
+size_flags_horizontal = 0
+
+[node name="VictoryLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+margin_right = 387.0
 margin_bottom = 55.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
 custom_fonts/font = ExtResource( 1 )
 text = "VICTORY!"
 align = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
 margin_top = 59.0
-margin_right = 335.0
-margin_bottom = 91.0
-custom_constants/separation = 20
+margin_right = 387.0
+margin_bottom = 127.0
+columns = 2
 
-[node name="ScoreLabel" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer"]
-margin_right = 153.0
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/GridContainer"]
+margin_right = 304.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 3 )
+text = "Score:"
+
+[node name="ScoreLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/GridContainer"]
+margin_left = 308.0
+margin_right = 387.0
 margin_bottom = 32.0
 custom_fonts/font = ExtResource( 3 )
-text = "Score: 000"
-align = 1
+text = "000"
+align = 2
 
-[node name="TimeLabel" type="Label" parent="CenterContainer/VBoxContainer/HBoxContainer"]
-margin_left = 173.0
-margin_right = 335.0
-margin_bottom = 32.0
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/GridContainer"]
+margin_top = 36.0
+margin_right = 304.0
+margin_bottom = 68.0
+size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
-text = "Time: 00:00"
-align = 1
+text = "Time:"
 
-[node name="RetryButton" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 95.0
-margin_right = 335.0
-margin_bottom = 133.0
+[node name="TimeLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/GridContainer"]
+margin_left = 308.0
+margin_top = 36.0
+margin_right = 387.0
+margin_bottom = 68.0
+custom_fonts/font = ExtResource( 3 )
+text = "00:00"
+align = 2
+
+[node name="Controls" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+margin_top = 131.0
+margin_right = 387.0
+margin_bottom = 169.0
+
+[node name="RetryButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/Controls"]
+margin_right = 104.0
+margin_bottom = 38.0
+size_flags_horizontal = 6
 custom_fonts/font = ExtResource( 3 )
 text = "Replay"
 
-[node name="BackToMenuButton" type="Button" parent="CenterContainer/VBoxContainer"]
-margin_top = 137.0
-margin_right = 335.0
-margin_bottom = 175.0
+[node name="BackToMenuButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/Controls"]
+margin_left = 108.0
+margin_right = 387.0
+margin_bottom = 38.0
+size_flags_horizontal = 6
 custom_fonts/font = ExtResource( 3 )
 text = "Back to main menu"
 
-[connection signal="pressed" from="CenterContainer/VBoxContainer/RetryButton" to="." method="_on_RetryButton_pressed"]
-[connection signal="pressed" from="CenterContainer/VBoxContainer/BackToMenuButton" to="." method="_on_BackToMenuButton_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/Controls/RetryButton" to="." method="_on_RetryButton_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/Controls/BackToMenuButton" to="." method="_on_BackToMenuButton_pressed"]

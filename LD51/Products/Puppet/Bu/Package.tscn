@@ -28,7 +28,7 @@ transform = Transform( 0.75, 0, 0, 0, -3.27835e-08, -0.75, 0, 0.75, -3.27835e-08
 [node name="BarcodesPlaceholder" type="Spatial" parent="RotationRoot"]
 
 [node name="FrontBarcode" parent="RotationRoot/BarcodesPlaceholder" instance=ExtResource( 3 )]
-transform = Transform( 0.812572, 0, 0.58286, 0, 1, 0, -0.58286, 0, 0.812572, -0.0318527, 0.239625, -0.0148134 )
+transform = Transform( 0.812572, 0, 0.58286, 0, 1, 0, -0.58286, 0, 0.812572, -0.0318527, 0.28529, -0.0148134 )
 
 [node name="BackBarcode" parent="RotationRoot/BarcodesPlaceholder" instance=ExtResource( 3 )]
 transform = Transform( -0.956024, -2.56402e-08, -0.29329, 0, -1, 8.74228e-08, -0.29329, 8.35783e-08, 0.956024, 0.0495687, -0.238099, -0.0877775 )

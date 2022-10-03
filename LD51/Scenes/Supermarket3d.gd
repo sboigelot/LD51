@@ -6,12 +6,15 @@ export(NodePath) var camera_np
 export(NodePath) var scan_camera_np
 export(NodePath) var scan_package_holder_np
 export(NodePath) var button_panel_np
+export(NodePath) var button_mesh_np
 export(NodePath) var hand_node_np
 export(NodePath) var scanner_np
 export(NodePath) var scanner_screen_texturerect_np
 export(NodePath) var scanner_screen_center_np
 export(NodePath) var scanner_error_screen_np
 export(NodePath) var scanner_disabled_screen_np
+export(NodePath) var scanner_price_screen_np
+export(NodePath) var scanner_price_rtb_np
 export(NodePath) var scanner_laser_np
 export(NodePath) var scanner_anim_np
 export(NodePath) var scanner_on_charger_np
@@ -19,26 +22,33 @@ export(NodePath) var debug_label_np
 export(NodePath) var keyboard_texturerect_np
 export(NodePath) var keyboard_line_edit_np
 export(NodePath) var keyboard_error_label_np
+export(NodePath) var keyboard_price_screen_np
+export(NodePath) var keyboard_price_rtb_np
 export(NodePath) var score_label_np
 export(NodePath) var time_label_np
 export(NodePath) var danger_zone_mesh_np
 export(NodePath) var danger_zone_hud_np
 export(NodePath) var danger_zone_label_np
+export(NodePath) var danger_zone_animation_np
 export(NodePath) var red_button_texturerect_np
 export(NodePath) var red_button_pressed_texturerect_np
 export(NodePath) var clock_progress_np
 export(NodePath) var clock_progress_label_np
+export(NodePath) var new_package_label_np
 
 onready var camera = get_node(camera_np) as Camera
 onready var scan_camera = get_node(scan_camera_np) as Camera
 onready var scan_package_holder = get_node(scan_package_holder_np) as Spatial
 onready var button_panel = get_node(button_panel_np) as PanelContainer
+onready var button_mesh = get_node(button_mesh_np) as MeshInstance
 onready var hand_node = get_node(hand_node_np) as Node2D
 onready var scanner = get_node(scanner_np) as Sprite
 onready var scanner_screen_texturerect = get_node(scanner_screen_texturerect_np) as TextureRect
 onready var scanner_screen_center = get_node(scanner_screen_center_np) as Position2D
 onready var scanner_error_screen = get_node(scanner_error_screen_np) as TextureRect
 onready var scanner_disabled_screen = get_node(scanner_disabled_screen_np) as TextureRect
+onready var scanner_price_screen = get_node(scanner_price_screen_np) as TextureRect
+onready var scanner_price_rtb = get_node(scanner_price_rtb_np) as RichTextLabel
 onready var scanner_laser = get_node(scanner_laser_np) as Line2D
 onready var scanner_anim = get_node(scanner_anim_np) as AnimationPlayer
 onready var scanner_on_charger = get_node(scanner_on_charger_np) as Sprite
@@ -46,15 +56,19 @@ onready var debug_label = get_node(debug_label_np) as Label
 onready var keyboard_texturerect = get_node(keyboard_texturerect_np) as Sprite
 onready var keyboard_line_edit = get_node(keyboard_line_edit_np) as LineEdit
 onready var keyboard_error_label = get_node(keyboard_error_label_np) as Label
+onready var keyboard_price_screen = get_node(keyboard_price_screen_np) as TextureRect
+onready var keyboard_price_rtb = get_node(keyboard_price_rtb_np) as RichTextLabel
 onready var score_label = get_node(score_label_np) as Label
 onready var time_label = get_node(time_label_np) as Label
 onready var danger_zone_mesh = get_node(danger_zone_mesh_np) as MeshInstance
 onready var danger_zone_hud = get_node(danger_zone_hud_np) as Control
 onready var danger_zone_label = get_node(danger_zone_label_np) as Label
+onready var danger_zone_animation = get_node(danger_zone_animation_np) as AnimationPlayer
 onready var red_button_texturerect = get_node(red_button_texturerect_np) as TextureRect
 onready var red_button_pressed_texturerect = get_node(red_button_pressed_texturerect_np) as TextureRect
 onready var clock_progress = get_node(clock_progress_np) as TextureProgress
 onready var clock_progress_label = get_node(clock_progress_label_np) as Label
+onready var new_package_label = get_node(new_package_label_np) as Label
 
 var hand_node_offset: Vector2
 
@@ -101,7 +115,8 @@ func _ready():
 	if scan_package_holder.get_child_count() >= 1:
 #		scan_package = scan_package_holder.get_child(0)
 		scan_package_holder.get_child(0).queue_free()
-		button_panel.visible = false
+	button_panel.visible = false
+	button_mesh.visible = false
 	spawn_package()
 	
 	scanner_error_screen.visible = false
@@ -111,6 +126,11 @@ func _ready():
 	score_label.text = str(Game.score)
 	time_label.text = Game.get_time_str()
 	update_danger_zone_visuals()
+	scanner_price_screen.visible = false
+	keyboard_price_screen.visible = false
+	new_package_label.visible = false
+	
+	k_ready()
 	
 func set_editor_azerty():
 	if not OS.is_debug_build():
@@ -136,7 +156,8 @@ func _process(delta):
 	toggle_scan_anim(delta)
 	move_scan_camera()
 	check_shake()	
-	update_clock(delta)	
+	update_clock(delta)
+	k_on_process()
 	
 func update_clock(delta):
 	Game.time += delta
@@ -238,14 +259,19 @@ func rotate_package(add_rotation: Vector2):
 		return
 	scan_package.add_to_target_rotation(add_rotation)
 
-var spawn_counter= {
-	0: 2,
-	30: 3,
-	50: 4,
-	90: 5
-}
 
 func _on_Timer_timeout():
+	k_on_timer()	
+	spawn_new_package_group()
+
+var spawn_counter= {
+	0: 2,
+	20: 3,
+	40: 4,
+	60: 5
+}
+func spawn_new_package_group():
+	blink_new_package_label()
 	
 	var count = 0
 	for threshold in spawn_counter.keys():
@@ -293,6 +319,7 @@ func on_conveyor_belt_package_clicked(package: Package):
 		
 		scan_package = package
 		button_panel.visible = true
+		button_mesh.visible = true
 
 func _on_Package_barcode_scanned(package, barcode):
 	if get_scanner_hands() and is_scanner_worling():
@@ -311,6 +338,7 @@ func blink_scanner_error():
 func add_score(score):
 	Game.score += score
 	score_label.text = str(Game.score)
+	blink_scanner_price(score)
 
 func move_package_to_exit_belt(package: Package):
 	
@@ -329,6 +357,7 @@ func move_package_to_exit_belt(package: Package):
 	]
 	package.transform = spawn_positions[randi() % spawn_positions.size()]
 	button_panel.visible = false
+	button_mesh.visible = false
 
 func _physics_process(delta):
 	move_package_in_coveryor_belt(delta, $ConveyorBelt)
@@ -418,6 +447,11 @@ func blink_keyboard_modulate():
 		yield(get_tree().create_timer(0.2), "timeout")
 	SfxManager.play("Error")
 
+func blink_new_package_label():
+	new_package_label.visible = true
+	yield(get_tree().create_timer(1.5), "timeout")
+	new_package_label.visible = false
+
 func blink_keyboard_label():
 	if keyboard_error_label.visible:
 		return		
@@ -425,6 +459,15 @@ func blink_keyboard_label():
 	yield(get_tree().create_timer(0.4), "timeout")
 	keyboard_error_label.visible = false
 	SfxManager.play("Error")
+
+func blink_scanner_price(price:int):
+	scanner_price_screen.visible = true
+	keyboard_price_screen.visible = true
+	scanner_price_rtb.bbcode_text = "[center]%d[img=32]res://Sprites/coin.png[/img][/center]" % price
+	keyboard_price_rtb.bbcode_text = scanner_price_rtb.bbcode_text
+	yield(get_tree().create_timer(0.4), "timeout")
+	scanner_price_screen.visible = false
+	keyboard_price_screen.visible = false
 
 func _on_KeyboardLineEdit_text_changed(new_text:String):
 	SfxManager.play("buttonpress")
@@ -449,6 +492,8 @@ func update_danger_zone_visuals():
 	danger_zone_mesh.visible = danger_zone_package.size() >= 3
 	danger_zone_hud.visible = danger_zone_package.size() >= 3
 	danger_zone_label.text = str(danger_zone_package.size())
+	if danger_zone_hud.visible and not danger_zone_animation.is_playing():
+		danger_zone_animation.play("BlinkText")
 
 func _on_LooseArea_body_exited(body):
 	if not body is Package:
@@ -461,9 +506,97 @@ func _on_LooseArea_body_exited(body):
 func _on_RedButton_pressed():
 	if red_button_pressed_texturerect.visible:
 		return
-	
+	set_scanner_hands(false)
 	red_button_texturerect.visible = false
 	red_button_pressed_texturerect.visible = true
+	k_push_away()
 	yield(get_tree().create_timer(0.2),"timeout")
 	red_button_texturerect.visible = true
 	red_button_pressed_texturerect.visible = false
+
+
+################################################################################
+#		KAREN
+################################################################################
+
+export(NodePath) var karen_np
+export(NodePath) var speech_bubble_spawn_locations_np
+export(NodePath) var speech_bubble_plaholder_np
+export(NodePath) var karen_button_help_container_np
+export(NodePath) var karen_button_help_animation_np
+
+onready var karen = get_node(karen_np) as MeshInstance
+onready var speech_bubble_spawn_locations = get_node(speech_bubble_spawn_locations_np) as Spatial
+onready var speech_bubble_plaholder = get_node(speech_bubble_plaholder_np) as Spatial
+onready var karen_button_help_container = get_node(karen_button_help_container_np) as Container
+onready var karen_button_help_animation = get_node(karen_button_help_animation_np) as AnimationPlayer
+
+const speech_bubble_scene = preload("res://Scenes/SpeechBubble.tscn")
+
+export(float) var karen_chance_percent_per_timer = 15
+var karen_accumulated_chance: float = 0
+var karen_last_bubble_spawn_time:float = 0
+export var karen_bubble_spawn_delay:float = 2
+export var karen_min_spawn_time: float = 30.0
+
+func k_ready():
+	karen.visible = false
+	karen_button_help_container.visible = false
+	karen_button_help_animation.play("BlinText")
+	
+	for child in speech_bubble_plaholder.get_children():
+		child.queue_free()
+
+func k_on_process():
+	if karen.visible:
+		k_try_spawn_bubble()
+
+func k_on_timer():
+	k_try_spawn_karen()
+
+func k_try_spawn_karen():
+	if karen.visible:
+		return
+		
+	if Game.time < karen_min_spawn_time:
+		return
+		
+	karen_accumulated_chance += karen_chance_percent_per_timer
+	var chance = randi() % 100
+	if chance < karen_accumulated_chance:
+		k_spawn_karen()
+
+func k_spawn_karen():
+	karen_accumulated_chance = 0
+	karen.visible = true
+	karen_button_help_container.visible = true
+
+func k_try_spawn_bubble():
+	if karen_last_bubble_spawn_time + karen_bubble_spawn_delay < Game.time:
+		k_spawn_bubble()
+	
+func k_spawn_bubble():
+	karen_last_bubble_spawn_time = Game.time
+	
+	var spawn_location = speech_bubble_spawn_locations.get_child(
+		randi() % speech_bubble_spawn_locations.get_child_count()
+	) as Spatial
+	
+	var instance = speech_bubble_scene.instance() as Spatial
+	instance.transform = spawn_location.transform
+	instance.translate(Vector3(0, 0.1*speech_bubble_plaholder.get_child_count(), 0))
+	speech_bubble_plaholder.add_child(instance)
+
+func k_push_away():
+	if not karen.visible:
+		return
+		
+	if speech_bubble_plaholder.get_child_count() == 0:
+		karen.visible = false
+		karen_button_help_container.visible = false
+		return
+	
+	var last_bubble = speech_bubble_plaholder.get_child(
+		speech_bubble_plaholder.get_child_count() - 1
+	)
+	last_bubble.queue_free()

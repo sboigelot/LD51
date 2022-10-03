@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://Products/y30z130/Poopalot/Package.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/Supermarket3d.gd" type="Script" id=2]
@@ -14,18 +14,24 @@
 [ext_resource path="res://Sprites/clock.png" type="Texture" id=12]
 [ext_resource path="res://Sprites/redbutton.png" type="Texture" id=13]
 [ext_resource path="res://Sprites/redbutton_pressed.png" type="Texture" id=14]
-[ext_resource path="res://Sprites/flip_arrow_left.png" type="Texture" id=15]
-[ext_resource path="res://Sprites/flip_arrow_right.png" type="Texture" id=16]
-[ext_resource path="res://Sprites/flip_arrow_down.png" type="Texture" id=17]
-[ext_resource path="res://Sprites/flip_arrow_up.png" type="Texture" id=18]
+[ext_resource path="res://Sprites/karen/karen.png" type="Texture" id=15]
+[ext_resource path="res://Scenes/SpeechBubble.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Sprites/circle_outline_170_in_200.png" type="Texture" id=19]
 [ext_resource path="res://Sprites/broken_scanner.png" type="Texture" id=20]
+[ext_resource path="res://Sprites/arrrows.png" type="Texture" id=21]
 
 [sub_resource type="PlaneMesh" id=12]
 size = Vector2( 17.8, 10 )
 
 [sub_resource type="SpatialMaterial" id=13]
 albedo_texture = ExtResource( 5 )
+
+[sub_resource type="PlaneMesh" id=26]
+size = Vector2( 3, 3 )
+
+[sub_resource type="SpatialMaterial" id=27]
+flags_transparent = true
+albedo_texture = ExtResource( 21 )
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.1, 1, 3 )
@@ -68,6 +74,22 @@ font_data = ExtResource( 7 )
 
 [sub_resource type="StyleBoxEmpty" id=25]
 
+[sub_resource type="Animation" id=30]
+resource_name = "BlinText"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("KarenInfoLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
 [sub_resource type="ViewportTexture" id=10]
 viewport_path = NodePath("ScanViewport")
 
@@ -88,6 +110,22 @@ tracks/0/keys = {
 "values": [ Vector2( -40, -40 ), Vector2( -40, -30 ), Vector2( -40, -40 ), Vector2( -40, -50 ), Vector2( -40, -40 ), Vector2( -40, -30 ), Vector2( -40, -40 ) ]
 }
 
+[sub_resource type="Animation" id=31]
+resource_name = "BlinkText"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("DangerZoneTextContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
 [sub_resource type="BoxShape" id=18]
 
 [sub_resource type="CubeMesh" id=19]
@@ -96,18 +134,28 @@ tracks/0/keys = {
 flags_transparent = true
 albedo_color = Color( 1, 0, 0, 0.439216 )
 
+[sub_resource type="PlaneMesh" id=28]
+size = Vector2( 3, 3 )
+
+[sub_resource type="SpatialMaterial" id=29]
+flags_transparent = true
+albedo_texture = ExtResource( 15 )
+
 [node name="Supermarket3d" type="Spatial"]
 script = ExtResource( 2 )
 camera_np = NodePath("Camera")
 scan_camera_np = NodePath("ScanViewport/ScanCamera")
 scan_package_holder_np = NodePath("ScanPackageLocation")
 button_panel_np = NodePath("CanvasLayer/Supermarket/ButtonPanelContainer")
+button_mesh_np = NodePath("Arrows")
 hand_node_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode")
 scanner_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext")
 scanner_screen_texturerect_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/ScannerCameraScreen")
 scanner_screen_center_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/ScannerCameraScreen/CenterPosition2D")
 scanner_error_screen_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/ErrorScreen")
 scanner_disabled_screen_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/DisabledScreen")
+scanner_price_screen_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/PriceScreen")
+scanner_price_rtb_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/PriceScreen/PriceLabel")
 scanner_laser_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/LaserLine2D")
 scanner_anim_np = NodePath("CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/ScannerAnimationPlayer")
 scanner_on_charger_np = NodePath("CanvasLayer/Supermarket/ScannerCharger/ScannerTextureRext")
@@ -115,20 +163,34 @@ debug_label_np = NodePath("CanvasLayer/Supermarket/ButtonPanelContainer/DebugLab
 keyboard_texturerect_np = NodePath("CanvasLayer/Supermarket/Keyboard/KeyboardTextureRext")
 keyboard_line_edit_np = NodePath("CanvasLayer/Supermarket/Keyboard/KeyboardLineEdit")
 keyboard_error_label_np = NodePath("CanvasLayer/Supermarket/Keyboard/KeyboardErrorLabel")
-score_label_np = NodePath("CanvasLayer/Supermarket/ScoreHUD/MarginContainer/ScoreContainer/ScoreLabel")
-time_label_np = NodePath("CanvasLayer/Supermarket/ScoreHUD/MarginContainer/TimeContainer/TimeLabel")
+keyboard_price_screen_np = NodePath("CanvasLayer/Supermarket/Keyboard/KbPriceScreen")
+keyboard_price_rtb_np = NodePath("CanvasLayer/Supermarket/Keyboard/KbPriceScreen/KbPriceLabel")
+score_label_np = NodePath("CanvasLayer/Supermarket/ScoreHUD/MarginContainer/VBoxContainer/ScoreContainer/ScoreLabel")
+time_label_np = NodePath("CanvasLayer/Supermarket/ScoreHUD/MarginContainer/VBoxContainer/TimeContainer/TimeLabel")
 danger_zone_mesh_np = NodePath("DangerZone/DangerZoneMesh")
 danger_zone_hud_np = NodePath("CanvasLayer/Supermarket/DangerZoneHUD")
-danger_zone_label_np = NodePath("CanvasLayer/Supermarket/DangerZoneHUD/MarginContainer/HBoxContainer/DangerZoneLabel")
-red_button_texturerect_np = NodePath("CanvasLayer/Supermarket/ManagerButton/MarginContainer/RedButtonTextureRect")
-red_button_pressed_texturerect_np = NodePath("CanvasLayer/Supermarket/ManagerButton/MarginContainer/RedButtonPressedTextureRect")
-clock_progress_np = NodePath("CanvasLayer/Supermarket/ScoreHUD/MarginContainer/TimeContainer/MarginContainer/ClockProgress")
-clock_progress_label_np = NodePath("CanvasLayer/Supermarket/ScoreHUD/MarginContainer/TimeContainer/MarginContainer/ClockProgress/ClockProgressLabel")
+danger_zone_label_np = NodePath("CanvasLayer/Supermarket/DangerZoneHUD/MarginContainer/DangerZoneTextContainer/DangerZoneLabel")
+danger_zone_animation_np = NodePath("CanvasLayer/Supermarket/DangerZoneHUD/MarginContainer/AnimationPlayer")
+red_button_texturerect_np = NodePath("CanvasLayer/Supermarket/ManagerButton/HBoxContainer/MarginContainer/RedButtonTextureRect")
+red_button_pressed_texturerect_np = NodePath("CanvasLayer/Supermarket/ManagerButton/HBoxContainer/MarginContainer/RedButtonPressedTextureRect")
+clock_progress_np = NodePath("CanvasLayer/Supermarket/ScoreHUD/MarginContainer/VBoxContainer/TimeContainer/MarginContainer/ClockProgress")
+clock_progress_label_np = NodePath("CanvasLayer/Supermarket/ScoreHUD/MarginContainer/VBoxContainer/TimeContainer/MarginContainer/ClockProgress/ClockProgressLabel")
+new_package_label_np = NodePath("CanvasLayer/Supermarket/ScoreHUD/MarginContainer/VBoxContainer/TimeContainer/NewPackageLabel")
 hand_min_y = 385.0
+karen_np = NodePath("CanvasLayer2/KarenLayerSpatial/Karen")
+speech_bubble_spawn_locations_np = NodePath("CanvasLayer2/KarenLayerSpatial/SpeechBubbleSpawnLocations")
+speech_bubble_plaholder_np = NodePath("CanvasLayer2/KarenLayerSpatial/SpeechBubblePlaceholder")
+karen_button_help_container_np = NodePath("CanvasLayer/Supermarket/ManagerButton/HBoxContainer/KarenInfo")
+karen_button_help_animation_np = NodePath("CanvasLayer/Supermarket/ManagerButton/HBoxContainer/KarenInfo/AnimationPlayer")
 
 [node name="BackgroundImage" type="MeshInstance" parent="."]
 mesh = SubResource( 12 )
 material/0 = SubResource( 13 )
+
+[node name="Arrows" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.43684, 0.0120896, 0 )
+mesh = SubResource( 26 )
+material/0 = SubResource( 27 )
 
 [node name="ScanPackageLocation" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2, 0 )
@@ -236,49 +298,45 @@ mouse_filter = 2
 custom_styles/panel = SubResource( 7 )
 
 [node name="LeftButton" type="Button" parent="CanvasLayer/Supermarket/ButtonPanelContainer"]
-margin_top = 134.0
+margin_top = 131.0
 margin_right = 87.0
-margin_bottom = 215.0
-rect_min_size = Vector2( 50, 50 )
+margin_bottom = 218.0
+rect_min_size = Vector2( 87, 87 )
 focus_mode = 0
 size_flags_horizontal = 0
 size_flags_vertical = 4
-icon = ExtResource( 15 )
 flat = true
 
 [node name="RightButton" type="Button" parent="CanvasLayer/Supermarket/ButtonPanelContainer"]
 margin_left = 263.0
-margin_top = 134.0
+margin_top = 131.0
 margin_right = 350.0
-margin_bottom = 215.0
-rect_min_size = Vector2( 50, 50 )
+margin_bottom = 218.0
+rect_min_size = Vector2( 87, 87 )
 focus_mode = 0
 size_flags_horizontal = 10
 size_flags_vertical = 4
-icon = ExtResource( 16 )
 flat = true
 
 [node name="DownButton" type="Button" parent="CanvasLayer/Supermarket/ButtonPanelContainer"]
 margin_left = 131.0
-margin_top = 269.0
+margin_top = 263.0
 margin_right = 218.0
 margin_bottom = 350.0
-rect_min_size = Vector2( 50, 50 )
+rect_min_size = Vector2( 87, 87 )
 focus_mode = 0
 size_flags_horizontal = 4
 size_flags_vertical = 8
-icon = ExtResource( 17 )
 flat = true
 
 [node name="UpButton" type="Button" parent="CanvasLayer/Supermarket/ButtonPanelContainer"]
 margin_left = 131.0
 margin_right = 218.0
-margin_bottom = 81.0
-rect_min_size = Vector2( 50, 50 )
+margin_bottom = 87.0
+rect_min_size = Vector2( 87, 87 )
 focus_mode = 0
 size_flags_horizontal = 4
 size_flags_vertical = 0
-icon = ExtResource( 18 )
 flat = true
 
 [node name="DebugLabel" type="Label" parent="CanvasLayer/Supermarket/ButtonPanelContainer"]
@@ -311,7 +369,6 @@ align = 1
 valign = 1
 
 [node name="KeyboardLineEdit" type="LineEdit" parent="CanvasLayer/Supermarket/Keyboard"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 1340.0
@@ -335,6 +392,27 @@ custom_styles/focus = SubResource( 4 )
 custom_styles/disabled = SubResource( 5 )
 custom_styles/normal = SubResource( 6 )
 flat = true
+
+[node name="KbPriceScreen" type="TextureRect" parent="CanvasLayer/Supermarket/Keyboard"]
+self_modulate = Color( 0, 0, 0, 1 )
+margin_left = 1340.0
+margin_top = 884.0
+margin_right = 1627.0
+margin_bottom = 987.0
+mouse_filter = 2
+texture = ExtResource( 3 )
+expand = true
+
+[node name="KbPriceLabel" type="RichTextLabel" parent="CanvasLayer/Supermarket/Keyboard/KbPriceScreen"]
+margin_left = -3.0
+margin_top = 19.0
+margin_right = 288.0
+margin_bottom = 73.0
+custom_fonts/normal_font = ExtResource( 10 )
+bbcode_enabled = true
+bbcode_text = "[center]50[img=32]res://Sprites/coin.png[/img][/center]"
+text = "50"
+scroll_active = false
 
 [node name="ScannerCharger" type="Node2D" parent="CanvasLayer/Supermarket"]
 
@@ -372,22 +450,26 @@ margin_top = 935.0
 margin_right = 807.0
 margin_bottom = 975.0
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Supermarket/ManagerButton"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Supermarket/ManagerButton"]
 margin_right = 40.0
 margin_bottom = 40.0
 
-[node name="RedButtonTextureRect" type="TextureRect" parent="CanvasLayer/Supermarket/ManagerButton/MarginContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Supermarket/ManagerButton/HBoxContainer"]
+margin_right = 158.0
+margin_bottom = 94.0
+
+[node name="RedButtonTextureRect" type="TextureRect" parent="CanvasLayer/Supermarket/ManagerButton/HBoxContainer/MarginContainer"]
 margin_right = 158.0
 margin_bottom = 94.0
 texture = ExtResource( 13 )
 
-[node name="RedButtonPressedTextureRect" type="TextureRect" parent="CanvasLayer/Supermarket/ManagerButton/MarginContainer"]
+[node name="RedButtonPressedTextureRect" type="TextureRect" parent="CanvasLayer/Supermarket/ManagerButton/HBoxContainer/MarginContainer"]
 visible = false
 margin_right = 158.0
 margin_bottom = 94.0
 texture = ExtResource( 14 )
 
-[node name="RedButton" type="Button" parent="CanvasLayer/Supermarket/ManagerButton/MarginContainer"]
+[node name="RedButton" type="Button" parent="CanvasLayer/Supermarket/ManagerButton/HBoxContainer/MarginContainer"]
 margin_right = 158.0
 margin_bottom = 94.0
 rect_min_size = Vector2( 158, 94 )
@@ -398,6 +480,25 @@ custom_styles/focus = SubResource( 23 )
 custom_styles/disabled = SubResource( 24 )
 custom_styles/normal = SubResource( 25 )
 flat = true
+
+[node name="KarenInfo" type="MarginContainer" parent="CanvasLayer/Supermarket/ManagerButton/HBoxContainer"]
+margin_left = 162.0
+margin_right = 691.0
+margin_bottom = 94.0
+
+[node name="KarenInfoLabel" type="Label" parent="CanvasLayer/Supermarket/ManagerButton/HBoxContainer/KarenInfo"]
+margin_top = 19.0
+margin_right = 529.0
+margin_bottom = 74.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0.52549, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_fonts/font = ExtResource( 10 )
+text = "<< call the manager!"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Supermarket/ManagerButton/HBoxContainer/KarenInfo"]
+autoplay = "BlinText"
+anims/BlinText = SubResource( 30 )
 
 [node name="Cashier" type="Node2D" parent="CanvasLayer/Supermarket"]
 
@@ -463,6 +564,27 @@ texture = ExtResource( 20 )
 expand = true
 stretch_mode = 1
 
+[node name="PriceScreen" type="TextureRect" parent="CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext"]
+self_modulate = Color( 0, 0, 0, 1 )
+margin_left = -56.0
+margin_top = -84.0
+margin_right = 56.0
+margin_bottom = -3.0
+mouse_filter = 2
+texture = ExtResource( 3 )
+expand = true
+
+[node name="PriceLabel" type="RichTextLabel" parent="CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext/PriceScreen"]
+margin_left = -3.0
+margin_top = 14.0
+margin_right = 117.0
+margin_bottom = 71.0
+custom_fonts/normal_font = ExtResource( 10 )
+bbcode_enabled = true
+bbcode_text = "[center]50[img=32]res://Sprites/coin.png[/img][/center]"
+text = "50"
+scroll_active = false
+
 [node name="ScannerAnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Supermarket/Cashier/HandNode/ScannerTextureRext"]
 anims/Scan = SubResource( 8 )
 
@@ -480,111 +602,159 @@ custom_constants/margin_top = 5
 custom_constants/margin_left = 5
 custom_constants/margin_bottom = 5
 
-[node name="ScoreContainer" type="HBoxContainer" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer"]
 margin_left = 5.0
 margin_top = 5.0
-margin_right = 318.0
-margin_bottom = 119.0
+margin_right = 1915.0
+margin_bottom = 230.0
+
+[node name="TimeContainer" type="HBoxContainer" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/VBoxContainer"]
+margin_right = 692.0
+margin_bottom = 112.0
 size_flags_horizontal = 0
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/ScoreContainer"]
-margin_right = 112.0
-margin_bottom = 114.0
-texture = ExtResource( 11 )
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/VBoxContainer/TimeContainer"]
+margin_right = 111.0
+margin_bottom = 112.0
 
-[node name="Label" type="Label" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/ScoreContainer"]
-margin_left = 116.0
-margin_top = 29.0
-margin_right = 279.0
-margin_bottom = 84.0
-custom_fonts/font = ExtResource( 10 )
-text = "SCORE:"
-
-[node name="ScoreLabel" type="Label" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/ScoreContainer"]
-margin_left = 283.0
-margin_top = 29.0
-margin_right = 313.0
-margin_bottom = 84.0
-custom_fonts/font = ExtResource( 10 )
-text = "0"
-
-[node name="TimeContainer" type="HBoxContainer" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer"]
-margin_left = 1635.0
-margin_top = 5.0
-margin_right = 1915.0
-margin_bottom = 119.0
-size_flags_horizontal = 8
-
-[node name="Label" type="Label" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/TimeContainer"]
-margin_top = 29.0
-margin_right = 128.0
-margin_bottom = 84.0
-custom_fonts/font = ExtResource( 10 )
-text = "TIME:"
-
-[node name="TimeLabel" type="Label" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/TimeContainer"]
-margin_left = 132.0
-margin_top = 29.0
-margin_right = 162.0
-margin_bottom = 84.0
-custom_fonts/font = ExtResource( 10 )
-text = "0"
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/TimeContainer"]
-margin_left = 166.0
-margin_right = 280.0
-margin_bottom = 114.0
-
-[node name="ClockProgress" type="TextureProgress" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/TimeContainer/MarginContainer"]
-margin_right = 114.0
-margin_bottom = 114.0
+[node name="ClockProgress" type="TextureProgress" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/VBoxContainer/TimeContainer/MarginContainer"]
+margin_right = 111.0
+margin_bottom = 112.0
 max_value = 10.0
 value = 2.0
 texture_under = ExtResource( 12 )
 texture_progress = ExtResource( 19 )
 fill_mode = 4
 
-[node name="ClockProgressLabel" type="Label" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/TimeContainer/MarginContainer/ClockProgress"]
+[node name="ClockProgressLabel" type="Label" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/VBoxContainer/TimeContainer/MarginContainer/ClockProgress"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0.596078, 0.596078, 0.596078, 1 )
+custom_constants/shadow_offset_x = 3
 custom_fonts/font = ExtResource( 10 )
 text = "0"
 align = 1
 valign = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/VBoxContainer/TimeContainer"]
+margin_left = 115.0
+margin_top = 28.0
+margin_right = 256.0
+margin_bottom = 83.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0.596078, 0.596078, 0.596078, 1 )
+custom_constants/shadow_offset_x = 2
+custom_fonts/font = ExtResource( 10 )
+text = " TIME:"
+
+[node name="TimeLabel" type="Label" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/VBoxContainer/TimeContainer"]
+margin_left = 260.0
+margin_top = 28.0
+margin_right = 290.0
+margin_bottom = 83.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0.596078, 0.596078, 0.596078, 1 )
+custom_constants/shadow_offset_x = 2
+custom_fonts/font = ExtResource( 10 )
+text = "0"
+
+[node name="NewPackageLabel" type="Label" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/VBoxContainer/TimeContainer"]
+margin_left = 294.0
+margin_top = 28.0
+margin_right = 692.0
+margin_bottom = 83.0
+custom_colors/font_color = Color( 0.352941, 0.815686, 0.196078, 1 )
+custom_colors/font_color_shadow = Color( 0.137255, 0.529412, 0.0823529, 1 )
+custom_constants/shadow_offset_x = 2
+custom_fonts/font = ExtResource( 10 )
+text = "  new pacakges!"
+
+[node name="ScoreContainer" type="HBoxContainer" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/VBoxContainer"]
+margin_top = 116.0
+margin_right = 322.0
+margin_bottom = 225.0
+size_flags_horizontal = 0
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/VBoxContainer/ScoreContainer"]
+margin_right = 108.0
+margin_bottom = 109.0
+texture = ExtResource( 11 )
+
+[node name="Label" type="Label" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/VBoxContainer/ScoreContainer"]
+margin_left = 112.0
+margin_top = 27.0
+margin_right = 288.0
+margin_bottom = 82.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0.596078, 0.596078, 0.596078, 1 )
+custom_constants/shadow_offset_x = 2
+custom_fonts/font = ExtResource( 10 )
+text = " SCORE:"
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/Supermarket/ScoreHUD/MarginContainer/VBoxContainer/ScoreContainer"]
+margin_left = 292.0
+margin_top = 27.0
+margin_right = 322.0
+margin_bottom = 82.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0.596078, 0.596078, 0.596078, 1 )
+custom_constants/shadow_offset_x = 2
+custom_fonts/font = ExtResource( 10 )
+text = "0"
 
 [node name="DangerZoneHUD" type="Control" parent="CanvasLayer/Supermarket"]
 margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Supermarket/DangerZoneHUD"]
-margin_top = 930.0
-margin_right = 501.0
-margin_bottom = 995.0
+margin_left = 10.0
+margin_top = 950.0
+margin_right = 530.0
+margin_bottom = 1015.0
 custom_constants/margin_right = 5
 custom_constants/margin_top = 5
 custom_constants/margin_left = 5
 custom_constants/margin_bottom = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Supermarket/DangerZoneHUD/MarginContainer"]
+[node name="DangerZoneTextContainer" type="HBoxContainer" parent="CanvasLayer/Supermarket/DangerZoneHUD/MarginContainer"]
+modulate = Color( 1, 1, 1, 0.8 )
 margin_left = 5.0
 margin_top = 5.0
-margin_right = 515.0
+margin_right = 548.0
 margin_bottom = 60.0
 
-[node name="DangerZoneLabel" type="Label" parent="CanvasLayer/Supermarket/DangerZoneHUD/MarginContainer/HBoxContainer"]
-margin_right = 30.0
+[node name="Label4" type="Label" parent="CanvasLayer/Supermarket/DangerZoneHUD/MarginContainer/DangerZoneTextContainer"]
+margin_right = 29.0
 margin_bottom = 55.0
-custom_colors/font_color = Color( 1, 0.552941, 0.552941, 1 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0.52549, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
+custom_fonts/font = ExtResource( 10 )
+text = "^"
+
+[node name="DangerZoneLabel" type="Label" parent="CanvasLayer/Supermarket/DangerZoneHUD/MarginContainer/DangerZoneTextContainer"]
+margin_left = 33.0
+margin_right = 63.0
+margin_bottom = 55.0
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0.52549, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
 custom_fonts/font = ExtResource( 10 )
 text = "0"
 
-[node name="Label3" type="Label" parent="CanvasLayer/Supermarket/DangerZoneHUD/MarginContainer/HBoxContainer"]
-margin_left = 34.0
-margin_right = 510.0
+[node name="Label3" type="Label" parent="CanvasLayer/Supermarket/DangerZoneHUD/MarginContainer/DangerZoneTextContainer"]
+margin_left = 67.0
+margin_right = 543.0
 margin_bottom = 55.0
-custom_colors/font_color = Color( 1, 0.552941, 0.552941, 1 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0.52549, 0, 0, 1 )
+custom_constants/shadow_offset_x = 2
 custom_fonts/font = ExtResource( 10 )
 text = " / 6 in danger zone!"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer/Supermarket/DangerZoneHUD/MarginContainer"]
+anims/BlinkText = SubResource( 31 )
 
 [node name="DangerZone" type="Area" parent="."]
 
@@ -597,6 +767,50 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 3, -8, -0.989723, 0.877936 )
 mesh = SubResource( 19 )
 material/0 = SubResource( 20 )
 
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="KarenLayerSpatial" type="Spatial" parent="CanvasLayer2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0 )
+
+[node name="Karen" type="MeshInstance" parent="CanvasLayer2/KarenLayerSpatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.07176, 0.0120897, -3.41356 )
+mesh = SubResource( 28 )
+material/0 = SubResource( 29 )
+
+[node name="SpeechBubbleSpawnLocations" type="Spatial" parent="CanvasLayer2/KarenLayerSpatial"]
+
+[node name="SpeechBubbleSpawnLocation1" type="Spatial" parent="CanvasLayer2/KarenLayerSpatial/SpeechBubbleSpawnLocations"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.46037, 0, -0.847131 )
+
+[node name="SpeechBubbleSpawnLocation2" type="Spatial" parent="CanvasLayer2/KarenLayerSpatial/SpeechBubbleSpawnLocations"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.159421, 0, -0.53248 )
+
+[node name="SpeechBubbleSpawnLocation3" type="Spatial" parent="CanvasLayer2/KarenLayerSpatial/SpeechBubbleSpawnLocations"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.809549, 0, -1.58855 )
+
+[node name="SpeechBubbleSpawnLocation4" type="Spatial" parent="CanvasLayer2/KarenLayerSpatial/SpeechBubbleSpawnLocations"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5555, 0, 0.820476 )
+
+[node name="SpeechBubbleSpawnLocation5" type="Spatial" parent="CanvasLayer2/KarenLayerSpatial/SpeechBubbleSpawnLocations"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0870373, 0, -1.05796 )
+
+[node name="SpeechBubbleSpawnLocation6" type="Spatial" parent="CanvasLayer2/KarenLayerSpatial/SpeechBubbleSpawnLocations"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.35665, 0, -1.31057 )
+
+[node name="SpeechBubbleSpawnLocation7" type="Spatial" parent="CanvasLayer2/KarenLayerSpatial/SpeechBubbleSpawnLocations"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.52944, 0, -0.776172 )
+
+[node name="SpeechBubbleSpawnLocation8" type="Spatial" parent="CanvasLayer2/KarenLayerSpatial/SpeechBubbleSpawnLocations"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.764277, 0, -0.0329865 )
+
+[node name="SpeechBubbleSpawnLocation9" type="Spatial" parent="CanvasLayer2/KarenLayerSpatial/SpeechBubbleSpawnLocations"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.53786, 0, -1.03535 )
+
+[node name="SpeechBubblePlaceholder" type="Spatial" parent="CanvasLayer2/KarenLayerSpatial"]
+
+[node name="SpeechBubble" parent="CanvasLayer2/KarenLayerSpatial/SpeechBubblePlaceholder" instance=ExtResource( 16 )]
+
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="pressed" from="CanvasLayer/Supermarket/ButtonPanelContainer/LeftButton" to="." method="_on_LeftButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Supermarket/ButtonPanelContainer/RightButton" to="." method="_on_RightButton_pressed"]
@@ -606,6 +820,6 @@ material/0 = SubResource( 20 )
 [connection signal="text_entered" from="CanvasLayer/Supermarket/Keyboard/KeyboardLineEdit" to="." method="_on_KeyboardLineEdit_text_entered"]
 [connection signal="pressed" from="CanvasLayer/Supermarket/Keyboard/KeyboardButton" to="." method="_on_KeyboardButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Supermarket/ScannerCharger/ScannerChargerButton" to="." method="_on_ScannerChargerButton_pressed"]
-[connection signal="pressed" from="CanvasLayer/Supermarket/ManagerButton/MarginContainer/RedButton" to="." method="_on_RedButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/Supermarket/ManagerButton/HBoxContainer/MarginContainer/RedButton" to="." method="_on_RedButton_pressed"]
 [connection signal="body_entered" from="DangerZone" to="." method="_on_LooseArea_body_entered"]
 [connection signal="body_exited" from="DangerZone" to="." method="_on_LooseArea_body_exited"]
