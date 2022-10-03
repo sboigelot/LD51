@@ -61,7 +61,7 @@ var hand_node_offset: Vector2
 export(float) var hand_min_y = 550
 export(bool) var scanner_in_hands setget set_scanner_hands, get_scanner_hands
 
-export(float) var scanner_malfunction_chance_percent_per_second = 0.5
+export(float) var scanner_malfunction_chance_percent_per_second = 0.75
 var scanner_malfunction_accumulated_second_used:float = 0.0
 var last_scanner_malfunction_test_time:float = 0.0
 var delay_between_scanner_malfunction_test: float = 1.0
@@ -135,15 +135,12 @@ func _process(delta):
 	move_hand_to_cursor()
 	toggle_scan_anim(delta)
 	move_scan_camera()
+	check_shake()	
+	update_clock(delta)	
 	
+func update_clock(delta):
 	Game.time += delta
-	time_label.text = Game.get_time_str()
-	
-	update_clock()
-	
-	check_shake()
-	
-func update_clock():
+	time_label.text = Game.get_time_str()	
 	clock_progress.value = $Timer.time_left
 	clock_progress_label.text = str(round($Timer.time_left))
 	
@@ -262,7 +259,6 @@ func _on_Timer_timeout():
 func spawn_package():
 	var product_id = randi() % package_scenes.size()
 	var scene = package_scenes[product_id]
-#	print("spawn: "+ str(product_id))
 	var instance = scene.instance()
 	var spawn_positions = [
 		$ConveyorBelt/PackageSpawnLocations/Location1.transform,
@@ -420,7 +416,7 @@ func blink_keyboard_modulate():
 		yield(get_tree().create_timer(0.2), "timeout")
 		keyboard_texturerect.modulate = Color.white
 		yield(get_tree().create_timer(0.2), "timeout")
-	
+	SfxManager.play("Error")
 
 func blink_keyboard_label():
 	if keyboard_error_label.visible:
@@ -428,6 +424,7 @@ func blink_keyboard_label():
 	keyboard_error_label.visible = true
 	yield(get_tree().create_timer(0.4), "timeout")
 	keyboard_error_label.visible = false
+	SfxManager.play("Error")
 
 func _on_KeyboardLineEdit_text_changed(new_text:String):
 	SfxManager.play("buttonpress")

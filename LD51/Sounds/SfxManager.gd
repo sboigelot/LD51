@@ -55,11 +55,11 @@ func _ready():																	# Add to database all samples preloaded in the In
 	add_players(start_player_count)												# Add some players to start with
 
 func play(sample_name:String)->void:
-	if active_players.has(sample_name):											# Same sample is already playing
-		var player:AudioStreamPlayer = active_players[sample_name]
-		if player.get_playback_position() > retrigger_time:						# Checks if same sample has played at least certain length
-			player.play()
-	else:
+#	if active_players.has(sample_name):											# Same sample is already playing
+#		var player:AudioStreamPlayer = active_players[sample_name]
+#		if player.get_playback_position() > retrigger_time:						# Checks if same sample has played at least certain length
+#			player.play()
+#	else:
 		if !free_players.empty():												# There are un-active players
 			var player:AudioStreamPlayer = free_players.pop_back()
 			active_players[sample_name] = player
