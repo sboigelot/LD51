@@ -10,7 +10,7 @@
 script = ExtResource( 4 )
 tween_np = NodePath("Tween")
 barcode_placeholder_np = NodePath("RotationRoot/BarcodesPlaceholder")
-price = 20
+price = 15
 
 [node name="Tween" type="Tween" parent="."]
 

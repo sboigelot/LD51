@@ -18,7 +18,7 @@ export(NodePath) var np_webgl_button
 onready var webgl_button = get_node(np_webgl_button) as Button
 
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 	if OS.get_name() != "HTML5":
 		webgl_button.queue_free()
 	else:
@@ -65,3 +65,17 @@ func _on_WebGLButton_pressed():
 func _on_StartButton_pressed():
 	Game.new_game()
 	SfxManager.play("confirm")
+
+func _process(delta):
+	move_hand_to_cursor()
+
+func move_hand_to_cursor():
+	var mouse_postion = get_viewport().get_mouse_position() as Vector2
+	$Cashier/HandNode.position = mouse_postion
+	
+	if $Cashier/HandNode.position.y < 450:
+		$Cashier/HandNode.position.y = 450
+
+
+func _on_QuitButton_pressed():
+	get_tree().quit()

@@ -1,22 +1,90 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Fonts/airstrip-four/airstrip_48.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Scenes/VictoryScreen.gd" type="Script" id=2]
 [ext_resource path="res://Fonts/airstrip-four/airstrip_28.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Sprites/mainbackground.png" type="Texture" id=4]
+[ext_resource path="res://Fonts/airstrip-four/airstrip_92.tres" type="DynamicFont" id=5]
+[ext_resource path="res://Fonts/airstrip-four/airstrip_16.tres" type="DynamicFont" id=6]
 
 [node name="VictoryScreen" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 2 )
-np_victory_label = NodePath("MarginContainer/VBoxContainer/VBoxContainer/VictoryLabel")
-np_retry_button = NodePath("MarginContainer/VBoxContainer/VBoxContainer/Controls/RetryButton")
-np_score_label = NodePath("MarginContainer/VBoxContainer/VBoxContainer/GridContainer/ScoreLabel")
-np_time_label = NodePath("MarginContainer/VBoxContainer/VBoxContainer/GridContainer/TimeLabel")
+np_victory_label = NodePath("MarginContainer2/VBoxContainer/VictoryLabel")
+np_submit_button = NodePath("MarginContainer/CenterContainer/HBoxContainer/PostScoreButton")
+np_retry_button = NodePath("MarginContainer/CenterContainer/HBoxContainer/RetryButton")
+np_score_label = NodePath("MarginContainer/CenterContainer/HBoxContainer/GridContainer/ScoreLabel")
+np_time_label = NodePath("MarginContainer/CenterContainer/HBoxContainer/GridContainer2/TimeLabel")
+np_top_score_rtb = NodePath("MarginContainer/CenterContainer/HBoxContainer/TopScoreRichTextLabel")
+np_top_time_rtb = NodePath("MarginContainer/CenterContainer/HBoxContainer/TopTimeRichTextLabel")
+np_post_score_dialog = NodePath("PostScoretDialog")
+np_post_score_name_lineedit = NodePath("PostScoretDialog/VBoxContainer/NameLineEdit")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 60.0
+texture = ExtResource( 4 )
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+margin_right = 1920.0
+margin_bottom = 1080.0
+custom_constants/margin_right = 20
+custom_constants/margin_top = 50
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+
+[node name="TitleLabel2" type="Label" parent="MarginContainer2"]
+margin_left = 20.0
+margin_top = 919.0
+margin_right = 1900.0
+margin_bottom = 1060.0
+size_flags_vertical = 8
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0.380392, 0.380392, 0.380392, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 2
+custom_fonts/font = ExtResource( 6 )
+text = "A game made for LD51 by:
+Graphics: Bu
+Music: Anchorlight
+Voice-over: Master of illusion
+Backend API: djoramm
+Game code: Togis"
+valign = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2"]
+margin_left = 20.0
+margin_top = 50.0
+margin_right = 1900.0
+margin_bottom = 1060.0
+
+[node name="TitleLabel" type="Label" parent="MarginContainer2/VBoxContainer"]
+margin_right = 1880.0
+margin_bottom = 104.0
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0.380392, 0.380392, 0.380392, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 2
+custom_fonts/font = ExtResource( 5 )
+text = "Groceries Please!"
+align = 1
+valign = 1
+
+[node name="VictoryLabel" type="Label" parent="MarginContainer2/VBoxContainer"]
+margin_top = 108.0
+margin_right = 1880.0
+margin_bottom = 163.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0.658824, 0.658824, 0.658824, 1 )
+custom_constants/shadow_offset_x = 3
+custom_fonts/font = ExtResource( 1 )
+text = "VICTORY!"
+align = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
@@ -24,87 +92,211 @@ anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/margin_right = 50
-custom_constants/margin_top = 50
+custom_constants/margin_top = 0
 custom_constants/margin_left = 50
 custom_constants/margin_bottom = 50
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer"]
 margin_left = 50.0
-margin_top = 50.0
 margin_right = 1870.0
 margin_bottom = 1030.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
-margin_right = 387.0
-margin_bottom = 169.0
-size_flags_horizontal = 0
-
-[node name="VictoryLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer"]
-margin_right = 387.0
-margin_bottom = 55.0
-size_flags_horizontal = 3
-size_flags_vertical = 1
-custom_fonts/font = ExtResource( 1 )
-text = "VICTORY!"
-align = 1
-
-[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
-margin_top = 59.0
-margin_right = 387.0
-margin_bottom = 127.0
+[node name="HBoxContainer" type="GridContainer" parent="MarginContainer/CenterContainer"]
+margin_left = 458.0
+margin_top = 251.0
+margin_right = 1362.0
+margin_bottom = 779.0
 columns = 2
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/GridContainer"]
-margin_right = 304.0
-margin_bottom = 32.0
-size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
-text = "Score:"
+[node name="TopScoreRichTextLabel" type="RichTextLabel" parent="MarginContainer/CenterContainer/HBoxContainer"]
+margin_right = 450.0
+margin_bottom = 450.0
+rect_min_size = Vector2( 450, 450 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+custom_fonts/bold_font = ExtResource( 1 )
+custom_fonts/normal_font = ExtResource( 3 )
+bbcode_enabled = true
+bbcode_text = "[center][b]TOP 10 SCORES[/b]
 
-[node name="ScoreLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 308.0
-margin_right = 387.0
+1/tsomeone\\t10000
+1/tsomeone\\t10000
+1/tsomeone\\t10000
+1/tsomeone\\t10000
+1/tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000[/center]"
+text = "TOP 10 SCORES
+
+1/tsomeone\\t10000
+1/tsomeone\\t10000
+1/tsomeone\\t10000
+1/tsomeone\\t10000
+1/tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000"
+fit_content_height = true
+
+[node name="TopTimeRichTextLabel" type="RichTextLabel" parent="MarginContainer/CenterContainer/HBoxContainer"]
+margin_left = 454.0
+margin_right = 904.0
+margin_bottom = 450.0
+rect_min_size = Vector2( 450, 450 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+custom_fonts/bold_font = ExtResource( 1 )
+custom_fonts/normal_font = ExtResource( 3 )
+bbcode_enabled = true
+bbcode_text = "[center][b]TOP 10 TIMES[/b]
+
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000[/center]"
+text = "TOP 10 TIMES
+
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000
+1\\tsomeone\\t10000"
+fit_content_height = true
+
+[node name="GridContainer" type="HBoxContainer" parent="MarginContainer/CenterContainer/HBoxContainer"]
+margin_left = 113.0
+margin_top = 454.0
+margin_right = 337.0
+margin_bottom = 486.0
+size_flags_horizontal = 4
+
+[node name="Label" type="Label" parent="MarginContainer/CenterContainer/HBoxContainer/GridContainer"]
+margin_right = 169.0
 margin_bottom = 32.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0.658824, 0.658824, 0.658824, 1 )
+custom_constants/shadow_offset_x = 3
+custom_fonts/font = ExtResource( 3 )
+text = "your Score:"
+
+[node name="ScoreLabel" type="Label" parent="MarginContainer/CenterContainer/HBoxContainer/GridContainer"]
+margin_left = 173.0
+margin_right = 224.0
+margin_bottom = 32.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0.658824, 0.658824, 0.658824, 1 )
+custom_constants/shadow_offset_x = 3
 custom_fonts/font = ExtResource( 3 )
 text = "000"
 align = 2
 
-[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/GridContainer"]
-margin_top = 36.0
-margin_right = 304.0
-margin_bottom = 68.0
-size_flags_horizontal = 3
-custom_fonts/font = ExtResource( 3 )
-text = "Time:"
+[node name="GridContainer2" type="HBoxContainer" parent="MarginContainer/CenterContainer/HBoxContainer"]
+margin_left = 562.0
+margin_top = 454.0
+margin_right = 795.0
+margin_bottom = 486.0
+size_flags_horizontal = 4
 
-[node name="TimeLabel" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer/GridContainer"]
-margin_left = 308.0
-margin_top = 36.0
-margin_right = 387.0
-margin_bottom = 68.0
+[node name="Label2" type="Label" parent="MarginContainer/CenterContainer/HBoxContainer/GridContainer2"]
+margin_right = 150.0
+margin_bottom = 32.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0.658824, 0.658824, 0.658824, 1 )
+custom_constants/shadow_offset_x = 3
+custom_fonts/font = ExtResource( 3 )
+text = "your Time:"
+
+[node name="TimeLabel" type="Label" parent="MarginContainer/CenterContainer/HBoxContainer/GridContainer2"]
+margin_left = 154.0
+margin_right = 233.0
+margin_bottom = 32.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0.658824, 0.658824, 0.658824, 1 )
+custom_constants/shadow_offset_x = 3
 custom_fonts/font = ExtResource( 3 )
 text = "00:00"
 align = 2
 
-[node name="Controls" type="HBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
-margin_top = 131.0
-margin_right = 387.0
-margin_bottom = 169.0
-
-[node name="RetryButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/Controls"]
-margin_right = 104.0
-margin_bottom = 38.0
-size_flags_horizontal = 6
+[node name="RetryButton" type="Button" parent="MarginContainer/CenterContainer/HBoxContainer"]
+margin_top = 490.0
+margin_right = 450.0
+margin_bottom = 528.0
+size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "Replay"
 
-[node name="BackToMenuButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/Controls"]
-margin_left = 108.0
-margin_right = 387.0
+[node name="PostScoreButton" type="Button" parent="MarginContainer/CenterContainer/HBoxContainer"]
+margin_left = 454.0
+margin_top = 490.0
+margin_right = 904.0
+margin_bottom = 528.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 3 )
+text = "Post Score"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 820.0
+margin_top = 992.0
+margin_right = 1099.0
+margin_bottom = 1030.0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_right = 279.0
 margin_bottom = 38.0
-size_flags_horizontal = 6
+size_flags_horizontal = 0
+
+[node name="Controls" type="VBoxContainer" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+margin_right = 279.0
+margin_bottom = 38.0
+
+[node name="BackToMenuButton" type="Button" parent="MarginContainer/VBoxContainer/VBoxContainer/Controls"]
+margin_right = 279.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
 text = "Back to main menu"
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/Controls/RetryButton" to="." method="_on_RetryButton_pressed"]
+[node name="PostScoretDialog" type="AcceptDialog" parent="."]
+margin_right = 83.0
+margin_bottom = 58.0
+rect_min_size = Vector2( 300, 0 )
+window_title = "Posting your score"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PostScoretDialog"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 292.0
+margin_bottom = 50.0
+
+[node name="Label" type="Label" parent="PostScoretDialog/VBoxContainer"]
+margin_right = 284.0
+margin_bottom = 14.0
+text = "Enter your name:"
+
+[node name="NameLineEdit" type="LineEdit" parent="PostScoretDialog/VBoxContainer"]
+margin_top = 18.0
+margin_right = 284.0
+margin_bottom = 42.0
+
+[connection signal="pressed" from="MarginContainer/CenterContainer/HBoxContainer/RetryButton" to="." method="_on_RetryButton_pressed"]
+[connection signal="pressed" from="MarginContainer/CenterContainer/HBoxContainer/PostScoreButton" to="." method="_on_PostScoreButton_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/VBoxContainer/Controls/BackToMenuButton" to="." method="_on_BackToMenuButton_pressed"]
+[connection signal="confirmed" from="PostScoretDialog" to="." method="_on_PostScoretDialog_confirmed"]

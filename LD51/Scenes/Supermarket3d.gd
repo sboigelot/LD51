@@ -327,6 +327,7 @@ func on_conveyor_belt_package_clicked(package: Package):
 func _on_Package_barcode_scanned(package, barcode):
 	if get_scanner_hands() and is_scanner_worling():
 		SfxManager.play("Scan")
+		add_score(scan_package.price)
 		move_package_to_exit_belt(package)
 
 func _on_Package_scan_error(package, barcode):
@@ -343,9 +344,12 @@ func add_score(score):
 	score_label.text = str(Game.score)
 	blink_scanner_price(score)
 
-func move_package_to_exit_belt(package: Package):
+func _on_TrashButton_pressed():
+	if scan_package != null:
+		add_score(-scan_package.price*2)
+		move_package_to_exit_belt(scan_package)
 	
-	add_score(scan_package.price)
+func move_package_to_exit_belt(package: Package):
 	
 	scan_package = null
 	if scan_package_holder.get_child_count() == 0:
@@ -440,6 +444,7 @@ func _on_KeyboardLineEdit_text_entered(new_text):
 				return
 				
 		SfxManager.play("Scan")
+		add_score(scan_package.price)
 		move_package_to_exit_belt(scan_package)
 
 func blink_keyboard_modulate():
@@ -492,11 +497,16 @@ func _on_LooseArea_body_entered(body):
 	update_danger_zone_visuals()
 
 func update_danger_zone_visuals():
+	var was_visible = danger_zone_hud.visible
 	danger_zone_mesh.visible = danger_zone_package.size() >= 3
 	danger_zone_hud.visible = danger_zone_package.size() >= 3
+	
 	danger_zone_label.text = str(danger_zone_package.size())
 	if danger_zone_hud.visible and not danger_zone_animation.is_playing():
 		danger_zone_animation.play("BlinkText")
+		
+	if not was_visible and danger_zone_hud.visible:
+		SfxManager.play("failalarm")
 
 func _on_LooseArea_body_exited(body):
 	if not body is Package:
@@ -519,6 +529,10 @@ func _on_RedButton_pressed():
 	red_button_pressed_texturerect.visible = false
 
 
+func _on_QuitButton_pressed():
+	Game.defeat()
+
+
 ################################################################################
 #		KAREN
 ################################################################################
@@ -536,6 +550,8 @@ onready var karen_button_help_container = get_node(karen_button_help_container_n
 onready var karen_button_help_animation = get_node(karen_button_help_animation_np) as AnimationPlayer
 
 const speech_bubble_scene = preload("res://Scenes/SpeechBubble.tscn")
+const speech_bubble_scene1 = preload("res://Scenes/SpeechBubble2.tscn")
+const speech_bubble_scene2 = preload("res://Scenes/SpeechBubble3.tscn")
 
 export(float) var karen_chance_percent_per_timer = 15
 var karen_accumulated_chance: float = 0
@@ -582,11 +598,22 @@ func k_try_spawn_bubble():
 func k_spawn_bubble():
 	karen_last_bubble_spawn_time = Game.time
 	
+	var bubble_count = speech_bubble_plaholder.get_child_count()
+	var bubble_scene_per_count = {
+		0: speech_bubble_scene,
+		3: speech_bubble_scene1,
+		6: speech_bubble_scene2
+	}
+	var bubble_scene
+	for i in bubble_scene_per_count.keys():
+		if bubble_count >= i:
+			bubble_scene = bubble_scene_per_count[i]
+	
 	var spawn_location = speech_bubble_spawn_locations.get_child(
 		randi() % speech_bubble_spawn_locations.get_child_count()
 	) as Spatial
 	
-	var instance = speech_bubble_scene.instance() as Spatial
+	var instance = bubble_scene.instance() as Spatial
 	instance.transform = spawn_location.transform
 	instance.translate(Vector3(0, 0.1*speech_bubble_plaholder.get_child_count(), 0))
 	speech_bubble_plaholder.add_child(instance)
@@ -606,3 +633,5 @@ func k_push_away():
 		speech_bubble_plaholder.get_child_count() - 1
 	)
 	last_bubble.queue_free()
+
+

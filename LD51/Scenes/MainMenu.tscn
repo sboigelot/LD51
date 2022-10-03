@@ -1,9 +1,16 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scenes/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/airstrip-four/airstrip_20.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Fonts/airstrip-four/airstrip_28.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Fonts/airstrip-four/airstrip_92.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Sprites/LD51-hand.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/mainbackground.png" type="Texture" id=6]
+[ext_resource path="res://Fonts/airstrip-four/airstrip_16.tres" type="DynamicFont" id=7]
+[ext_resource path="res://Sprites/quit.png" type="Texture" id=8]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.360784, 0.529412, 0.396078, 1 )
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -18,28 +25,26 @@ np_webgl_button = NodePath("PanelContainer/WebGLButton")
 [node name="PanelContainer" type="PanelContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+custom_styles/panel = SubResource( 1 )
 
 [node name="TextureRect" type="TextureRect" parent="PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1913.0
-margin_bottom = 1073.0
+margin_right = 1920.0
+margin_bottom = 1080.0
+texture = ExtResource( 6 )
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1913.0
-margin_bottom = 1073.0
+margin_right = 1920.0
+margin_bottom = 1080.0
 custom_constants/margin_right = 20
-custom_constants/margin_top = 20
+custom_constants/margin_top = 250
 custom_constants/margin_left = 20
 custom_constants/margin_bottom = 20
 
 [node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer"]
 margin_left = 20.0
-margin_top = 20.0
-margin_right = 1886.0
-margin_bottom = 124.0
+margin_top = 250.0
+margin_right = 1900.0
+margin_bottom = 354.0
 size_flags_vertical = 0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0.380392, 0.380392, 0.380392, 1 )
@@ -48,6 +53,25 @@ custom_constants/shadow_offset_y = 2
 custom_fonts/font = ExtResource( 4 )
 text = "Groceries Please!"
 align = 1
+valign = 1
+
+[node name="TitleLabel2" type="Label" parent="PanelContainer/MarginContainer"]
+margin_left = 20.0
+margin_top = 919.0
+margin_right = 1900.0
+margin_bottom = 1060.0
+size_flags_vertical = 8
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0.380392, 0.380392, 0.380392, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 2
+custom_fonts/font = ExtResource( 7 )
+text = "A game made for LD51 by:
+Graphics: Bu
+Music: Anchorlight
+Voice-over: Master of illusion
+Backend API: djoramm
+Game code: Togis"
 valign = 1
 
 [node name="WebGLButton" type="Button" parent="PanelContainer"]
@@ -59,10 +83,8 @@ margin_bottom = 593.0
 text = "click here to switch to fullscreen"
 
 [node name="MarginContainer2" type="MarginContainer" parent="PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1913.0
-margin_bottom = 1073.0
+margin_right = 1920.0
+margin_bottom = 1080.0
 custom_constants/margin_top = 600
 custom_constants/margin_left = 1200
 
@@ -70,8 +92,8 @@ custom_constants/margin_left = 1200
 margin_left = 1200.0
 margin_top = 600.0
 margin_right = 1328.0
-margin_bottom = 728.0
-rect_min_size = Vector2( 128, 128 )
+margin_bottom = 696.0
+rect_min_size = Vector2( 128, 96 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_fonts/font = ExtResource( 3 )
@@ -82,9 +104,9 @@ anchor_bottom = 1.0
 mouse_filter = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer2/StartButton/MarginContainer"]
-margin_top = 31.0
+margin_top = 15.0
 margin_right = 128.0
-margin_bottom = 97.0
+margin_bottom = 81.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -96,18 +118,28 @@ text = "Start
 Work"
 fit_content_height = true
 
+[node name="QuitButton" type="Button" parent="PanelContainer"]
+margin_left = 912.0
+margin_top = 1000.0
+margin_right = 1008.0
+margin_bottom = 1080.0
+rect_min_size = Vector2( 96, 80 )
+size_flags_horizontal = 4
+size_flags_vertical = 8
+icon = ExtResource( 8 )
+flat = true
+expand_icon = true
+
 [node name="CenterContainer" type="CenterContainer" parent="PanelContainer"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 1913.0
-margin_bottom = 1073.0
+margin_right = 1920.0
+margin_bottom = 1080.0
 mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/CenterContainer"]
-margin_left = 759.0
-margin_top = 493.0
-margin_right = 1147.0
-margin_bottom = 573.0
+margin_left = 766.0
+margin_top = 500.0
+margin_right = 1154.0
+margin_bottom = 580.0
 
 [node name="MusicConrol" type="GridContainer" parent="PanelContainer/CenterContainer/VBoxContainer"]
 margin_right = 388.0
@@ -154,8 +186,17 @@ margin_right = 388.0
 margin_bottom = 72.0
 rect_min_size = Vector2( 200, 0 )
 
+[node name="Cashier" type="Node2D" parent="."]
+
+[node name="HandNode" type="Node2D" parent="Cashier"]
+
+[node name="ArmTextureRext" type="Sprite" parent="Cashier/HandNode"]
+position = Vector2( 166, 341 )
+texture = ExtResource( 5 )
+
 [connection signal="pressed" from="PanelContainer/WebGLButton" to="." method="_on_WebGLButton_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer2/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="PanelContainer/QuitButton" to="." method="_on_QuitButton_pressed"]
 [connection signal="value_changed" from="PanelContainer/CenterContainer/VBoxContainer/MusicConrol/MasterVolumeSlider" to="." method="_on_MasterVolumeSlider_value_changed"]
 [connection signal="value_changed" from="PanelContainer/CenterContainer/VBoxContainer/MusicConrol/MusicVolumeSlider" to="." method="_on_MusicVolumeSlider_value_changed"]
 [connection signal="value_changed" from="PanelContainer/CenterContainer/VBoxContainer/MusicConrol/SoundFxVolumeSlider" to="." method="_on_SoundFxVolumeSlider_value_changed"]

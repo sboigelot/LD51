@@ -37,8 +37,11 @@ func _ready():
 	 clear_data()
 	
 func get_time_str():
-	var minutes = floor(time / 60)
-	var seconds = floor(fmod(time,60))
+	return  to_time_str(time)
+	
+func to_time_str(_time):	
+	var minutes = floor(_time / 60)
+	var seconds = floor(fmod(_time,60))
 	var txt = "%02d:%02d" % [
 		minutes,
 		seconds

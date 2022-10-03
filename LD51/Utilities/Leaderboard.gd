@@ -5,8 +5,8 @@ signal top_score_updated
 signal entry_added
 signal error
 
-var top_time
-var top_score
+var top_time = []
+var top_score = []
 
 func get_base_uri():
 	return "https://ldtobugisapiapi.azure-api.net/"
@@ -21,7 +21,7 @@ func get_top_score():
 	$GetTopScoreHTTPRequest.request(get_base_uri() + "GetTimeBoard")
 
 func get_top_time():
-	$GetTopScoreHTTPRequest.request(get_base_uri() + "GetScoreBoard")
+	$GetTopTimeHTTPRequest.request(get_base_uri() + "GetScoreBoard")
 
 func post_entry(name:String, score:float, time:float):
 	# Convert data to json string:
