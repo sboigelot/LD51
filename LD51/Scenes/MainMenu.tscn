@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scenes/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/airstrip-four/airstrip_20.tres" type="DynamicFont" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://Fonts/airstrip-four/airstrip_16.tres" type="DynamicFont" id=7]
 [ext_resource path="res://Sprites/quit.png" type="Texture" id=8]
 [ext_resource path="res://Fonts/airstrip-four/airstrip_48.tres" type="DynamicFont" id=9]
+[ext_resource path="res://Sprites/LOGO .png" type="Texture" id=10]
+[ext_resource path="res://Sprites/LOGO-CART.png" type="Texture" id=11]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.360784, 0.529412, 0.396078, 1 )
@@ -17,10 +19,10 @@ bg_color = Color( 0.360784, 0.529412, 0.396078, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
-np_start_game_button = NodePath("PanelContainer/MarginContainer2/HBoxContainer/StartButton")
-np_ui_audio_master = NodePath("PanelContainer/CenterContainer/VBoxContainer/MusicConrol/MasterVolumeSlider")
-np_ui_audio_music = NodePath("PanelContainer/CenterContainer/VBoxContainer/MusicConrol/MusicVolumeSlider")
-np_ui_audio_soundfx = NodePath("PanelContainer/CenterContainer/VBoxContainer/MusicConrol/SoundFxVolumeSlider")
+np_start_game_button = NodePath("PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer/StartButton")
+np_ui_audio_master = NodePath("PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol/MasterVolumeSlider")
+np_ui_audio_music = NodePath("PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol/MusicVolumeSlider")
+np_ui_audio_soundfx = NodePath("PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol/SoundFxVolumeSlider")
 np_webgl_button = NodePath("PanelContainer/WebGLButton")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
@@ -33,34 +35,10 @@ margin_right = 1920.0
 margin_bottom = 1080.0
 texture = ExtResource( 6 )
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
+[node name="TitleLabel2" type="Label" parent="PanelContainer"]
+margin_top = 939.0
 margin_right = 1920.0
 margin_bottom = 1080.0
-custom_constants/margin_right = 20
-custom_constants/margin_top = 250
-custom_constants/margin_left = 20
-custom_constants/margin_bottom = 20
-
-[node name="TitleLabel" type="Label" parent="PanelContainer/MarginContainer"]
-margin_left = 20.0
-margin_top = 250.0
-margin_right = 1900.0
-margin_bottom = 354.0
-size_flags_vertical = 0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-custom_colors/font_color_shadow = Color( 0.380392, 0.380392, 0.380392, 1 )
-custom_constants/shadow_offset_x = 3
-custom_constants/shadow_offset_y = 2
-custom_fonts/font = ExtResource( 4 )
-text = "Groceries Please!"
-align = 1
-valign = 1
-
-[node name="TitleLabel2" type="Label" parent="PanelContainer/MarginContainer"]
-margin_left = 20.0
-margin_top = 919.0
-margin_right = 1900.0
-margin_bottom = 1060.0
 size_flags_vertical = 8
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_shadow = Color( 0.380392, 0.380392, 0.380392, 1 )
@@ -75,20 +53,112 @@ Backend API: djoramm
 Game code: Togis"
 valign = 1
 
-[node name="MarginContainer2" type="MarginContainer" parent="PanelContainer"]
+[node name="CenterContainer" type="MarginContainer" parent="PanelContainer"]
 margin_right = 1920.0
 margin_bottom = 1080.0
-custom_constants/margin_top = 600
-custom_constants/margin_left = 1200
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer2"]
-margin_left = 1200.0
-margin_top = 600.0
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/CenterContainer"]
 margin_right = 1920.0
 margin_bottom = 1080.0
+custom_constants/margin_bottom = 100
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/CenterContainer/MarginContainer"]
+margin_left = 556.0
+margin_top = 118.0
+margin_right = 1364.0
+margin_bottom = 861.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+custom_constants/separation = 50
+
+[node name="TitleContainer" type="MarginContainer" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer"]
+margin_right = 808.0
+margin_bottom = 467.0
+
+[node name="TitleLabel" type="Label" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/TitleContainer"]
+visible = false
+margin_right = 861.0
+margin_bottom = 104.0
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_shadow = Color( 0.380392, 0.380392, 0.380392, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 2
+custom_fonts/font = ExtResource( 4 )
+text = "Groceries Please!"
+align = 1
+valign = 1
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/TitleContainer"]
+margin_right = 808.0
+margin_bottom = 467.0
+texture = ExtResource( 10 )
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/TitleContainer/TextureRect"]
+margin_left = -100.0
+margin_top = 300.0
+margin_right = 100.0
+margin_bottom = 511.0
+texture = ExtResource( 11 )
+
+[node name="MusicConrol" type="GridContainer" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer"]
+margin_left = 210.0
+margin_top = 517.0
+margin_right = 598.0
+margin_bottom = 597.0
+size_flags_horizontal = 4
+columns = 2
+
+[node name="Label" type="Label" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol"]
+margin_right = 184.0
+margin_bottom = 24.0
+custom_fonts/font = ExtResource( 2 )
+text = "master volume:"
+
+[node name="MasterVolumeSlider" type="HSlider" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol"]
+margin_left = 188.0
+margin_right = 388.0
+margin_bottom = 16.0
+rect_min_size = Vector2( 200, 0 )
+
+[node name="Label2" type="Label" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol"]
+margin_top = 28.0
+margin_right = 184.0
+margin_bottom = 52.0
+custom_fonts/font = ExtResource( 2 )
+text = "music volume:"
+
+[node name="MusicVolumeSlider" type="HSlider" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol"]
+margin_left = 188.0
+margin_top = 28.0
+margin_right = 388.0
+margin_bottom = 44.0
+rect_min_size = Vector2( 200, 0 )
+
+[node name="Label3" type="Label" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol"]
+margin_top = 56.0
+margin_right = 184.0
+margin_bottom = 80.0
+custom_fonts/font = ExtResource( 2 )
+text = "sound fx volume:"
+
+[node name="SoundFxVolumeSlider" type="HSlider" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol"]
+margin_left = 188.0
+margin_top = 56.0
+margin_right = 388.0
+margin_bottom = 72.0
+rect_min_size = Vector2( 200, 0 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer"]
+margin_left = 273.0
+margin_top = 647.0
+margin_right = 534.0
+margin_bottom = 743.0
+size_flags_horizontal = 4
+size_flags_vertical = 6
 custom_constants/separation = 5
 
-[node name="StartButton" type="Button" parent="PanelContainer/MarginContainer2/HBoxContainer"]
+[node name="StartButton" type="Button" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 margin_right = 128.0
 margin_bottom = 96.0
 rect_min_size = Vector2( 128, 96 )
@@ -96,12 +166,12 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_fonts/font = ExtResource( 3 )
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer2/HBoxContainer/StartButton"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer/StartButton"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer2/HBoxContainer/StartButton/MarginContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer/StartButton/MarginContainer"]
 margin_top = 15.0
 margin_right = 128.0
 margin_bottom = 81.0
@@ -116,7 +186,7 @@ text = "Start
 Work"
 fit_content_height = true
 
-[node name="FullscreenButton" type="Button" parent="PanelContainer/MarginContainer2/HBoxContainer"]
+[node name="FullscreenButton" type="Button" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer"]
 margin_left = 133.0
 margin_right = 261.0
 margin_bottom = 96.0
@@ -125,12 +195,12 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 custom_fonts/font = ExtResource( 3 )
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer2/HBoxContainer/FullscreenButton"]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer/FullscreenButton"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/MarginContainer2/HBoxContainer/FullscreenButton/MarginContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer/FullscreenButton/MarginContainer"]
 margin_top = 23.0
 margin_right = 128.0
 margin_bottom = 73.0
@@ -156,62 +226,6 @@ size_flags_vertical = 8
 icon = ExtResource( 8 )
 flat = true
 expand_icon = true
-
-[node name="CenterContainer" type="CenterContainer" parent="PanelContainer"]
-margin_right = 1920.0
-margin_bottom = 1080.0
-mouse_filter = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/CenterContainer"]
-margin_left = 766.0
-margin_top = 500.0
-margin_right = 1154.0
-margin_bottom = 580.0
-
-[node name="MusicConrol" type="GridContainer" parent="PanelContainer/CenterContainer/VBoxContainer"]
-margin_right = 388.0
-margin_bottom = 80.0
-columns = 2
-
-[node name="Label" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/MusicConrol"]
-margin_right = 184.0
-margin_bottom = 24.0
-custom_fonts/font = ExtResource( 2 )
-text = "master volume:"
-
-[node name="MasterVolumeSlider" type="HSlider" parent="PanelContainer/CenterContainer/VBoxContainer/MusicConrol"]
-margin_left = 188.0
-margin_right = 388.0
-margin_bottom = 16.0
-rect_min_size = Vector2( 200, 0 )
-
-[node name="Label2" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/MusicConrol"]
-margin_top = 28.0
-margin_right = 184.0
-margin_bottom = 52.0
-custom_fonts/font = ExtResource( 2 )
-text = "music volume:"
-
-[node name="MusicVolumeSlider" type="HSlider" parent="PanelContainer/CenterContainer/VBoxContainer/MusicConrol"]
-margin_left = 188.0
-margin_top = 28.0
-margin_right = 388.0
-margin_bottom = 44.0
-rect_min_size = Vector2( 200, 0 )
-
-[node name="Label3" type="Label" parent="PanelContainer/CenterContainer/VBoxContainer/MusicConrol"]
-margin_top = 56.0
-margin_right = 184.0
-margin_bottom = 80.0
-custom_fonts/font = ExtResource( 2 )
-text = "sound fx volume:"
-
-[node name="SoundFxVolumeSlider" type="HSlider" parent="PanelContainer/CenterContainer/VBoxContainer/MusicConrol"]
-margin_left = 188.0
-margin_top = 56.0
-margin_right = 388.0
-margin_bottom = 72.0
-rect_min_size = Vector2( 200, 0 )
 
 [node name="WebGLButton" type="Button" parent="PanelContainer"]
 visible = false
@@ -254,10 +268,10 @@ fit_content_height = true
 position = Vector2( 166, 341 )
 texture = ExtResource( 5 )
 
-[connection signal="pressed" from="PanelContainer/MarginContainer2/HBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
-[connection signal="pressed" from="PanelContainer/MarginContainer2/HBoxContainer/FullscreenButton" to="." method="_on_FullscreenButton_pressed"]
+[connection signal="value_changed" from="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol/MasterVolumeSlider" to="." method="_on_MasterVolumeSlider_value_changed"]
+[connection signal="value_changed" from="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol/MusicVolumeSlider" to="." method="_on_MusicVolumeSlider_value_changed"]
+[connection signal="value_changed" from="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/MusicConrol/SoundFxVolumeSlider" to="." method="_on_SoundFxVolumeSlider_value_changed"]
+[connection signal="pressed" from="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="PanelContainer/CenterContainer/MarginContainer/VBoxContainer/HBoxContainer/FullscreenButton" to="." method="_on_FullscreenButton_pressed"]
 [connection signal="pressed" from="PanelContainer/QuitButton" to="." method="_on_QuitButton_pressed"]
-[connection signal="value_changed" from="PanelContainer/CenterContainer/VBoxContainer/MusicConrol/MasterVolumeSlider" to="." method="_on_MasterVolumeSlider_value_changed"]
-[connection signal="value_changed" from="PanelContainer/CenterContainer/VBoxContainer/MusicConrol/MusicVolumeSlider" to="." method="_on_MusicVolumeSlider_value_changed"]
-[connection signal="value_changed" from="PanelContainer/CenterContainer/VBoxContainer/MusicConrol/SoundFxVolumeSlider" to="." method="_on_SoundFxVolumeSlider_value_changed"]
 [connection signal="pressed" from="PanelContainer/WebGLButton" to="." method="_on_WebGLButton_pressed"]
