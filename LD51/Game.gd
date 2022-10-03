@@ -19,6 +19,7 @@ var valid_locations_per_product = {
 	"res://Products/Cylender/Beans/Package.tscn" : 		[BARCODE_LOCATION.FRONT,BARCODE_LOCATION.LEFT,BARCODE_LOCATION.BOTTOM,BARCODE_LOCATION.RIGHT,BARCODE_LOCATION.TOP,BARCODE_LOCATION.BACK],
 	"res://Products/DvdBox/GateBuilder/Package.tscn" : 	[BARCODE_LOCATION.FRONT,BARCODE_LOCATION.BACK],
 	"res://Products/DvdBox/Kawai/Package.tscn" : 		[BARCODE_LOCATION.FRONT,BARCODE_LOCATION.BACK],
+	"res://Products/DvdBox/Dalai/Package.tscn" : 		[BARCODE_LOCATION.FRONT,BARCODE_LOCATION.BACK],
 }
 var barcode_location_per_product = {}
 
@@ -35,9 +36,9 @@ func _ready():
 func get_time_str():
 	var minutes = round(time / 60)
 	var seconds = round(fmod(time,60))
-	var txt = "%s:%s" % [
-		("0%d" % minutes) if minutes < 10 else ("%d" % minutes),
-		("0%d" % seconds) if seconds < 10 else ("%d" % seconds)
+	var txt = "%02d:%02d" % [
+		minutes,
+		seconds
 	]
 	return txt
 

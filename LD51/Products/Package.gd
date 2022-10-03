@@ -6,11 +6,9 @@ signal clicked(package)
 signal barcode_scanned(package, barcode)
 signal scan_error(package, barcode)
 
-export(NodePath) var package_model_np
 export(NodePath) var tween_np
 export(NodePath) var barcode_placeholder_np
 
-onready var package_model = get_node(package_model_np) as Spatial
 onready var tween = get_node(tween_np) as Tween
 onready var barcode_placeholder = get_node(barcode_placeholder_np) as Spatial
 
