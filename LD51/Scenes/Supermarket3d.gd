@@ -75,7 +75,7 @@ var hand_node_offset: Vector2
 export(float) var hand_min_y = 550
 export(bool) var scanner_in_hands setget set_scanner_hands, get_scanner_hands
 
-export(float) var scanner_malfunction_chance_percent_per_second = 0.75
+export(float) var scanner_malfunction_chance_percent_per_second = 0.4
 var scanner_malfunction_accumulated_second_used:float = 0.0
 var last_scanner_malfunction_test_time:float = 0.0
 var delay_between_scanner_malfunction_test: float = 1.0
@@ -328,7 +328,7 @@ func on_conveyor_belt_package_clicked(package: Package):
 		package.transform = Transform()
 		
 		scan_package = package
-		button_panel.visible = true
+#		button_panel.visible = true
 		button_mesh.visible = true
 		
 		var grab_id = (1+(randi()%8)-1)
@@ -563,7 +563,7 @@ const speech_bubble_scene = preload("res://Scenes/SpeechBubble.tscn")
 const speech_bubble_scene1 = preload("res://Scenes/SpeechBubble2.tscn")
 const speech_bubble_scene2 = preload("res://Scenes/SpeechBubble3.tscn")
 
-export(float) var karen_chance_percent_per_timer = 10
+export(float) var karen_chance_percent_per_timer = 7.5
 var karen_accumulated_chance: float = 0
 var karen_last_bubble_spawn_time:float = 0
 export var karen_bubble_spawn_delay:float = 3

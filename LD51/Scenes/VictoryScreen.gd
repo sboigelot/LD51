@@ -104,6 +104,8 @@ func on_leaderboard_time_updated():
 	reloading_leaderboard = false
 	
 	submit_button.disabled = score_submitted
+	if Game.score <= 0:
+		submit_button.disabled = true
 	on_leaderboard_loaded()
 	
 func on_leaderboard_loaded():

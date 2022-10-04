@@ -14,7 +14,7 @@ var stained: bool
 var mouse_over:bool
 var scan_timer:float 
 var scan_target:float = 0.8
-export var percent_chance_of_stained:float = 20
+export var percent_chance_of_stained:float = 15
 
 func _ready():
 	numbers = []
