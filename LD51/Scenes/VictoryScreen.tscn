@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Fonts/Bebas_48.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Scenes/VictoryScreen.gd" type="Script" id=2]
@@ -11,6 +11,9 @@
 [ext_resource path="res://Sprites/LOGO-CART.png" type="Texture" id=9]
 [ext_resource path="res://Sprites/REPLAY-BUTTON.png" type="Texture" id=10]
 [ext_resource path="res://Sprites/POSTSCORE.png" type="Texture" id=11]
+[ext_resource path="res://UI/ButtonNormal.tres" type="StyleBox" id=12]
+[ext_resource path="res://UI/ButtonHover.tres" type="StyleBox" id=13]
+[ext_resource path="res://UI/ButtonPressed.tres" type="StyleBox" id=14]
 
 [node name="VictoryScreen" type="Control"]
 anchor_right = 1.0
@@ -228,6 +231,9 @@ rect_min_size = Vector2( 184, 127 )
 focus_mode = 0
 size_flags_horizontal = 4
 custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 13 )
+custom_styles/pressed = ExtResource( 14 )
+custom_styles/normal = ExtResource( 12 )
 enabled_focus_mode = 0
 icon = ExtResource( 10 )
 flat = true
@@ -242,6 +248,9 @@ rect_min_size = Vector2( 184, 127 )
 focus_mode = 0
 size_flags_horizontal = 4
 custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 13 )
+custom_styles/pressed = ExtResource( 14 )
+custom_styles/normal = ExtResource( 12 )
 enabled_focus_mode = 0
 icon = ExtResource( 11 )
 flat = true
@@ -284,6 +293,9 @@ margin_bottom = 80.0
 rect_min_size = Vector2( 96, 80 )
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 13 )
+custom_styles/pressed = ExtResource( 14 )
+custom_styles/normal = ExtResource( 12 )
 icon = ExtResource( 7 )
 flat = true
 expand_icon = true

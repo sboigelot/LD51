@@ -18,6 +18,7 @@ export(NodePath) var scanner_price_rtb_np
 export(NodePath) var scanner_laser_np
 export(NodePath) var scanner_anim_np
 export(NodePath) var scanner_on_charger_np
+export(NodePath) var scanner_on_charger_ready_info_np
 export(NodePath) var debug_label_np
 export(NodePath) var keyboard_texturerect_np
 export(NodePath) var keyboard_line_edit_np
@@ -30,6 +31,7 @@ export(NodePath) var danger_zone_mesh_np
 export(NodePath) var danger_zone_hud_np
 export(NodePath) var danger_zone_label_np
 export(NodePath) var danger_zone_animation_np
+export(NodePath) var danger_zone_progress_bar_np
 export(NodePath) var red_button_texturerect_np
 export(NodePath) var red_button_pressed_texturerect_np
 export(NodePath) var clock_progress_np
@@ -52,6 +54,7 @@ onready var scanner_price_rtb = get_node(scanner_price_rtb_np) as RichTextLabel
 onready var scanner_laser = get_node(scanner_laser_np) as Line2D
 onready var scanner_anim = get_node(scanner_anim_np) as AnimationPlayer
 onready var scanner_on_charger = get_node(scanner_on_charger_np) as Sprite
+onready var scanner_on_charger_ready_info = get_node(scanner_on_charger_ready_info_np) as TextureRect
 onready var debug_label = get_node(debug_label_np) as Label
 onready var keyboard_texturerect = get_node(keyboard_texturerect_np) as Sprite
 onready var keyboard_line_edit = get_node(keyboard_line_edit_np) as LineEdit
@@ -64,6 +67,7 @@ onready var danger_zone_mesh = get_node(danger_zone_mesh_np) as MeshInstance
 onready var danger_zone_hud = get_node(danger_zone_hud_np) as Control
 onready var danger_zone_label = get_node(danger_zone_label_np) as Label
 onready var danger_zone_animation = get_node(danger_zone_animation_np) as AnimationPlayer
+onready var danger_zone_progress_bar = get_node(danger_zone_progress_bar_np) as ProgressBar
 onready var red_button_texturerect = get_node(red_button_texturerect_np) as TextureRect
 onready var red_button_pressed_texturerect = get_node(red_button_pressed_texturerect_np) as TextureRect
 onready var clock_progress = get_node(clock_progress_np) as TextureProgress
@@ -102,6 +106,9 @@ func is_scanner_worling():
 var scan_package: Package
 var danger_zone_package = []
 
+export(float) var danger_zone_max_seconds = 10.0
+var danger_zone_warning_start_time = 0
+
 func load_products():
 	for product_scene in Game.barcode_location_per_product.keys():
 		package_scenes.append(load(product_scene))
@@ -125,6 +132,7 @@ func _ready():
 	spawn_package()
 	
 	scanner_error_screen.visible = false
+	scanner_on_charger_ready_info.visible = false
 	scanner_disabled_screen.visible = false
 	keyboard_line_edit.visible = false
 	keyboard_error_label.visible = false
@@ -165,6 +173,7 @@ func _process(delta):
 	k_on_process()
 	
 	move_belt_visual(delta)
+	danger_zone_check_loose(delta)
 	
 func move_belt_visual(delta):
 	$BeltVisual.get_active_material(0).uv1_offset.x -= delta * conveyor_visual_speed
@@ -276,9 +285,9 @@ func _on_Timer_timeout():
 
 var spawn_counter= {
 	0: 2,
-	20: 3,
-	40: 4,
-	60: 5
+	30: 3,
+	50: 4,
+	70: 5
 }
 func spawn_new_package_group():
 	blink_new_package_label()
@@ -295,7 +304,7 @@ func spawn_new_package_group():
 func spawn_package():
 	var product_id = randi() % package_scenes.size()
 	var scene = package_scenes[product_id]
-	var instance = scene.instance()
+	var instance = scene.instance() as Package
 	var spawn_positions = [
 		$ConveyorBelt/PackageSpawnLocations/Location1.transform,
 		$ConveyorBelt/PackageSpawnLocations/Location2.transform,
@@ -303,6 +312,7 @@ func spawn_package():
 		$ConveyorBelt/PackageSpawnLocations/Location4.transform,
 	]
 	$ConveyorBelt.add_child(instance)
+	instance.apply_barcode_location(Game.time > 30)
 	instance.transform = spawn_positions[randi() % spawn_positions.size()]
 	instance.connect("clicked", self, "on_conveyor_belt_package_clicked")
 
@@ -325,11 +335,14 @@ func on_conveyor_belt_package_clicked(package: Package):
 		package.disconnect("clicked", self, "on_conveyor_belt_package_clicked")
 		package.connect("barcode_scanned", self, "_on_Package_barcode_scanned")
 		package.connect("scan_error", self, "_on_Package_scan_error")
+		
 		package.transform = Transform()
+		package.set_initial_basis()
 		
 		scan_package = package
-#		button_panel.visible = true
 		button_mesh.visible = true
+		
+		scanner_on_charger_ready_info.visible = true
 		
 		var grab_id = (1+(randi()%8)-1)
 		SfxManager.play("grab%d" % grab_id)
@@ -367,14 +380,16 @@ func move_package_to_exit_belt(package: Package):
 	package.get_parent().remove_child(package)
 	$ConveyorBelt2.add_child(package)
 	var spawn_positions = [
-		$ConveyorBelt2/PackageSpawnLocations/Location1.transform,
-		$ConveyorBelt2/PackageSpawnLocations/Location2.transform,
-		$ConveyorBelt2/PackageSpawnLocations/Location3.transform,
-		$ConveyorBelt2/PackageSpawnLocations/Location4.transform,
+		$ConveyorBelt2/PackageSpawnLocations/Location1.translation,
+		$ConveyorBelt2/PackageSpawnLocations/Location2.translation,
+		$ConveyorBelt2/PackageSpawnLocations/Location3.translation,
+		$ConveyorBelt2/PackageSpawnLocations/Location4.translation,
 	]
-	package.transform = spawn_positions[randi() % spawn_positions.size()]
+#	package.transform = spawn_positions[randi() % spawn_positions.size()]
+	package.translation = spawn_positions[randi() % spawn_positions.size()]
 	button_panel.visible = false
-	button_mesh.visible = false
+	button_mesh.visible = false	
+	scanner_on_charger_ready_info.visible = false
 
 func _physics_process(delta):
 	move_package_in_coveryor_belt(delta, $ConveyorBelt)
@@ -458,12 +473,12 @@ func _on_KeyboardLineEdit_text_entered(new_text):
 		move_package_to_exit_belt(scan_package)
 
 func blink_keyboard_modulate():
+	SfxManager.play("Error")
 	for i in 2:
 		keyboard_texturerect.modulate = Color.red
 		yield(get_tree().create_timer(0.2), "timeout")
 		keyboard_texturerect.modulate = Color.white
 		yield(get_tree().create_timer(0.2), "timeout")
-	SfxManager.play("Error")
 
 func blink_new_package_label():
 	new_package_label.visible = true
@@ -492,24 +507,37 @@ func _on_KeyboardLineEdit_text_changed(new_text:String):
 	if new_text == "":
 		return		
 	var last = new_text[new_text.length() - 1]
-	SfxManager.play("key"+last)
-
+	if SfxManager.sample_dictionary.has("key"+last):
+		SfxManager.play("key"+last)
+	else:
+		SfxManager.play("key1")
+		
+func danger_zone_check_loose(delta):
+	if danger_zone_package.size() >= 6:
+		
+		var danger_elapsed = Game.time - danger_zone_warning_start_time
+		
+		danger_zone_progress_bar.value = danger_elapsed
+		
+		if danger_elapsed >= danger_zone_max_seconds:
+			Game.defeat()
+	else:
+		danger_zone_warning_start_time = Game.time
 
 func _on_LooseArea_body_entered(body):
 	if not body is Package:
 		return
+		
+	if danger_zone_package.size() == 5:
+		danger_zone_warning_start_time = Game.time
 	danger_zone_package.append(body)
-	
-	if danger_zone_package.size() >= 6:
-		Game.defeat()
-		return
 		
 	update_danger_zone_visuals()
 
 func update_danger_zone_visuals():
 	var was_visible = danger_zone_hud.visible
-	danger_zone_mesh.visible = danger_zone_package.size() >= 3
-	danger_zone_hud.visible = danger_zone_package.size() >= 3
+	danger_zone_mesh.visible = danger_zone_package.size() > 4
+	danger_zone_hud.visible = danger_zone_package.size() > 4
 	
 	danger_zone_label.text = str(danger_zone_package.size())
 	if danger_zone_hud.visible and not danger_zone_animation.is_playing():
@@ -517,6 +545,9 @@ func update_danger_zone_visuals():
 		
 	if not was_visible and danger_zone_hud.visible:
 		SfxManager.play("failalarm")
+		danger_zone_progress_bar.max_value = danger_zone_max_seconds
+		danger_zone_progress_bar.value = 0
+		
 
 func _on_LooseArea_body_exited(body):
 	if not body is Package:
@@ -541,6 +572,12 @@ func _on_RedButton_pressed():
 
 func _on_QuitButton_pressed():
 	Game.defeat()
+
+func _on_RedButton_mouse_entered():
+	red_button_texturerect.modulate = Color.white
+
+func _on_RedButton_mouse_exited():
+	red_button_texturerect.modulate = Color(0.83,0.83,0.83)
 
 
 ################################################################################
@@ -600,6 +637,8 @@ func k_spawn_karen():
 	karen_accumulated_chance = 0
 	karen.visible = true
 	karen_button_help_container.visible = true
+	var anim = karen.get_child(0) as AnimationPlayer
+	anim.play("Rage")
 
 func k_try_spawn_bubble():
 	if karen_last_bubble_spawn_time + karen_bubble_spawn_delay < Game.time:
@@ -643,5 +682,4 @@ func k_push_away():
 		speech_bubble_plaholder.get_child_count() - 1
 	)
 	last_bubble.queue_free()
-
 

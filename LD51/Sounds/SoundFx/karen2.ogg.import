@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/karen2.ogg-16c7bd89c2da4d165aef6842ff4537d9.oggstr"
+
+[deps]
+
+source_file="res://Sounds/SoundFx/karen2.ogg"
+dest_files=[ "res://.import/karen2.ogg-16c7bd89c2da4d165aef6842ff4537d9.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

@@ -13,15 +13,16 @@ var numbers: Array
 var stained: bool
 var mouse_over:bool
 var scan_timer:float 
-var scan_target:float = 0.8
+var scan_target:float = 0.5
 export var percent_chance_of_stained:float = 15
-
-func _ready():
+	
+func randomize_barcode(allow_dirty:bool):
 	numbers = []
 	for i in (1 + randi() % 4):
 		numbers.append(randi() % 10)
 	
 	stained = (randi() % 100) <= percent_chance_of_stained
+	stained = stained and allow_dirty
 	
 	change_code(numbers, stained)
 

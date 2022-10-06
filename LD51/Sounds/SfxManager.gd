@@ -50,12 +50,14 @@ func remove_samples(list:Array)->void:											# Clear up memory if there are 
 
 func _ready():																	# Add to database all samples preloaded in the Inspector
 	for i in sample_collection.size():
-		var sample:AudioStreamSample = sample_collection[i]						# Reference sample
+		var sample:AudioStreamOGGVorbis = sample_collection[i]						# Reference sample
 		sample_dictionary[sample.get_path().get_file().get_basename()] = i		# Create entry with file name to reference index in array
 	add_players(start_player_count)												# Add some players to start with
 
 func play(sample_name:String)->void:
-#		print(sample_name)
+#	print(sample_name)
+#	if "karen" in sample_name:
+#		pass
 	if active_players.has(sample_name):											# Same sample is already playing
 		var player:AudioStreamPlayer = active_players[sample_name]
 		if player.get_playback_position() > retrigger_time:						# Checks if same sample has played at least certain length
@@ -64,7 +66,7 @@ func play(sample_name:String)->void:
 		if !free_players.empty():												# There are un-active players
 			var player:AudioStreamPlayer = free_players.pop_back()
 			active_players[sample_name] = player
-			player.stream = sample_collection[ sample_dictionary[sample_name] ]
+			player.stream = sample_collection[sample_dictionary[sample_name] ]
 			player.play()
 			player.connect("finished", self, "sample_finished", [sample_name])
 		else:

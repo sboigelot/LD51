@@ -36,7 +36,12 @@ func _ready():
 	
 	update_top_score_ui()
 	update_top_time_ui()
-	reload_leaderboard()
+	
+	if OS.get_name() == "HTML5":
+		top_time_rtb.bbcode_text = "[center][b]TOP 10 SCORES[/b]\n\ndowload the game to participate[/center]"
+		top_score_rtb.bbcode_text = "[center][b]TOP 10 TIMES[/b]\n\nnot available in html5 / webgl[/center]"
+	else:
+		reload_leaderboard()
 	
 	Music.play(load("res://Sounds/Musics/onboarging.ogg"))
 	

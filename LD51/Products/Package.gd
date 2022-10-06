@@ -30,9 +30,12 @@ onready var barcodes_per_location = {
 var barcode: Barcode
 
 func _ready():
-	apply_barcode_location()
+	set_initial_basis()
 	
-func apply_barcode_location():
+func set_initial_basis():
+	target_basis = transform.basis
+	
+func apply_barcode_location(allow_dirty:bool):
 	
 	var random_location = Game.BARCODE_LOCATION.TOP
 	if Game.barcode_location_per_product.has(filename):
@@ -45,6 +48,7 @@ func apply_barcode_location():
 	else:
 		barcode = barcodes_per_location[barcodes_per_location.keys()[0]]
 	
+	barcode.randomize_barcode(allow_dirty)
 	if not barcode.visible:
 		printerr("Not visible barcode for :" + filename)
 	
@@ -67,14 +71,12 @@ func add_to_target_rotation(add_rotation: Vector2):
 	var axis = Vector3(add_rotation.x/90, 0, add_rotation.y/90) # Or Vector3.RIGHT
 	var rotation_radiant = deg2rad(90)
 	
-	target_basis = transform.basis.rotated(axis, rotation_radiant) #.orthonormalized()
-
+	target_basis = target_basis.rotated(axis, rotation_radiant).orthonormalized()
 	start_rotate_tween()
 
 func start_rotate_tween():
-	if tween.is_active():
-		tween.stop_all()
-		
+	tween.remove_all()
+	tween.stop_all()		
 	tween.interpolate_property(self, "tween_basis",
 		transform.basis, target_basis, 0.2,
 		Tween.TRANS_CUBIC, Tween.EASE_OUT)

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/failalarm.ogg-e1afe61926cf7bf823b3f3a97ee2ae9d.oggstr"
+
+[deps]
+
+source_file="res://Sounds/SoundFx/failalarm.ogg"
+dest_files=[ "res://.import/failalarm.ogg-e1afe61926cf7bf823b3f3a97ee2ae9d.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

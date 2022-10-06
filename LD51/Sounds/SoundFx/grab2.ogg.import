@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/grab2.ogg-778f7b309ae5c58550223adf457a195c.oggstr"
+
+[deps]
+
+source_file="res://Sounds/SoundFx/grab2.ogg"
+dest_files=[ "res://.import/grab2.ogg-778f7b309ae5c58550223adf457a195c.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

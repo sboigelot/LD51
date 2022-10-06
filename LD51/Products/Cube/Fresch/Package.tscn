@@ -23,11 +23,13 @@ shape = SubResource( 4 )
 [node name="PackageVisualPlaceholder" type="Spatial" parent="RotationRoot"]
 
 [node name="cube" parent="RotationRoot/PackageVisualPlaceholder" instance=ExtResource( 1 )]
+transform = Transform( -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0 )
 
 [node name="BarcodesPlaceholder" type="Spatial" parent="RotationRoot"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
 
 [node name="FrontBarcode" parent="RotationRoot/BarcodesPlaceholder" instance=ExtResource( 3 )]
-transform = Transform( -0.904938, 0, -0.425542, 0, 1, 0, 0.425542, 0, -0.904938, 0.333248, 1.04216, 0.120253 )
+transform = Transform( -0.904938, 0, -0.425542, 0, 1, 0, 0.425542, 0, -0.904938, 0.603984, 1.04216, 0.661753 )
 
 [node name="BackBarcode" parent="RotationRoot/BarcodesPlaceholder" instance=ExtResource( 3 )]
 transform = Transform( 0.689569, -6.33133e-08, -0.72422, 0, -1, 8.74228e-08, -0.72422, -6.02841e-08, -0.689569, 0.618416, -1.04492, 0.551362 )
@@ -36,13 +38,13 @@ transform = Transform( 0.689569, -6.33133e-08, -0.72422, 0, -1, 8.74228e-08, -0.
 transform = Transform( -4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 1.01915, -0.634162, 0.329227 )
 
 [node name="RightBarcode" parent="RotationRoot/BarcodesPlaceholder" instance=ExtResource( 3 )]
-transform = Transform( -4.37114e-08, -1, 4.37114e-08, 0.00141372, -4.37732e-08, -0.999999, 0.999999, -4.36496e-08, 0.00141372, -1.04848, -0.470939, -0.0326832 )
+transform = Transform( -1.31756e-08, -1, 2.09478e-09, 0.953491, -1.31943e-08, -0.301422, 0.301422, -1.97402e-09, 0.953491, -1.04848, -0.470939, 0.597687 )
 
 [node name="TopBarcode" parent="RotationRoot/BarcodesPlaceholder" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.340935, -0.557864, 1.02952 )
+transform = Transform( 0.0385622, -8.57047e-08, -0.999256, -0.999256, -4.53645e-08, -0.0385622, -4.20258e-08, 1, -8.73903e-08, -0.64948, -0.387234, 1.02952 )
 
 [node name="BottomBarcode" parent="RotationRoot/BarcodesPlaceholder" instance=ExtResource( 3 )]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.509836, -0.803666, -1.01699 )
+transform = Transform( 0.304831, 7.20178e-08, -0.952406, 0.952406, -5.49556e-08, 0.304831, -3.03868e-08, -1, -8.53424e-08, 0.0298589, -0.00808024, -1.01699 )
 
 [connection signal="input_event" from="." to="." method="_on_Package_input_event"]
 [connection signal="clicked" from="RotationRoot/BarcodesPlaceholder/FrontBarcode" to="." method="_on_Barcode_clicked"]
