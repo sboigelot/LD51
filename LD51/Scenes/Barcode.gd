@@ -13,7 +13,7 @@ var numbers: Array
 var stained: bool
 var mouse_over:bool
 var scan_timer:float 
-var scan_target:float = 0.5
+var scan_target:float = 0.4
 export var percent_chance_of_stained:float = 15
 	
 func randomize_barcode(allow_dirty:bool):
@@ -30,6 +30,8 @@ func change_code(numbers:Array, stained:bool):
 	barcode_image_genetaor.change_code(numbers, stained)
 
 func _process(delta):
+	if not is_instance_valid(self) or is_queued_for_deletion():
+		return
 	if mouse_over:
 		if Input.is_mouse_button_pressed(BUTTON_LEFT):
 			scan_timer += delta

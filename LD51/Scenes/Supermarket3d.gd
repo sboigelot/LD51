@@ -83,6 +83,7 @@ export(float) var scanner_malfunction_chance_percent_per_second = 0.4
 var scanner_malfunction_accumulated_second_used:float = 0.0
 var last_scanner_malfunction_test_time:float = 0.0
 var delay_between_scanner_malfunction_test: float = 1.0
+var delay_after_scanner_malfunction_test: float = 12.0
 var shake_sum:float = 0.0
 var shake_target:float = 5000.0
 var shake_previous_mouse_pos: Vector2
@@ -132,7 +133,7 @@ func _ready():
 	spawn_package()
 	
 	scanner_error_screen.visible = false
-	scanner_on_charger_ready_info.visible = false
+	scanner_on_charger_ready_info.visible = true
 	scanner_disabled_screen.visible = false
 	keyboard_line_edit.visible = false
 	keyboard_error_label.visible = false
@@ -246,7 +247,7 @@ func test_and_trigger_scanner_malfunction(delta):
 func trigger_scanner_malfunction():
 	shake_sum = 0
 	shake_previous_mouse_pos = get_viewport().get_mouse_position() as Vector2
-	scanner_malfunction_accumulated_second_used = 0
+	scanner_malfunction_accumulated_second_used = -delay_after_scanner_malfunction_test
 	scanner_disabled_screen.visible = true	
 	
 func _on_DownButton_pressed():
@@ -342,13 +343,13 @@ func on_conveyor_belt_package_clicked(package: Package):
 		scan_package = package
 		button_mesh.visible = true
 		
-		scanner_on_charger_ready_info.visible = true
+#		scanner_on_charger_ready_info.visible = true
 		
 		var grab_id = (1+(randi()%8)-1)
 		SfxManager.play("grab%d" % grab_id)
 
 func _on_Package_barcode_scanned(package, barcode):
-	if get_scanner_hands() and is_scanner_worling():
+	if get_scanner_hands() and is_scanner_worling() and scan_package != null:
 		SfxManager.play("Scan")
 		add_score(scan_package.price)
 		move_package_to_exit_belt(package)
@@ -389,7 +390,7 @@ func move_package_to_exit_belt(package: Package):
 	package.translation = spawn_positions[randi() % spawn_positions.size()]
 	button_panel.visible = false
 	button_mesh.visible = false	
-	scanner_on_charger_ready_info.visible = false
+#	scanner_on_charger_ready_info.visible = true
 
 func _physics_process(delta):
 	move_package_in_coveryor_belt(delta, $ConveyorBelt)
@@ -452,7 +453,6 @@ func _on_KeyboardButton_pressed():
 	keyboard_line_edit.grab_focus()
 	set_scanner_hands(false)
 
-
 var number_scancodes = [
 	KEY_0,
 	KEY_1,
@@ -464,16 +464,26 @@ var number_scancodes = [
 	KEY_7,
 	KEY_8,
 	KEY_8,
+	KEY_KP_0,
+	KEY_KP_1,
+	KEY_KP_2,
+	KEY_KP_3,
+	KEY_KP_4,
+	KEY_KP_5,
+	KEY_KP_6,
+	KEY_KP_7,
+	KEY_KP_8,
+	KEY_KP_9
 ]
 func _input(event):
-	if event is InputEventKey:
+	if event is InputEventKey and not keyboard_line_edit.visible:
 		if number_scancodes.has(event.scancode):
 			_on_KeyboardButton_pressed()
-			keyboard_line_edit.text = OS.get_scancode_string(event.scancode)
+#			keyboard_line_edit.text = char(event.unicode)
 			return
-		if [KEY_SPACE, KEY_TAB].has(event.scancode):
-			_on_KeyboardButton_pressed()
-			return
+#		if [KEY_SPACE, KEY_TAB].has(event.scancode):
+#			_on_KeyboardButton_pressed()
+#			return
 
 func _on_KeyboardLineEdit_text_entered(new_text):
 	keyboard_line_edit.visible = false

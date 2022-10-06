@@ -30,12 +30,12 @@ var valid_locations_per_product = {
 var barcode_location_per_product = {}
 
 func clear_data():
-	randomize()	
+	randomize()
 	randomize_barcode_locations()
 	win = false
 	score = 0
 	time = 0
-	
+
 func _ready():
 	 clear_data()
 	
