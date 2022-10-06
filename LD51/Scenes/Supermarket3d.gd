@@ -452,6 +452,29 @@ func _on_KeyboardButton_pressed():
 	keyboard_line_edit.grab_focus()
 	set_scanner_hands(false)
 
+
+var number_scancodes = [
+	KEY_0,
+	KEY_1,
+	KEY_2,
+	KEY_3,
+	KEY_4,
+	KEY_5,
+	KEY_6,
+	KEY_7,
+	KEY_8,
+	KEY_8,
+]
+func _input(event):
+	if event is InputEventKey:
+		if number_scancodes.has(event.scancode):
+			_on_KeyboardButton_pressed()
+			keyboard_line_edit.text = OS.get_scancode_string(event.scancode)
+			return
+		if [KEY_SPACE, KEY_TAB].has(event.scancode):
+			_on_KeyboardButton_pressed()
+			return
+
 func _on_KeyboardLineEdit_text_entered(new_text):
 	keyboard_line_edit.visible = false
 	var numbers = []
